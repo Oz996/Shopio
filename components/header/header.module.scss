@@ -8,6 +8,7 @@
 
   display: flex;
   align-items: end;
+  background: $store-background;
 
   width: screen;
   height: 5rem;
@@ -15,7 +16,7 @@
 
 .logo {
   display: flex;
-  padding-bottom: 3px;
+  padding-bottom: 8px;
 
   h2 {
     font-size: x-large;
@@ -48,8 +49,8 @@
 
 .input {
   width: 100%;
-  padding-block: 0.6rem;
-  padding-inline: 0.6rem;
+  padding-block: 0.8rem;
+  padding-inline: 2rem;
   border: none;
   font-family: var(--font-inter);
 
@@ -62,8 +63,52 @@
   }
 }
 
-.text {
-  font-size: 0.95rem;
-  font-weight: 500;
-  color: $dark-grey;
+// navbar items
+.nav_item {
+  position: relative;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  min-height: 2rem;
+  gap: 0.3rem;
+
+  ul {
+    position: absolute;
+    padding: 1rem;
+    padding-top: 0.8rem;
+    top: 30;
+
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    gap: 0.5rem;
+
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+      rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+    height: auto;
+    width: 10rem;
+
+    li {
+      padding: 0.3rem;
+      font-size: 15;
+
+      &:hover {
+        background: $store-background;
+      }
+    }
+  }
+
+  span {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: $dark-grey;
+  }
+
+  svg {
+    left: 35%;
+    bottom: -13px;
+    color: $dark-grey;
+  }
 }

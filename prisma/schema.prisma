@@ -15,6 +15,7 @@ model Product {
   category    String
   description String
   details     String
+  images      String[]
   createdAt   DateTime  @default(now())
   editedAt    DateTime  @default(now())
   @@map("products")

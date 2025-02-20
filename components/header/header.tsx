@@ -1,6 +1,7 @@
 import { Search } from "lucide-react";
 import styles from "./header.module.scss";
 import Link from "next/link";
+import ProductsNavbar from "./products-navbar";
 
 export default function Header() {
   return (
@@ -18,11 +19,9 @@ export default function Header() {
           <Search className={styles.icon_search} size={20} />
         </div>
 
-        <div>
-          <span className={styles.text}>Products</span>
-        </div>
+        <ProductsNavbar />
 
-        <div>
+        <div className={styles.nav_item}>
           <span className={styles.text}>Sign Up / Login</span>
         </div>
       </nav>

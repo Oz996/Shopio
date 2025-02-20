@@ -1,5 +1,11 @@
 @use "@/sass/" as *;
 
-.section {
+.layout {
   @include container;
+  background: $store-background;
+  width: 100vw;
+  height: calc(100vh - 5rem);
+}
+
+.section {
 }
