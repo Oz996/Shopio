@@ -1,8 +1,15 @@
+@mixin container {
+  margin: 0 auto;
+  padding-left: 5rem;
+  padding-right: 5rem;
+}
+
 @mixin tablet {
   @media screen and (max-width: 768px) {
     @content;
   }
 }
+
 @mixin mobile {
   @media screen and (max-width: 640px) {
     @content;
