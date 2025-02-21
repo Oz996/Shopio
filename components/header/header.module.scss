@@ -2,8 +2,8 @@
 
 .header {
   margin: 0 auto;
-  padding-left: 8rem;
-  padding-right: 8rem;
+  padding-left: 17rem;
+  padding-right: 17rem;
   padding-bottom: 0.1rem;
 
   display: flex;
@@ -16,12 +16,11 @@
 
 .logo {
   display: flex;
-  padding-bottom: 8px;
+  padding-bottom: 18px;
 
   h2 {
     font-size: x-large;
     font-weight: 700;
-    color: $dark-grey;
   }
 }
 
