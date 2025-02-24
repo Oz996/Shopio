@@ -63,7 +63,6 @@ export default function HeaderMobile() {
             {productCategories.map((category) => (
               <div className={styles.nav_item_mobile} key={category}>
                 <div
-                  className={styles.nav_image_mobile}
                   style={{
                     backgroundImage: `url("/banner-${category
                       .toLowerCase()
