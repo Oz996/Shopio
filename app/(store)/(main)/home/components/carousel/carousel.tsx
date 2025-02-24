@@ -5,13 +5,14 @@ import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 import "./styles.scss";
 import Link from "next/link";
+import { carouselContent } from "./carousel-content";
 
 export default function HomeCarousel() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [loaded, setLoaded] = useState(false);
   const [sliderRef, instanceRef] = useKeenSlider({
     slides: {
-      perView: 1.4,
+      perView: 1.3,
       spacing: 15,
       origin: "center",
     },
@@ -22,7 +23,6 @@ export default function HomeCarousel() {
     created() {
       setLoaded(true);
     },
-
     drag: false,
   });
 
@@ -30,7 +30,20 @@ export default function HomeCarousel() {
     <>
       <div className="navigation-wrapper">
         <div ref={sliderRef} className="keen-slider">
-          <div className="keen-slider__slide number-slide1">1</div>
+          {carouselContent.map((content, index) => (
+            <div
+              key={index}
+              className={`keen-slider__slide number-slide${index + 1}`}
+              style={{ backgroundImage: `url("${content.image}")` }}
+            >
+              <div>
+                <h2>{content.title}</h2>
+                <p>{content.description}</p>
+                <Link href={`/products/${content.link}`}>Start Browsing</Link>
+              </div>
+            </div>
+          ))}
+          {/* <div className="keen-slider__slide number-slide1">1</div>
           <div className="keen-slider__slide number-slide2">
             <div>
               <h2>Modern Monitors</h2>
@@ -45,7 +58,7 @@ export default function HomeCarousel() {
           <div className="keen-slider__slide number-slide3">3</div>
           <div className="keen-slider__slide number-slide4">4</div>
           <div className="keen-slider__slide number-slide5">5</div>
-          <div className="keen-slider__slide number-slide6">6</div>
+          <div className="keen-slider__slide number-slide6">6</div> */}
         </div>
         {loaded && instanceRef.current && (
           <>

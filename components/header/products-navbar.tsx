@@ -2,7 +2,7 @@
 
 import {
   ChevronDown,
-  Headset,
+  Headphones,
   Laptop,
   Monitor,
   ShoppingBasket,
@@ -22,8 +22,8 @@ export default function ProductsNavbar() {
     switch (category.toLowerCase()) {
       case "monitors":
         return <Monitor size={16} />;
-      case "headsets":
-        return <Headset size={16} />;
+      case "headphones":
+        return <Headphones size={16} />;
       case "laptops":
         return <Laptop size={16} />;
       case "tablets":

@@ -1,6 +1,6 @@
 export const productCategories = [
   "Monitors",
-  "Headsets",
+  "Headphones",
   "Laptops",
   "Tablets",
 ] as const;
