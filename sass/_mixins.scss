@@ -2,10 +2,20 @@
   margin: 0 auto;
   padding-left: 15rem;
   padding-right: 15rem;
+
+  @include tablet() {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+
+  @include mobile() {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
 }
 
 @mixin tablet {
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 1024px) {
     @content;
   }
 }

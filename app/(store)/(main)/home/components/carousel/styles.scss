@@ -16,12 +16,11 @@ body {
   font-size: 50px;
   color: #fff;
   font-weight: 500;
-  height: 500px;
+  height: 520px;
   max-height: 100vh;
 
   div {
     padding-left: 2rem;
-    max-width: 30rem;
 
     display: flex;
     flex-direction: column;
@@ -33,6 +32,7 @@ body {
     }
 
     p {
+      max-width: 25rem;
       font-size: 14;
     }
 
@@ -55,11 +55,6 @@ body {
 .number-slide1 {
   background-size: cover;
   background-repeat: no-repeat;
-}
-
-.number-slide2 {
-  background-size: cover;
-  background-repeat: no-repeat;
   background-position: 40%;
 
   div {
@@ -72,16 +67,16 @@ body {
   }
 }
 
-.number-slide3 {
+.number-slide2 {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: 95%;
 }
 
-.number-slide4 {
+.number-slide3 {
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: 60%;
+  background-position: 50%;
 
   div {
     h2 {
@@ -91,6 +86,11 @@ body {
       color: #000;
     }
   }
+}
+
+.number-slide4 {
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .navigation-wrapper {
@@ -123,13 +123,17 @@ body {
 }
 
 .arrow {
-  width: 30px;
-  height: 30px;
+  width: 35px;
+  height: 35px;
+  padding: 10px;
+  border-radius: 1rem;
+
+  background-color: #fff;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   -webkit-transform: translateY(-50%);
-  fill: #fff;
+  fill: $dark-grey;
   cursor: pointer;
 }
 

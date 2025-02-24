@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 import "./styles.scss";
@@ -12,19 +12,39 @@ export default function HomeCarousel() {
   const [loaded, setLoaded] = useState(false);
   const [sliderRef, instanceRef] = useKeenSlider({
     slides: {
-      perView: 1.3,
+      perView: 1.2,
       spacing: 15,
       origin: "center",
     },
-    initial: 1,
+    drag: false,
+    loop: true,
+    initial: 0,
     slideChanged(slider) {
       setCurrentSlide(slider.track.details.rel);
     },
     created() {
       setLoaded(true);
     },
-    drag: false,
+    breakpoints: {
+      "(max-width: 1024px)": {
+        slides: {
+          perView: 1,
+          spacing: 10,
+        },
+      },
+    },
   });
+
+  useEffect(() => {
+    const slider = instanceRef.current;
+    if (!slider) return;
+
+    const interval = setInterval(() => {
+      slider.next();
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, [instanceRef]);
 
   return (
     <>
@@ -43,22 +63,6 @@ export default function HomeCarousel() {
               </div>
             </div>
           ))}
-          {/* <div className="keen-slider__slide number-slide1">1</div>
-          <div className="keen-slider__slide number-slide2">
-            <div>
-              <h2>Modern Monitors</h2>
-              <p>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. At ab
-                enim placeat culpa rem architecto laboriosam omnis dolorum
-                fugiat sint!
-              </p>
-              <Link href="/products/monitors">Start Browsing</Link>
-            </div>
-          </div>
-          <div className="keen-slider__slide number-slide3">3</div>
-          <div className="keen-slider__slide number-slide4">4</div>
-          <div className="keen-slider__slide number-slide5">5</div>
-          <div className="keen-slider__slide number-slide6">6</div> */}
         </div>
         {loaded && instanceRef.current && (
           <>
@@ -104,13 +108,10 @@ export default function HomeCarousel() {
 }
 
 function Arrow(props: any) {
-  const disabled = props.disabled ? " arrow--disabled" : "";
   return (
     <svg
       onClick={props.onClick}
-      className={`arrow ${
-        props.left ? "arrow--left" : "arrow--right"
-      } ${disabled}`}
+      className={`arrow ${props.left ? "arrow--left" : "arrow--right"}`}
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
     >
