@@ -25,6 +25,6 @@ export const carouselContent = [
     description:
       "Lorem, ipsum dolor sit amet consectetur adipisicing elit. At abenim placeat culpa rem architecto laboriosam omnis dolorum fugiat sint!",
     link: "headphones",
-    image: "/banner-headphones.webp",
+    image: "/banner-headphone.webp",
   },
 ] as const;

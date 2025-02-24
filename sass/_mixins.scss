@@ -3,15 +3,20 @@
   padding-left: 15rem;
   padding-right: 15rem;
 
-  @include tablet() {
+  @include tablet {
     padding-left: 3rem;
     padding-right: 3rem;
   }
 
-  @include mobile() {
+  @include mobile {
     padding-left: 1rem;
     padding-right: 1rem;
   }
+}
+
+@mixin full-shadow {
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+    rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
 }
 
 @mixin tablet {

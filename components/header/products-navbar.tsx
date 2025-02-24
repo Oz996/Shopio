@@ -16,23 +16,6 @@ import Link from "next/link";
 export default function ProductsNavbar() {
   const [isOpen, setIsOpen] = useState(false);
 
-  type Category = (typeof productCategories)[number];
-
-  function categoryIcons(category: Category) {
-    switch (category.toLowerCase()) {
-      case "monitors":
-        return <Monitor size={16} />;
-      case "headphones":
-        return <Headphones size={16} />;
-      case "laptops":
-        return <Laptop size={16} />;
-      case "tablets":
-        return <Tablet size={16} />;
-      default:
-        console.error("Product category does not exist");
-    }
-  }
-
   return (
     <div
       className={styles.nav_item}
@@ -62,4 +45,22 @@ export default function ProductsNavbar() {
       )}
     </div>
   );
+}
+
+export type Category = (typeof productCategories)[number];
+
+export function categoryIcons(category: Category) {
+  const size = 16;
+  switch (category.toLowerCase()) {
+    case "monitors":
+      return <Monitor size={size} />;
+    case "headphones":
+      return <Headphones size={size} />;
+    case "laptops":
+      return <Laptop size={size} />;
+    case "tablets":
+      return <Tablet size={size} />;
+    default:
+      console.error("Product category does not exist");
+  }
 }
