@@ -4,12 +4,18 @@
   background: #fff;
   text-align: center;
   width: 18rem;
+  height: 100%;
 
   display: flex;
   flex-direction: column;
 
   box-shadow: rgba(0, 0, 0, 0.09) 0px 3px 12px;
   border-radius: 0.3rem;
+
+  @include tablet {
+    width: 100%;
+    place-self: center;
+  }
 
   a {
     padding: 1rem;
@@ -22,9 +28,19 @@
   }
 }
 
+.image_wrapper {
+  position: relative;
+  aspect-ratio: 16 / 9;
+}
+
+.image {
+  object-fit: contain;
+}
+
 .content {
   display: flex;
   flex-direction: column;
+  padding-top: 1rem;
   gap: 1rem;
 
   p {

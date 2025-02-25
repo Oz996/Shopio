@@ -9,7 +9,6 @@ body {
 
 [class^="number-slide"],
 [class*=" number-slide"] {
-  background: grey;
   display: flex;
   align-items: center;
   justify-content: start;
@@ -26,7 +25,7 @@ body {
   }
 
   div {
-    padding: 7rem;
+    padding: 5rem;
 
     display: flex;
     flex-direction: column;
@@ -42,7 +41,7 @@ body {
     }
 
     p {
-      max-width: 25rem;
+      max-width: 20rem;
       font-size: 14;
     }
 
@@ -65,11 +64,7 @@ body {
 .number-slide1 {
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: 60%;
-
-  @include tablet {
-    background-position: 60%;
-  }
+  background-position: 58%;
 
   div {
     h2 {
@@ -84,7 +79,7 @@ body {
 .number-slide2 {
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: 95%;
+  background-position: 94%;
 
   @include tablet {
     background-position: 79%;
@@ -103,10 +98,10 @@ body {
 .number-slide3 {
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: 50%;
+  background-position: 65%;
 
   @include tablet {
-    background-position: 70%;
+    background-position: 75%;
   }
 
   div {
@@ -122,6 +117,7 @@ body {
 .number-slide4 {
   background-size: cover;
   background-repeat: no-repeat;
+  background-position: 40%;
 
   @include tablet {
     background-position: 60%;
@@ -166,6 +162,7 @@ body {
   background-color: #fff;
   position: absolute;
   top: 50%;
+
   transform: translateY(-50%);
   -webkit-transform: translateY(-50%);
   fill: $dark-grey;
@@ -173,7 +170,7 @@ body {
 }
 
 .arrow--left {
-  left: 10rem;
+  left: 8rem;
   @include tablet {
     left: 5px;
   }
@@ -181,7 +178,7 @@ body {
 
 .arrow--right {
   left: auto;
-  right: 10rem;
+  right: 8rem;
   @include tablet {
     right: 5px;
   }

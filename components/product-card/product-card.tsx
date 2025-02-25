@@ -12,8 +12,8 @@ export default function ProductCard({ product }: ProductCardProps) {
   return (
     <article className={styles.wrapper}>
       <Link href={`/product/${product.slug}`}>
-        <div>
-          <Image src={product.images[0]} alt="" width="160" height="160" />
+        <div className={styles.image_wrapper}>
+          <Image className={styles.image} src={product.images[0]} alt="" fill />
         </div>
 
         <div className={styles.content}>

@@ -29,22 +29,21 @@ export default function HomeCarousel() {
       "(max-width: 1024px)": {
         slides: {
           perView: 1,
-          spacing: 10,
         },
       },
     },
   });
 
-  useEffect(() => {
-    const slider = instanceRef.current;
-    if (!slider) return;
+  // useEffect(() => {
+  //   const slider = instanceRef.current;
+  //   if (!slider) return;
 
-    const interval = setInterval(() => {
-      slider.next();
-    }, 4000);
+  //   const interval = setInterval(() => {
+  //     slider.next();
+  //   }, 4000);
 
-    return () => clearInterval(interval);
-  }, [instanceRef]);
+  //   return () => clearInterval(interval);
+  // }, [instanceRef]);
 
   return (
     <>
