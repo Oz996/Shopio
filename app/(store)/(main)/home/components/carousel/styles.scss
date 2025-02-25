@@ -19,12 +19,22 @@ body {
   height: 520px;
   max-height: 100vh;
 
+  @include tablet {
+    height: 800px;
+    align-items: start;
+    justify-content: center;
+  }
+
   div {
-    padding-left: 2rem;
+    padding: 7rem;
 
     display: flex;
     flex-direction: column;
     gap: 1rem;
+
+    @include tablet {
+      padding: 2rem;
+    }
 
     h2 {
       font-size: 40;
@@ -55,7 +65,11 @@ body {
 .number-slide1 {
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: 40%;
+  background-position: 60%;
+
+  @include tablet {
+    background-position: 60%;
+  }
 
   div {
     h2 {
@@ -71,12 +85,29 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: 95%;
+
+  @include tablet {
+    background-position: 79%;
+
+    div {
+      h2 {
+        color: #000;
+      }
+      p {
+        color: #000;
+      }
+    }
+  }
 }
 
 .number-slide3 {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: 50%;
+
+  @include tablet {
+    background-position: 70%;
+  }
 
   div {
     h2 {
@@ -91,6 +122,10 @@ body {
 .number-slide4 {
   background-size: cover;
   background-repeat: no-repeat;
+
+  @include tablet {
+    background-position: 60%;
+  }
 }
 
 .navigation-wrapper {
@@ -138,12 +173,18 @@ body {
 }
 
 .arrow--left {
-  left: 5px;
+  left: 10rem;
+  @include tablet {
+    left: 5px;
+  }
 }
 
 .arrow--right {
   left: auto;
-  right: 5px;
+  right: 10rem;
+  @include tablet {
+    right: 5px;
+  }
 }
 
 .arrow--disabled {
