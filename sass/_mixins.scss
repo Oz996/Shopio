@@ -19,6 +19,17 @@
     rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
 }
 
+@mixin line-clamp($lines) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $lines;
+}
+
+// breakpoints
+
 @mixin tablet {
   @media screen and (max-width: 1024px) {
     @content;

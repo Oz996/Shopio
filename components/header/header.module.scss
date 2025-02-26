@@ -2,20 +2,22 @@
 @use "./navbar_mobile.scss" as *;
 
 .header {
-  margin: 0 auto;
   height: 5rem;
-
-  padding-left: 17rem;
-  padding-right: 17rem;
   padding-bottom: 0.1rem;
-
-  display: flex;
-  align-items: end;
   background: $store-background;
 
   @include tablet {
     display: none;
   }
+}
+
+.header_wrapper {
+  @include container;
+  height: 100%;
+  margin: 0 auto;
+
+  display: flex;
+  align-items: end;
 }
 
 .header_mobile {
@@ -29,14 +31,9 @@
   }
 
   @include tablet {
+    @include container;
     display: flex;
-    padding-left: 3rem;
-    padding-right: 3rem;
-  }
-
-  @include mobile {
-    padding-left: 1rem;
-    padding-right: 1rem;
+    align-items: end;
   }
 }
 

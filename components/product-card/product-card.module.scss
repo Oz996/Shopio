@@ -3,28 +3,32 @@
 .wrapper {
   background: #fff;
   text-align: center;
-  width: 18rem;
-  height: 100%;
-
-  display: flex;
-  flex-direction: column;
+  max-width: 18rem;
 
   box-shadow: rgba(0, 0, 0, 0.09) 0px 3px 12px;
   border-radius: 0.3rem;
 
   @include tablet {
     width: 100%;
-    place-self: center;
+    max-width: none;
   }
 
   a {
     padding: 1rem;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
   }
 
   h3 {
-    font-size: 17;
+    font-size: 17px;
     font-weight: 500;
     text-transform: capitalize;
+  }
+
+  p {
+    @include line-clamp(3);
   }
 }
 
@@ -38,13 +42,14 @@
 }
 
 .content {
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
   padding-top: 1rem;
   gap: 1rem;
 
   p {
-    font-size: 14;
+    font-size: 14px;
     color: $dark-grey;
   }
 }
@@ -52,11 +57,11 @@
 .content_second {
   padding-top: 2rem;
   display: flex;
+  align-items: end;
   justify-content: space-between;
-  gap: 1rem;
 }
 
 .price {
-  font-size: 18;
+  font-size: 18px;
   font-weight: 600;
 }
