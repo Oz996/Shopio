@@ -1,9 +1,9 @@
 import ProductCard from "@/components/product-card/product-card";
-import { Product } from "@prisma/client";
 import styles from "./product-list.module.scss";
+import { ProductCardType } from "@/lib/types";
 
 interface ProductListProps {
-  products: Product[];
+  products: ProductCardType[];
 }
 
 export default async function ProductList({ products }: ProductListProps) {

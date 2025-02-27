@@ -1,11 +1,11 @@
-import { Product } from "@prisma/client";
 import Image from "next/image";
 import React from "react";
 import styles from "./product-card.module.scss";
 import Link from "next/link";
+import { ProductCardType } from "@/lib/types";
 
 interface ProductCardProps {
-  product: Product;
+  product: ProductCardType;
 }
 
 export default function ProductCard({ product }: ProductCardProps) {

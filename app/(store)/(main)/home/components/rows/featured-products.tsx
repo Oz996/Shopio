@@ -3,10 +3,10 @@ import prisma from "@/lib/prisma/prisma";
 import styles from "./row-list.module.scss";
 import { productCardSelect } from "@/lib/prisma/selects";
 
-export default async function PopularProducts() {
+export default async function FeaturedProducts() {
   const products = await prisma.product.findMany({
     where: {
-      popular: true,
+      featured: true,
     },
     select: productCardSelect,
   });
@@ -15,7 +15,7 @@ export default async function PopularProducts() {
 
   return (
     <>
-      <h2 className={styles.title}>Popular Products</h2>
+      <h2 className={styles.title}>Featured Products</h2>
       <ProductList products={products} />
     </>
   );

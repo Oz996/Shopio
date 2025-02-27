@@ -18,6 +18,7 @@ model Product {
   brand       String
   images      String[]
   popular     Boolean?
+  featured    Boolean?
   reviews     Review[]
   createdAt   DateTime  @default(now())
   editedAt    DateTime  @default(now())

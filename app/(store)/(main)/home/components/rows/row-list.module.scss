@@ -1,0 +1,13 @@
+@use "@/sass/" as *;
+
+.title {
+  font-size: 18px;
+  font-weight: 400;
+  padding-block: 2rem;
+  padding-left: 4.3rem;
+
+  @include tablet {
+    padding-left: 0;
+    font-size: 17px;
+  }
+}

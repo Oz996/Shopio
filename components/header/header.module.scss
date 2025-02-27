@@ -1,6 +1,15 @@
 @use "@/sass" as *;
 @use "./navbar_mobile.scss" as *;
 
+.header_wrapper {
+  @include container;
+  height: 100%;
+  margin: 0 auto;
+
+  display: flex;
+  align-items: end;
+}
+
 .header {
   height: 5rem;
   padding-bottom: 0.1rem;
@@ -9,15 +18,6 @@
   @include tablet {
     display: none;
   }
-}
-
-.header_wrapper {
-  @include container;
-  height: 100%;
-  margin: 0 auto;
-
-  display: flex;
-  align-items: end;
 }
 
 .header_mobile {
