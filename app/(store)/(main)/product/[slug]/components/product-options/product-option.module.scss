@@ -1,0 +1,41 @@
+@use "@/sass/" as *;
+
+.options {
+  display: flex;
+  gap: 2rem;
+}
+
+.amount {
+  height: 2.5rem;
+
+  button {
+    border: 1px solid rgba($dark-grey, 0.1);
+    background: #fff;
+    cursor: pointer;
+
+    height: 100%;
+    padding-inline: 1rem;
+  }
+
+  input {
+    border: 1px solid rgba($dark-grey, 0.1);
+    text-align: center;
+
+    height: 100%;
+    width: 2.5rem;
+  }
+}
+
+.add_button {
+  border: 1px solid rgba($dark-grey, 0.1);
+  background: #272727;
+  color: #fff;
+
+  height: 100%;
+  padding-inline: 2rem;
+
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
