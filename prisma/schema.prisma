@@ -16,6 +16,7 @@ model Product {
   description String
   details     String
   brand       String
+  thumbnails  String[]
   images      String[]
   popular     Boolean?
   featured    Boolean?

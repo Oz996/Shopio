@@ -1,7 +1,8 @@
 import prisma from "@/lib/prisma/prisma";
 import { ProductSlug } from "@/lib/types";
 import styles from "./page.module.scss";
-import Image from "next/image";
+import ProductImages from "./components/product-images/product-images";
+import ProductDetails from "./components/product-details/product-details";
 
 // fetching all products slugs to make page static instead of dynamic
 export async function generateStaticParams() {
@@ -31,12 +32,11 @@ export default async function Product({
   console.log("productproduct", product);
 
   return (
-    <section className={styles.section}>
-      <div className={styles.images}>
-        <div className={styles.display}>
-          <Image src={product?.images[0]!} alt="" fill />
-        </div>
-      </div>
-    </section>
+    <>
+      <section className={styles.section}>
+        <ProductImages product={product!} />
+        <ProductDetails product={product!} />
+      </section>
+    </>
   );
 }

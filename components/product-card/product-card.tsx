@@ -13,7 +13,12 @@ export default function ProductCard({ product }: ProductCardProps) {
     <article className={styles.card}>
       <Link href={`/product/${product.slug}`}>
         <div className={styles.image_wrapper}>
-          <Image className={styles.image} src={product.images[0]} alt="" fill />
+          <Image
+            className={styles.image}
+            src={product.thumbnails[0]}
+            alt=""
+            fill
+          />
         </div>
 
         <div className={styles.content}>

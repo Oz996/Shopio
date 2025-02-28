@@ -5,17 +5,3 @@
   display: flex;
   justify-content: space-between;
 }
-
-.images {
-}
-
-.display {
-  position: relative;
-
-  width: 30rem;
-  height: 30rem;
-  aspect-ratio: 16 / 9;
-  img {
-    object-fit: contain;
-  }
-}
