@@ -9,18 +9,6 @@ interface ProductDetailsProps {
 }
 
 export default function ProductDetails({ product }: ProductDetailsProps) {
-  function listDescription(description: string) {
-    return (
-      <ul className={styles.list}>
-        {description.split("-").map((text, index) => (
-          <li key={index}>{text}</li>
-        ))}
-      </ul>
-    );
-  }
-
-  console.log("test1", listDescription(product.description));
-
   return (
     <div className={styles.details}>
       <h1>{`${product.brand} ${product.name}`}</h1>
@@ -41,5 +29,15 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
         </Link>
       </div>
     </div>
+  );
+}
+
+function listDescription(description: string) {
+  return (
+    <ul className={styles.list}>
+      {description.split("-").map((text, index) => (
+        <li key={index}>{text}</li>
+      ))}
+    </ul>
   );
 }

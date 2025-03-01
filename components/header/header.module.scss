@@ -136,8 +136,12 @@
 
 .icon_search {
   position: absolute;
-  right: 10px;
+  right: 25px;
   color: grey;
+
+  @include mobile {
+    right: 10px;
+  }
 }
 
 .input {
@@ -146,6 +150,10 @@
   padding-inline: 2rem;
   border: none;
   font-family: var(--font-inter);
+
+  @include mobile {
+    padding-inline: 1rem;
+  }
 
   &:focus {
     outline: 1px solid $dark-grey;
