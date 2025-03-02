@@ -21,6 +21,7 @@ model Product {
   popular     Boolean?
   featured    Boolean?
   reviews     Review[]
+  rating      Float
   createdAt   DateTime  @default(now())
   editedAt    DateTime  @default(now())
   @@map("products")
@@ -29,7 +30,8 @@ model Product {
 model Review {
   id          String    @id @default(auto()) @map("_id") @db.ObjectId
   user_email  String
-  content     String
+  content     String?
+  rating      Int
   product     Product?  @relation(fields: [productId], references: [id])
   productId   String?   @db.ObjectId
   @@map("reviews")

@@ -10,6 +10,7 @@ export const productCardSelect: ProductCardSelect = {
   brand: true,
   description: true,
   thumbnails: true,
+  rating: true,
   name: true,
   slug: true,
   price: true,

@@ -3,6 +3,7 @@ import React from "react";
 import styles from "./product-card.module.scss";
 import Link from "next/link";
 import { ProductCardType } from "@/lib/types";
+import ProductRating from "./product-rating";
 
 interface ProductCardProps {
   product: ProductCardType;
@@ -27,7 +28,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         </div>
 
         <div className={styles.content_second}>
-          <p>text</p>
+          <ProductRating rating={product.rating} small />
           <p className={styles.price}>€ {product.price}</p>
         </div>
       </Link>

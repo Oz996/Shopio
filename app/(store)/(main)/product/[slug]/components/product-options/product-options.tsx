@@ -21,7 +21,7 @@ export default function ProductOptions({ product }: ProductOptionsProps) {
   }
 
   function decrementAmount() {
-    if (amount > 0) {
+    if (amount > 1) {
       setAmount((prev) => prev - 1);
     }
   }
