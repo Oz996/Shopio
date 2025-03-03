@@ -11,13 +11,14 @@ export default function SignIn() {
   );
 
   return (
-    <form action={formAction}>
+    <form action={formAction} noValidate>
       <h2>Sign in</h2>
 
       <div>
         <label htmlFor="email">Email</label>
         <input type="email" name="email" id="email" />
       </div>
+
       <div>
         <label htmlFor="password">Password</label>
         <input type="password" name="password" id="password" />
@@ -27,7 +28,7 @@ export default function SignIn() {
 
       <div>
         <span>
-          Not a member yet? <Link href="/sign-up">Sign up</Link>{" "}
+          Not a member yet? <Link href="/sign-up">Sign up</Link>
         </span>
       </div>
 

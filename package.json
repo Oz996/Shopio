@@ -9,10 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@auth/prisma-adapter": "^2.8.0",
     "@fortawesome/free-regular-svg-icons": "^6.7.2",
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@fortawesome/react-fontawesome": "^0.2.2",
-    "@prisma/client": "^6.4.0",
+    "@prisma/client": "^6.4.1",
     "keen-slider": "^6.8.6",
     "lucide-react": "^0.475.0",
     "next": "15.1.7",
@@ -20,7 +21,8 @@
     "prisma": "^6.4.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "sass": "^1.85.0"
+    "sass": "^1.85.0",
+    "zod": "^3.24.2"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

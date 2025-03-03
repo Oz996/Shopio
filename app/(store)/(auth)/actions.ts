@@ -1,15 +1,21 @@
 "use server";
 
 import { signIn } from "@/auth";
+import prisma from "@/lib/prisma/prisma";
+import { signUpSchema } from "@/lib/schemas";
 import { AuthError } from "next-auth";
-import { redirect } from "next/navigation";
+import { ZodIssue } from "zod";
 
 export async function authenticate(
   prevState: string | undefined,
-  formData: FormData
+  formData: FormData,
+  callbackUrl = "/home"
 ) {
   try {
-    await signIn("credentials", formData);
+    const email = formData.get("email")?.toString();
+    const password = formData.get("password")?.toString();
+
+    await signIn("credentials", { email, password, redirectTo: callbackUrl });
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
@@ -20,7 +26,41 @@ export async function authenticate(
       }
     }
     throw error;
-  } finally {
-    redirect("/home");
+  }
+}
+
+export async function signUp(
+  prevState: ZodIssue[] | undefined,
+  formData: FormData,
+  callbackUrl = "/home"
+) {
+  try {
+    const email = formData.get("email")?.toString() as string;
+    const name = formData.get("name")?.toString() as string;
+    const password = formData.get("password")?.toString() as string;
+    const cPassword = formData.get("cPassword")?.toString() as string;
+
+    const result = signUpSchema.safeParse({
+      email,
+      password,
+      cPassword,
+      redirectTo: callbackUrl,
+    });
+
+    if (!result.success) {
+      return result.error.errors;
+    }
+
+    await prisma.user.create({
+      data: {
+        name,
+        email,
+        password,
+      },
+    });
+
+    await signIn("credentials", { email, password, redirectTo: callbackUrl });
+  } catch (error) {
+    console.error(error);
   }
 }
