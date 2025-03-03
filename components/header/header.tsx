@@ -27,7 +27,9 @@ export default function Header() {
             <ProductsNavbar />
 
             <div className={styles.nav_item}>
-              <span className={styles.text}>Sign Up / Login</span>
+              <Link href="/sign-in" className={styles.text}>
+                Sign Up / Login
+              </Link>
             </div>
           </nav>
         </div>

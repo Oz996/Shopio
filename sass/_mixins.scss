@@ -1,3 +1,5 @@
+@use "./colors" as *;
+
 @mixin container {
   max-width: 1200px;
   margin: 0 auto;
@@ -26,6 +28,22 @@
   line-clamp: $lines;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: $lines;
+}
+
+@mixin black-button($radius: 0px, $p-inline: 1rem) {
+  border: 1px solid rgba($dark-grey, 0.1);
+  border-radius: $radius;
+
+  background: #272727;
+  color: #fff;
+
+  height: 2.5rem;
+  padding-inline: $p-inline;
+
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
 }
 
 // breakpoints
