@@ -31,7 +31,7 @@ function displayRating(rating: number, small?: boolean) {
     );
   }
 
-  for (let i = 0; i < 5; i++) {
+  while (stars.length < 5) {
     stars.push(
       <FontAwesomeIcon
         key={stars.length}
@@ -41,6 +41,8 @@ function displayRating(rating: number, small?: boolean) {
       />
     );
   }
+
+  console.log(stars);
 
   return stars;
 }

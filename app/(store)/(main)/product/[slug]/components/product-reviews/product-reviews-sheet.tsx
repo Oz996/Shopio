@@ -5,6 +5,10 @@ import React, { useRef } from "react";
 import styles from "./product-reviews.module.scss";
 import { X } from "lucide-react";
 import useClickOutside from "@/hooks/use-click-outside";
+import ProductRating from "@/components/product-card/product-rating";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faThumbsUp as solidThumbsUp } from "@fortawesome/free-solid-svg-icons";
+import { faThumbsUp as regularThumbsUp } from "@fortawesome/free-regular-svg-icons";
 
 interface ProductReviewsProps {
   product: Product;
@@ -22,7 +26,10 @@ export default function ProductReviewsSheet({
 
   return (
     <>
-      <button onClick={() => dialogRef?.current?.showModal()}>
+      <button
+        onClick={() => dialogRef?.current?.showModal()}
+        className={styles.dailog_button}
+      >
         {reviewCount(reviews)}
       </button>
 
@@ -34,6 +41,26 @@ export default function ProductReviewsSheet({
               <X strokeWidth={1.5} />
             </button>
           </div>
+
+          <div>
+            {reviews.map((review) => (
+              <div key={review.id} className={styles.review_content}>
+                <span className={styles.name}>{review.name}</span>
+                <ProductRating rating={review.rating} small />
+                <p>{review.content}</p>
+                <div className={styles.details}>
+                  <span>{reviewDate(review.createdAt)}</span>
+                  <span>Unverified purchase</span>
+                </div>
+                <div className={styles.details}>
+                  <button>
+                    <FontAwesomeIcon icon={regularThumbsUp} />
+                    <span>{`Helpful (${review.helpful.length})`}</span>
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </dialog>
     </>
@@ -41,9 +68,19 @@ export default function ProductReviewsSheet({
 }
 
 function reviewCount(reviews: Review[]) {
-  if (reviews.length > 0) {
+  if (reviews.length === 1) {
+    return `${reviews.length} Review`;
+  } else if (reviews.length > 1) {
     return `${reviews.length} Reviews`;
   } else {
     return "No reviews";
   }
+}
+
+function reviewDate(date: Date) {
+  return new Date(date).toLocaleString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
 }
