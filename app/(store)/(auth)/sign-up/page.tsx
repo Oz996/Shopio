@@ -11,8 +11,6 @@ export default function SignUp() {
     undefined
   );
 
-  console.log(errorMessage);
-
   return (
     <form action={formAction} noValidate>
       <h2>Sign up</h2>

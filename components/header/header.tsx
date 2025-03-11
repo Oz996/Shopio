@@ -3,8 +3,12 @@ import styles from "./header.module.scss";
 import Link from "next/link";
 import ProductsNavbar from "./products-navbar";
 import HeaderMobile from "./header-mobile";
+import { auth } from "@/auth";
+import SignOutButton from "./sign-out-button";
 
-export default function Header() {
+export default async function Header() {
+  const authorized = await auth();
+
   return (
     <>
       <header className={styles.header}>
@@ -27,9 +31,11 @@ export default function Header() {
             <ProductsNavbar />
 
             <div className={styles.nav_item}>
-              <Link href="/sign-in" className={styles.text}>
-                Sign Up / Login
-              </Link>
+              {authorized ? (
+                <SignOutButton />
+              ) : (
+                <Link href="/sign-in">Sign Up / Login</Link>
+              )}
             </div>
           </nav>
         </div>

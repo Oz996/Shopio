@@ -42,7 +42,5 @@ function displayRating(rating: number, small?: boolean) {
     );
   }
 
-  console.log(stars);
-
   return stars;
 }

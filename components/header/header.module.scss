@@ -110,10 +110,14 @@
   }
 
   span,
+  button,
   a {
     font-size: 15;
     font-weight: 500;
     color: $dark-grey;
+
+    border: none;
+    cursor: pointer;
 
     @include tablet {
       font-size: 16;
