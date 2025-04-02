@@ -7,22 +7,28 @@ import { X } from "lucide-react";
 import useClickOutside from "@/hooks/use-click-outside";
 import ProductRating from "@/components/product-card/product-rating";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faThumbsUp as solidThumbsUp } from "@fortawesome/free-solid-svg-icons";
 import { faThumbsUp as regularThumbsUp } from "@fortawesome/free-regular-svg-icons";
+import { helpfulReviewAction } from "@/app/actions";
 
 interface ProductReviewsProps {
   product: Product;
   reviews: Review[];
+  userEmail: string;
 }
 
 export default function ProductReviewsSheet({
   product,
   reviews,
+  userEmail,
 }: ProductReviewsProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const dialogContentRef = useRef<HTMLDivElement>(null);
 
   useClickOutside(dialogContentRef, () => dialogRef?.current?.close());
+
+  function isHelpful(review: Review) {
+    return review.helpful.includes(userEmail);
+  }
 
   return (
     <>
@@ -48,12 +54,23 @@ export default function ProductReviewsSheet({
                 <span className={styles.name}>{review.name}</span>
                 <ProductRating rating={review.rating} small />
                 <p>{review.content}</p>
+
                 <div className={styles.details}>
                   <span>{reviewDate(review.createdAt)}</span>
                   <span>Unverified purchase</span>
                 </div>
-                <div className={styles.details}>
-                  <button>
+
+                <div
+                  className={`${styles.details} ${
+                    isHelpful(review) ? styles.helpful : ""
+                  }`}
+                >
+                  <button
+                    aria-label="Review was helpful"
+                    onClick={() =>
+                      helpfulReviewAction(reviews, review.id, userEmail)
+                    }
+                  >
                     <FontAwesomeIcon icon={regularThumbsUp} />
                     <span>{`Helpful (${review.helpful.length})`}</span>
                   </button>
