@@ -1,7 +1,7 @@
 "use client";
 
 import { Product, Review } from "@prisma/client";
-import React, { useRef } from "react";
+import React, { startTransition, useOptimistic, useRef } from "react";
 import styles from "./product-reviews.module.scss";
 import { X } from "lucide-react";
 import useClickOutside from "@/hooks/use-click-outside";
@@ -26,6 +26,38 @@ export default function ProductReviewsSheet({
 
   useClickOutside(dialogContentRef, () => dialogRef?.current?.close());
 
+  // updating reviews helpful count optimistically to display change instantly while the action runs in the background
+  const [optimisticReviews, setOptimisticReviews] = useOptimistic(
+    reviews,
+    updateHelpfulReviews
+  );
+
+  console.log(optimisticReviews);
+
+  function updateHelpfulReviews(
+    currentReviews: Review[],
+    { reviewId, userEmail }: { reviewId: string; userEmail: string }
+  ) {
+    return currentReviews.map((review) =>
+      review.id === reviewId
+        ? {
+            ...review,
+            helpful: review.helpful.includes(userEmail)
+              ? review.helpful.filter((email) => email !== userEmail)
+              : [...review.helpful, userEmail],
+          }
+        : review
+    );
+  }
+
+  async function isHelpfulAction(review: Review) {
+    startTransition(() => {
+      setOptimisticReviews({ reviewId: review.id, userEmail });
+    });
+
+    await helpfulReviewAction(reviews, review.id, userEmail);
+  }
+
   function isHelpful(review: Review) {
     return review.helpful.includes(userEmail);
   }
@@ -49,7 +81,7 @@ export default function ProductReviewsSheet({
           </div>
 
           <div>
-            {reviews.map((review) => (
+            {optimisticReviews.map((review) => (
               <div key={review.id} className={styles.review_content}>
                 <span className={styles.name}>{review.name}</span>
                 <ProductRating rating={review.rating} small />
@@ -67,9 +99,7 @@ export default function ProductReviewsSheet({
                 >
                   <button
                     aria-label="Review was helpful"
-                    onClick={() =>
-                      helpfulReviewAction(reviews, review.id, userEmail)
-                    }
+                    onClick={() => isHelpfulAction(review)}
                   >
                     <FontAwesomeIcon icon={regularThumbsUp} />
                     <span>{`Helpful (${review.helpful.length})`}</span>
