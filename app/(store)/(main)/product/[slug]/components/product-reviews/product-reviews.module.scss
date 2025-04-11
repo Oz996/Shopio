@@ -44,6 +44,10 @@
   height: 100vh;
   max-height: 100vh;
   overflow: hidden;
+
+  &[open] {
+    @include slide_in_left_dialog;
+  }
 }
 
 .dialog_content {
@@ -64,6 +68,8 @@
 
   button {
     background: #fff;
+    color: $dark-grey;
+    cursor: pointer;
   }
 }
 
@@ -89,7 +95,7 @@
   gap: 1rem;
 
   span {
-    font-size: 14px; // Added px unit
+    font-size: 14px;
     color: $dark-grey;
   }
 

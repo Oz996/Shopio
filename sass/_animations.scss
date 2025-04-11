@@ -1,7 +1,11 @@
-.skeleton {
+@mixin skeleton {
   background-image: linear-gradient(90deg, #ddd 0px, #e8e8e8 40px, #ddd 80px);
   background-size: 300% 100%;
   animation: shimmer 1.4s infinite linear;
+}
+
+@mixin slide_in_left_dialog {
+  animation: slide_in_left 0.3s ease forwards;
 }
 
 @keyframes shimmer {
@@ -10,5 +14,14 @@
   }
   100% {
     background-position: -100% 0;
+  }
+}
+
+@keyframes slide_in_left {
+  0% {
+    right: -20rem;
+  }
+  100% {
+    right: 0;
   }
 }

@@ -40,5 +40,5 @@
 .image,
 .title,
 .description {
-  @extend .skeleton;
+  @include skeleton;
 }
