@@ -4,6 +4,8 @@ import ProductOptions from "../product-options/product-options";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import ProductReviews from "../product-reviews/product-reviews";
+import { Suspense } from "react";
+import ProductRatingSkeleton from "@/components/skeletons/product-rating/product-rating-skeleton";
 
 interface ProductDetailsProps {
   product: Product;
@@ -15,7 +17,9 @@ export default function ProductDetails({ product }: ProductDetailsProps) {
       <h1>{`${product.brand} ${product.name}`}</h1>
       <p className={styles.details_text}>{product.details}</p>
 
-      <ProductReviews product={product} />
+      <Suspense fallback={<ProductRatingSkeleton />}>
+        <ProductReviews product={product} />
+      </Suspense>
 
       {listDescription(product.description)}
       <span className={styles.price}>€ {product.price}</span>

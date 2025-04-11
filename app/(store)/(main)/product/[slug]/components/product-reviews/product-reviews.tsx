@@ -1,4 +1,4 @@
-import { Product, Review } from "@prisma/client";
+import { Product } from "@prisma/client";
 import styles from "./product-reviews.module.scss";
 import ProductRating from "@/components/product-card/product-rating";
 import prisma from "@/lib/prisma/prisma";

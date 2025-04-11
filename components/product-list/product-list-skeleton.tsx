@@ -1,4 +1,4 @@
-import ProductCardSkeleton from "../skeletons/product-card-skeleton";
+import ProductCardSkeleton from "../skeletons/product-card/product-card-skeleton";
 import styles from "./product-list.module.scss";
 
 interface ProductCardSkeletonProps {

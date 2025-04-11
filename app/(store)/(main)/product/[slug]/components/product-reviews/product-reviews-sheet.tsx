@@ -32,8 +32,6 @@ export default function ProductReviewsSheet({
     updateHelpfulReviews
   );
 
-  console.log(optimisticReviews);
-
   function updateHelpfulReviews(
     currentReviews: Review[],
     { reviewId, userEmail }: { reviewId: string; userEmail: string }
