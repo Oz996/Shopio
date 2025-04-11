@@ -21,9 +21,14 @@ export async function helpfulReviewAction(
     ? review.helpful.filter((email) => email !== userEmail)
     : [...review.helpful, userEmail];
 
-  await prisma.review.update({
-    where: { id },
-    data: { helpful: updatedHelpful },
-  });
-  revalidatePath("/product");
+  try {
+    await prisma.review.update({
+      where: { id },
+      data: { helpful: updatedHelpful },
+    });
+    revalidatePath("/product");
+  } catch (error) {
+    console.error(error);
+    throw new Error("Something went wrong");
+  }
 }

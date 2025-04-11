@@ -1,7 +1,7 @@
 "use client";
 
 import { Product, Review } from "@prisma/client";
-import React, { startTransition, useOptimistic, useRef } from "react";
+import React, { startTransition, useOptimistic, useRef, useState } from "react";
 import styles from "./product-reviews.module.scss";
 import { X } from "lucide-react";
 import useClickOutside from "@/hooks/use-click-outside";
@@ -9,6 +9,7 @@ import ProductRating from "@/components/product-card/product-rating";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faThumbsUp as regularThumbsUp } from "@fortawesome/free-regular-svg-icons";
 import { helpfulReviewAction } from "@/app/actions";
+import toast, { Toaster } from "react-hot-toast";
 
 interface ProductReviewsProps {
   product: Product;
@@ -27,6 +28,7 @@ export default function ProductReviewsSheet({
   useClickOutside(dialogContentRef, () => dialogRef?.current?.close());
 
   // updating reviews helpful count optimistically to display change instantly while the action runs in the background
+  const [error, setError] = useState("");
   const [optimisticReviews, setOptimisticReviews] = useOptimistic(
     reviews,
     updateHelpfulReviews
@@ -53,7 +55,11 @@ export default function ProductReviewsSheet({
       setOptimisticReviews({ reviewId: review.id, userEmail });
     });
 
-    await helpfulReviewAction(reviews, review.id, userEmail);
+    try {
+      await helpfulReviewAction(reviews, review.id, userEmail);
+    } catch (error: any) {
+      toast.error(error.message);
+    }
   }
 
   function isHelpful(review: Review) {
@@ -62,6 +68,7 @@ export default function ProductReviewsSheet({
 
   return (
     <>
+      <Toaster position="bottom-left" />
       <button
         onClick={() => dialogRef?.current?.showModal()}
         className={styles.dailog_button}
