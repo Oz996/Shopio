@@ -12,7 +12,7 @@ export default function HomeCarousel() {
   const [loaded, setLoaded] = useState(false);
   const [sliderRef, instanceRef] = useKeenSlider({
     slides: {
-      perView: 1.2,
+      perView: 1,
       spacing: 15,
       origin: "center",
     },
@@ -25,13 +25,13 @@ export default function HomeCarousel() {
     created() {
       setLoaded(true);
     },
-    breakpoints: {
-      "(max-width: 1024px)": {
-        slides: {
-          perView: 1,
-        },
-      },
-    },
+    // breakpoints: {
+    //   "(max-width: 1024px)": {
+    //     slides: {
+    //       perView: 1,
+    //     },
+    //   },
+    // },
   });
 
   // useEffect(() => {

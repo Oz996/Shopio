@@ -54,6 +54,9 @@
   height: 100%;
   padding: 1.5rem;
   padding-inline: 2rem;
+
+  display: flex;
+  flex-direction: column;
 }
 
 .header {
@@ -114,4 +117,46 @@
       opacity: 85%;
     }
   }
+}
+
+//
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  margin-top: auto;
+}
+
+.form_content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  textarea {
+    border-radius: 5px;
+    padding: 5px;
+
+    font-family: var(--font-inter);
+    resize: none;
+  }
+}
+
+.submit_button {
+  @include black-button(5px);
+  justify-content: center;
+}
+
+.rating_star {
+  @include black-button(5px, 10px);
+  cursor: pointer;
+}
+
+//
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 0.1rem;
 }

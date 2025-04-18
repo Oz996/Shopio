@@ -39,8 +39,12 @@
     align-items: center;
 
     span {
-      padding-left: 0.3rem;
+      padding-left: 0.2rem;
       text-transform: capitalize;
+    }
+
+    svg {
+      margin-left: 0.1rem;
     }
   }
 }

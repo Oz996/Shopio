@@ -8,8 +8,9 @@ import useClickOutside from "@/hooks/use-click-outside";
 import ProductRating from "@/components/product-card/product-rating";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faThumbsUp as regularThumbsUp } from "@fortawesome/free-regular-svg-icons";
-import { helpfulReviewAction } from "@/app/actions";
+import { helpfulReviewAction, submitReviewAction } from "@/app/actions";
 import toast, { Toaster } from "react-hot-toast";
+import ProductAddRating from "./product-add-rating";
 
 interface ProductReviewsProps {
   product: Product;
@@ -28,26 +29,27 @@ export default function ProductReviewsSheet({
   useClickOutside(dialogContentRef, () => dialogRef?.current?.close());
 
   // updating reviews helpful count optimistically to display change instantly while the action runs in the background
-  const [error, setError] = useState("");
   const [optimisticReviews, setOptimisticReviews] = useOptimistic(
     reviews,
     updateHelpfulReviews
   );
 
+  const [rating, setRating] = useState(0);
+
   function updateHelpfulReviews(
     currentReviews: Review[],
     { reviewId, userEmail }: { reviewId: string; userEmail: string }
   ) {
-    return currentReviews.map((review) =>
-      review.id === reviewId
+    return currentReviews.map((review) => {
+      return review.id === reviewId
         ? {
             ...review,
             helpful: review.helpful.includes(userEmail)
               ? review.helpful.filter((email) => email !== userEmail)
               : [...review.helpful, userEmail],
           }
-        : review
-    );
+        : review;
+    });
   }
 
   async function isHelpfulAction(review: Review) {
@@ -66,9 +68,20 @@ export default function ProductReviewsSheet({
     return review.helpful.includes(userEmail);
   }
 
+  async function reviewAction(formData: FormData) {
+    const content = formData.get("content")?.toString() as string;
+
+    try {
+      await submitReviewAction(product.id, rating, content, userEmail);
+    } catch (error: any) {
+      toast.error(error.message);
+    }
+  }
+
   return (
     <>
       <Toaster position="bottom-left" />
+
       <button
         onClick={() => dialogRef?.current?.showModal()}
         className={styles.dailog_button}
@@ -113,6 +126,18 @@ export default function ProductReviewsSheet({
               </div>
             ))}
           </div>
+
+          <form className={styles.form} action={reviewAction}>
+            <div className={styles.form_content}>
+              <span>Submit a review</span>
+              <ProductAddRating rating={rating} setRating={setRating} />
+            </div>
+
+            <div className={styles.form_content}>
+              <textarea name="content" id="content" rows={8} />
+              <button className={styles.submit_button}>Submit</button>
+            </div>
+          </form>
         </div>
       </dialog>
     </>

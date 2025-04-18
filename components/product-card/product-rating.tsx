@@ -3,7 +3,6 @@
 import styles from "./product-card.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar, faStarHalf } from "@fortawesome/free-solid-svg-icons";
-import ProductRatingSkeleton from "../skeletons/product-rating/product-rating-skeleton";
 
 interface ProductRatingProps {
   rating: number;

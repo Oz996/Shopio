@@ -32,3 +32,52 @@ export async function helpfulReviewAction(
     throw new Error("Something went wrong");
   }
 }
+
+export async function submitReviewAction(
+  id: string,
+  rating: number,
+  content: string,
+  userEmail: string
+) {
+  const product = await prisma.product.findUnique({
+    where: { id },
+    select: {
+      rating: true,
+      _count: { select: { reviews: true } },
+    },
+  });
+
+  if (!product) throw new Error("Product not found");
+
+  const currentTotal = product.rating * product._count.reviews;
+  const newTotal = currentTotal + rating;
+  const newAverage = newTotal / (product._count.reviews + 1);
+
+  const rounded = Math.round(newAverage * 2) / 2;
+
+  try {
+    await prisma.review.create({
+      data: {
+        name: "",
+        rating,
+        content,
+        helpful: [],
+        productId: id,
+        user_email: userEmail,
+      },
+    });
+
+    await prisma.product.update({
+      where: {
+        id,
+      },
+      data: {
+        rating: rounded,
+      },
+    });
+    revalidatePath("/product");
+  } catch (error) {
+    console.error(error);
+    throw new Error("Something went wrong");
+  }
+}
