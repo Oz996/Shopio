@@ -1,0 +1,51 @@
+@use "@/sass/" as *;
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  margin-top: auto;
+}
+
+.form_content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  textarea {
+    border-radius: 5px;
+    padding: 5px;
+
+    font-family: var(--font-inter);
+    resize: none;
+  }
+}
+
+.form_rating {
+  display: flex;
+  align-items: end;
+  gap: 1rem;
+
+  span {
+    font-size: 15px;
+  }
+}
+
+.submit_button {
+  @include black-button(5px);
+  justify-content: center;
+}
+
+.rating_star {
+  @include black-button(5px, 10px);
+  cursor: pointer;
+}
+
+//
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 0.1rem;
+}
