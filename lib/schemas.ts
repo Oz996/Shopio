@@ -16,3 +16,8 @@ export const signUpSchema = z
     message: "Passwords do not match",
     path: ["confirmPassword"],
   });
+
+export const reviewSchema = z.object({
+  content: z.string().max(300, { message: "Review is too long" }),
+  rating: z.number().positive({ message: "Rating is required" }),
+});

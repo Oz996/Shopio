@@ -21,13 +21,18 @@ function displayRating(rating: number, small?: boolean) {
 
   for (let i = 0; i < fullStars; i++) {
     stars.push(
-      <FontAwesomeIcon key={i} icon={faStar} color="gold" size={size} />
+      <FontAwesomeIcon key={i} icon={faStar} color="orange" size={size} />
     );
   }
 
   if (hasHalfStar) {
     stars.push(
-      <FontAwesomeIcon key="half" icon={faStarHalf} color="gold" size={size} />
+      <FontAwesomeIcon
+        key="half"
+        icon={faStarHalf}
+        color="orange"
+        size={size}
+      />
     );
   }
 

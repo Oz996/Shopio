@@ -1,7 +1,13 @@
 "use client";
 
 import { Product, Review } from "@prisma/client";
-import React, { startTransition, useOptimistic, useRef, useState } from "react";
+import React, {
+  startTransition,
+  useActionState,
+  useOptimistic,
+  useRef,
+  useState,
+} from "react";
 import styles from "./product-reviews.module.scss";
 import { X } from "lucide-react";
 import useClickOutside from "@/hooks/use-click-outside";
@@ -36,6 +42,11 @@ export default function ProductReviewsSheet({
 
   const [rating, setRating] = useState(0);
 
+  const [state, formAction, isPending] = useActionState(
+    submitReviewAction,
+    undefined
+  );
+
   function updateHelpfulReviews(
     currentReviews: Review[],
     { reviewId, userEmail }: { reviewId: string; userEmail: string }
@@ -66,16 +77,6 @@ export default function ProductReviewsSheet({
 
   function isHelpful(review: Review) {
     return review.helpful.includes(userEmail);
-  }
-
-  async function reviewAction(formData: FormData) {
-    const content = formData.get("content")?.toString() as string;
-
-    try {
-      await submitReviewAction(product.id, rating, content, userEmail);
-    } catch (error: any) {
-      toast.error(error.message);
-    }
   }
 
   return (
@@ -127,14 +128,30 @@ export default function ProductReviewsSheet({
             ))}
           </div>
 
-          <form className={styles.form} action={reviewAction}>
+          <form className={styles.form} action={formAction}>
             <div className={styles.form_content}>
               <span>Submit a review</span>
-              <ProductAddRating rating={rating} setRating={setRating} />
+
+              <div className={styles.form_rating}>
+                <ProductAddRating rating={rating} setRating={setRating} />
+                {state?.errors &&
+                  state.errors.map((error, index) => (
+                    <span key={index}>{error.message}</span>
+                  ))}
+              </div>
             </div>
 
             <div className={styles.form_content}>
-              <textarea name="content" id="content" rows={8} />
+              <input type="hidden" name="id" value={product.id} />
+              <input type="hidden" name="rating" value={rating} />
+              <input type="hidden" name="userEmail" value={userEmail} />
+
+              <textarea
+                name="content"
+                id="content"
+                rows={8}
+                defaultValue={state?.data}
+              />
               <button className={styles.submit_button}>Submit</button>
             </div>
           </form>

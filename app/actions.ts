@@ -1,6 +1,7 @@
 "use server";
 
 import prisma from "@/lib/prisma/prisma";
+import { reviewSchema } from "@/lib/schemas";
 import { Review } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
@@ -33,12 +34,12 @@ export async function helpfulReviewAction(
   }
 }
 
-export async function submitReviewAction(
-  id: string,
-  rating: number,
-  content: string,
-  userEmail: string
-) {
+export async function submitReviewAction(prevState: any, formData: FormData) {
+  const id = formData.get("id")?.toString() as string;
+  const rating = Number(formData.get("rating"));
+  const content = formData.get("content")?.toString() as string;
+  const userEmail = formData.get("userEmail")?.toString() as string;
+
   const product = await prisma.product.findUnique({
     where: { id },
     select: {
@@ -48,6 +49,20 @@ export async function submitReviewAction(
   });
 
   if (!product) throw new Error("Product not found");
+
+  const result = reviewSchema.safeParse({
+    content,
+    rating,
+  });
+
+  if (!result.success) {
+    console.log("errr", result.error.errors);
+    // also returning content to persist input field if error
+    return {
+      errors: result.error.errors,
+      data: content,
+    };
+  }
 
   const currentTotal = product.rating * product._count.reviews;
   const newTotal = currentTotal + rating;

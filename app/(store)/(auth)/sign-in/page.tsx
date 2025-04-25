@@ -33,7 +33,7 @@ export default function SignIn() {
       </div>
 
       <div>
-        <button>Sign in</button>
+        <button disabled={isPending}>Sign in</button>
         <button type="button">Enter as guest</button>
       </div>
     </form>

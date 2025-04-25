@@ -50,7 +50,7 @@ export default function SignUp() {
       </div>
 
       <div>
-        <button>Sign up</button>
+        <button disabled={isPending}>Sign up</button>
       </div>
     </form>
   );
