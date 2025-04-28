@@ -8,6 +8,14 @@
   animation: slide_in_left 0.3s ease forwards;
 }
 
+@mixin slide_in_top_dialog {
+  animation: slide_in_top 0.3s ease forwards;
+}
+
+@mixin spin_loader {
+  animation: spin 1s linear infinite;
+}
+
 @keyframes shimmer {
   0% {
     background-position: 100% 0;
@@ -23,5 +31,22 @@
   }
   100% {
     right: 0;
+  }
+}
+
+@keyframes slide_in_top {
+  0% {
+    top: 45%;
+    opacity: 60%;
+  }
+  100% {
+    top: 50%;
+    opacity: 100%;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
   }
 }

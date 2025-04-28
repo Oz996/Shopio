@@ -41,6 +41,10 @@
 .submit_button {
   @include black-button(5px);
   justify-content: center;
+
+  svg {
+    @include spin_loader;
+  }
 }
 
 .rating_star {
@@ -59,6 +63,8 @@
 // dialog
 
 .dialog::backdrop {
+  background: black;
+  opacity: 40%;
 }
 
 .dialog {
@@ -73,7 +79,7 @@
   overflow: hidden;
 
   &[open] {
-    @include slide_in_left_dialog;
+    @include slide_in_top_dialog;
   }
 }
 
@@ -85,8 +91,8 @@
   padding-bottom: 1rem;
 
   h2 {
-    font-size: 20px;
-    font-weight: 600;
+    font-size: 18px;
+    font-weight: 500;
   }
 
   button {

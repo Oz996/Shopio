@@ -1,6 +1,8 @@
 @use "@/sass/" as *;
 
 .dialog::backdrop {
+  background: black;
+  opacity: 40%;
 }
 
 .dialog {
@@ -25,7 +27,6 @@
 
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
 }
 
 .header {

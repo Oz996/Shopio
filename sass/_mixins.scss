@@ -44,6 +44,19 @@
   align-items: center;
   gap: 0.5rem;
   cursor: pointer;
+
+  &:disabled {
+    opacity: 90%;
+    cursor: auto;
+  }
+}
+
+@mixin truncate($lines: 3) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 // breakpoints

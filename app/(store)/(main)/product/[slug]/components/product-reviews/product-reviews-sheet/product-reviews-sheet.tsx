@@ -1,11 +1,10 @@
 "use client";
 
 import { Product, Review } from "@prisma/client";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./product-reviews-sheet.module.scss";
 import { X } from "lucide-react";
 import useClickOutside from "@/hooks/use-click-outside";
-import ProductReviewForm from "../product-review-form/product-review.form";
 import ReviewList from "../review-list/review-list";
 
 interface ProductReviewsProps {
@@ -24,7 +23,11 @@ export default function ProductReviewsSheet({
 
   useClickOutside(dialogContentRef, () => dialogRef?.current?.close());
 
-  const [rating, setRating] = useState(0);
+  const [sortedReviews, setSortedReviews] = useState(reviews);
+
+  useEffect(() => {
+    setSortedReviews(reviews);
+  }, [reviews]);
 
   return (
     <>
@@ -44,7 +47,7 @@ export default function ProductReviewsSheet({
             </button>
           </div>
 
-          <ReviewList reviews={reviews} userEmail={userEmail} />
+          <ReviewList reviews={sortedReviews} userEmail={userEmail} />
         </div>
       </dialog>
     </>

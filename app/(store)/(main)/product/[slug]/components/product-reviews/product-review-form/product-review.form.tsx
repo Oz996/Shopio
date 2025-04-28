@@ -4,7 +4,7 @@ import { useActionState, useRef, useState } from "react";
 import styles from "./product.review.form.module.scss";
 import { submitReviewAction } from "@/app/actions";
 import ProductAddRating from "./product-add-rating";
-import { X } from "lucide-react";
+import { Loader, X } from "lucide-react";
 import useClickOutside from "@/hooks/use-click-outside";
 import { Product } from "@prisma/client";
 import Image from "next/image";
@@ -69,15 +69,15 @@ function ProductReviewForm({ product, userEmail }: ProductReviewFormProps) {
               <input type="hidden" name="userEmail" value={userEmail} />
 
               <textarea
-                name="Review content"
-                id="content"
                 rows={8}
+                name="content"
+                aria-label="Review content"
                 placeholder="Share a comment (optional)"
                 defaultValue={state?.data}
               />
 
               <button disabled={isPending} className={styles.submit_button}>
-                Submit Review
+                {isPending ? <Loader /> : "Submit Review"}
               </button>
             </div>
           </form>
