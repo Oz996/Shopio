@@ -18,6 +18,6 @@ export const signUpSchema = z
   });
 
 export const reviewSchema = z.object({
-  content: z.string().max(300, { message: "Review is too long" }),
+  content: z.string().max(300, { message: "Review is too long" }).optional(),
   rating: z.number().positive({ message: "Rating is required" }),
 });

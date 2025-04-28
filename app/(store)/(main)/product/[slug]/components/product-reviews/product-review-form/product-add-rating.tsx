@@ -27,8 +27,8 @@ export default function ProductAddRating({
         >
           <FontAwesomeIcon
             icon={faStar}
-            size="lg"
-            color={rating < index + 1 ? "gray" : "gold"}
+            size="xl"
+            color={rating < index + 1 ? "gray" : "orange"}
           />
         </button>
       ))}

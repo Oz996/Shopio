@@ -1,0 +1,62 @@
+@use "@/sass/" as *;
+
+.dialog::backdrop {
+}
+
+.dialog {
+  inset: unset;
+  right: 0;
+  top: 0;
+
+  border: none;
+  width: 27rem;
+  height: 100vh;
+  max-height: 100vh;
+  overflow: hidden;
+
+  &[open] {
+    @include slide_in_left_dialog;
+  }
+}
+
+.dialog_content {
+  height: 100%;
+  padding: 1.5rem;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  h1 {
+    font-size: 19;
+    font-weight: 400;
+  }
+
+  button {
+    border: none;
+    cursor: pointer;
+
+    background: transparent;
+    color: $dark-grey;
+  }
+}
+
+.dialog_button {
+  padding: 0.2rem;
+  border: none;
+  background: transparent;
+
+  font-family: var(--font-inter);
+  cursor: pointer;
+
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  text-decoration-color: $dark-grey;
+}

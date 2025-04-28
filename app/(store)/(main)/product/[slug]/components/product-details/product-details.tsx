@@ -3,15 +3,15 @@ import styles from "./product-details.module.scss";
 import ProductOptions from "../product-options/product-options";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
-import ProductReviews from "../product-reviews/product-reviews";
 import { Suspense } from "react";
 import ProductRatingSkeleton from "@/components/skeletons/product-rating/product-rating-skeleton";
+import ProductReviews from "../product-reviews/product-reviews";
 
 interface ProductDetailsProps {
   product: Product;
 }
 
-export default function ProductDetails({ product }: ProductDetailsProps) {
+export default async function ProductDetails({ product }: ProductDetailsProps) {
   return (
     <div className={styles.details}>
       <h1>{`${product.brand} ${product.name}`}</h1>

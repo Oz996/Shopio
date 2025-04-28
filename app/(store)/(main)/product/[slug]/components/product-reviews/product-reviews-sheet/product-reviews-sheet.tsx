@@ -2,12 +2,11 @@
 
 import { Product, Review } from "@prisma/client";
 import { useRef, useState } from "react";
-import styles from "./product-reviews.module.scss";
+import styles from "./product-reviews-sheet.module.scss";
 import { X } from "lucide-react";
 import useClickOutside from "@/hooks/use-click-outside";
-import { Toaster } from "react-hot-toast";
-import ProductReviewForm from "./product-review-form/product-review.form";
-import ReviewList from "./review-list/review-list";
+import ProductReviewForm from "../product-review-form/product-review.form";
+import ReviewList from "../review-list/review-list";
 
 interface ProductReviewsProps {
   product: Product;
@@ -29,11 +28,9 @@ export default function ProductReviewsSheet({
 
   return (
     <>
-      <Toaster position="bottom-left" />
-
       <button
         onClick={() => dialogRef?.current?.showModal()}
-        className={styles.dailog_button}
+        className={styles.dialog_button}
       >
         {reviewCount(reviews)}
       </button>
@@ -48,13 +45,6 @@ export default function ProductReviewsSheet({
           </div>
 
           <ReviewList reviews={reviews} userEmail={userEmail} />
-
-          <ProductReviewForm
-            rating={rating}
-            setRating={setRating}
-            id={product.id}
-            userEmail={userEmail}
-          />
         </div>
       </dialog>
     </>

@@ -49,7 +49,7 @@ export default function ReviewList({ userEmail, reviews }: ReviewListProps) {
   }
 
   return (
-    <div>
+    <>
       {optimisticReviews.map((review) => (
         <div key={review.id} className={styles.review_content}>
           <span className={styles.name}>{review.name}</span>
@@ -76,7 +76,7 @@ export default function ReviewList({ userEmail, reviews }: ReviewListProps) {
           </div>
         </div>
       ))}
-    </div>
+    </>
   );
 }
 
