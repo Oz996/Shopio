@@ -9,7 +9,7 @@ const inter = Inter({
 
 const poppins = Poppins({
   weight: ["200", "300", "400", "500", "600"],
-  display: "swap",
+  variable: "--font-poppins",
 });
 
 export const metadata: Metadata = {

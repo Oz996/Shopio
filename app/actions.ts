@@ -40,16 +40,6 @@ export async function submitReviewAction(prevState: any, formData: FormData) {
   const content = formData.get("content")?.toString() as string;
   const userEmail = formData.get("userEmail")?.toString() as string;
 
-  const product = await prisma.product.findUnique({
-    where: { id },
-    select: {
-      rating: true,
-      _count: { select: { reviews: true } },
-    },
-  });
-
-  if (!product) throw new Error("Product not found");
-
   const result = reviewSchema.safeParse({
     content,
     rating,
@@ -63,6 +53,16 @@ export async function submitReviewAction(prevState: any, formData: FormData) {
       data: content,
     };
   }
+
+  const product = await prisma.product.findUnique({
+    where: { id },
+    select: {
+      rating: true,
+      _count: { select: { reviews: true } },
+    },
+  });
+
+  if (!product) throw new Error("Product not found");
 
   const currentTotal = product.rating * product._count.reviews;
   const newTotal = currentTotal + rating;
