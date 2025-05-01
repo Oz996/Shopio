@@ -1,0 +1,48 @@
+@use "@/sass/" as *;
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+
+  position: sticky;
+  bottom: 0;
+
+  background: transparent;
+  padding-top: 1.5rem;
+
+  box-shadow: 0 -4px 6px -4px rgba(0, 0, 0, 0.2);
+
+  button {
+    border: none;
+    cursor: pointer;
+    background: transparent;
+
+    padding-block: 0.6rem;
+    padding-inline: 0.8rem;
+
+    border-radius: 5px;
+    transition: 0.3s;
+
+    &:hover {
+      background: #e4e9f4;
+    }
+
+    &:disabled {
+      cursor: auto;
+    }
+  }
+
+  button.arrow {
+    padding-inline: 0.3rem;
+
+    &:hover {
+      background: transparent;
+    }
+  }
+
+  button.active {
+    background: #dfe5f4;
+  }
+}
