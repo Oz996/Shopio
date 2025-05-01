@@ -2,36 +2,44 @@
 
 import { Product, Review } from "@prisma/client";
 import { useEffect, useRef, useState } from "react";
-import styles from "./product-reviews-sheet.module.scss";
+import styles from "./product-review-sheet.module.scss";
 import { X } from "lucide-react";
 import useClickOutside from "@/hooks/use-click-outside";
 import ReviewList from "./review-list/review-list";
-import ReviewsPagination from "./reviews-pagination/reviews-pagination";
+import ReviewSort from "./review-sort/review-sort";
+import ReviewPagination from "./review-pagination/review-pagination";
 
-interface ProductReviewsProps {
+interface ProductReviewProps {
   product: Product;
   reviews: Review[];
   userEmail: string;
 }
 
-export default function ProductReviewsSheet({
+export default function ProductReviewSheet({
   product,
   reviews,
   userEmail,
-}: ProductReviewsProps) {
+}: ProductReviewProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const dialogContentRef = useRef<HTMLDivElement>(null);
 
   useClickOutside(dialogContentRef, () => dialogRef?.current?.close());
 
-  const [sortedReviews, setSortedReviews] = useState<Review[]>(
-    reviews.slice(0, 4)
-  );
+  const [currentPage, setCurrentPage] = useState(1);
 
-  console.log(sortedReviews);
+  const [sortedReviews, setSortedReviews] = useState<Review[]>([]);
+  const [slicedReviews, setSlicedReviews] = useState<Review[]>([]);
 
   useEffect(() => {
-    setSortedReviews(reviews.slice(0, 4));
+    setCurrentPage(1);
+    setSortedReviews(reviews);
+
+    // sorting to display latest reviews by default
+    setSlicedReviews(
+      reviews
+        .sort((a, b) => Number(b.createdAt) - Number(a.createdAt))
+        .slice(0, 5)
+    );
   }, [reviews]);
 
   return (
@@ -48,18 +56,28 @@ export default function ProductReviewsSheet({
           <div className={styles.reviews_scrollable}>
             <div className={styles.header}>
               <h1>{`${product.brand} ${product.name}`}</h1>
+
               <button onClick={() => dialogRef?.current?.close()}>
                 <X strokeWidth={1.5} />
               </button>
             </div>
 
-            <ReviewList reviews={sortedReviews} userEmail={userEmail} />
+            <ReviewSort
+              reviews={sortedReviews}
+              setCurrentPage={setCurrentPage}
+              setSlicedReviews={setSlicedReviews}
+              setSortedReviews={setSortedReviews}
+            />
+
+            <ReviewList reviews={slicedReviews} userEmail={userEmail} />
           </div>
 
-          <ReviewsPagination
-            length={sortedReviews.length}
-            reviews={reviews}
-            setSortedReviews={setSortedReviews}
+          <ReviewPagination
+            length={slicedReviews.length}
+            reviews={sortedReviews}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            setSlicedReviews={setSlicedReviews}
           />
         </div>
       </dialog>

@@ -1,45 +1,49 @@
 import { Review } from "@prisma/client";
-import styles from "./reviews-pagination.module.scss";
-import { Dispatch, SetStateAction, useState } from "react";
+import styles from "./review-pagination.module.scss";
+import { Dispatch, SetStateAction } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-interface ReviewsPaginationProps {
+interface ReviewPaginationProps {
   reviews: Review[];
   length: number;
-  setSortedReviews: Dispatch<SetStateAction<Review[]>>;
+  currentPage: number;
+  setCurrentPage: Dispatch<SetStateAction<number>>;
+  setSlicedReviews: Dispatch<SetStateAction<Review[]>>;
 }
 
-export default function ReviewsPagination({
-  reviews,
+export default function ReviewPagination({
   length,
-  setSortedReviews,
-}: ReviewsPaginationProps) {
-  const [currentPage, setCurrentPage] = useState(1);
+  reviews,
+  currentPage,
+  setCurrentPage,
+  setSlicedReviews,
+}: ReviewPaginationProps) {
+  const reviewsPerPage = 5;
+  const totalPages = Math.ceil(reviews.length / reviewsPerPage);
 
-  const reviewsPerPage = 4;
-  const totalPages = Math.round(reviews.length / reviewsPerPage);
+  console.log("total", totalPages);
 
   const pages = new Array(totalPages).fill(0);
 
   function changePage(page: number) {
     setCurrentPage(page + 1);
 
-    let startIndex = page * 4;
+    let startIndex = page * reviewsPerPage;
     if (page === 0) startIndex = 0;
-    setSortedReviews(reviews.slice(startIndex, startIndex + 4));
+    setSlicedReviews(reviews.slice(startIndex, startIndex + reviewsPerPage));
   }
 
   function nextPage() {
-    const startIndex = currentPage * 4;
+    const startIndex = currentPage * reviewsPerPage;
     setCurrentPage((curr) => curr + 1);
-    setSortedReviews(reviews.slice(startIndex, startIndex + 4));
+    setSlicedReviews(reviews.slice(startIndex, startIndex + reviewsPerPage));
   }
 
   function previousPage() {
     const newPage = currentPage - 1;
-    const startIndex = (newPage - 1) * 4;
+    const startIndex = (newPage - 1) * reviewsPerPage;
     setCurrentPage(newPage);
-    setSortedReviews(reviews.slice(startIndex, startIndex + 4));
+    setSlicedReviews(reviews.slice(startIndex, startIndex + reviewsPerPage));
   }
 
   return (

@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { helpfulReviewAction } from "@/app/actions";
 import { faThumbsUp as regularThumbsUp } from "@fortawesome/free-regular-svg-icons";
 import toast from "react-hot-toast";
-import { useOptimistic } from "react";
+import { startTransition, useOptimistic } from "react";
 
 interface ReviewListProps {
   userEmail: string;
@@ -39,7 +39,9 @@ export default function ReviewList({ userEmail, reviews }: ReviewListProps) {
   }
 
   async function isHelpfulAction(review: Review) {
-    setOptimisticReviews({ reviewId: review.id, userEmail });
+    startTransition(() => {
+      setOptimisticReviews({ reviewId: review.id, userEmail });
+    });
 
     try {
       await helpfulReviewAction(reviews, review.id, userEmail);
