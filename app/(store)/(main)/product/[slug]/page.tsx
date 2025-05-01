@@ -29,8 +29,6 @@ export default async function Product({
     include: { reviews: true },
   });
 
-  console.log("productproduct", product);
-
   return (
     <>
       <section className={styles.section}>

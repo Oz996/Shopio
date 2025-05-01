@@ -18,7 +18,7 @@ export default function ReviewPagination({
   setCurrentPage,
   setSlicedReviews,
 }: ReviewPaginationProps) {
-  const reviewsPerPage = 5;
+  const reviewsPerPage = 6;
   const totalPages = Math.ceil(reviews.length / reviewsPerPage);
 
   console.log("total", totalPages);

@@ -1,7 +1,7 @@
 "use client";
 
 import { Product, Review } from "@prisma/client";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import styles from "./product-review-sheet.module.scss";
 import { X } from "lucide-react";
 import useClickOutside from "@/hooks/use-click-outside";
@@ -12,13 +12,13 @@ import ReviewPagination from "./review-pagination/review-pagination";
 interface ProductReviewProps {
   product: Product;
   reviews: Review[];
-  userEmail: string;
 }
+
+export type ProductSortType = "latest" | "high" | "low";
 
 export default function ProductReviewSheet({
   product,
   reviews,
-  userEmail,
 }: ProductReviewProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const dialogContentRef = useRef<HTMLDivElement>(null);
@@ -26,28 +26,53 @@ export default function ProductReviewSheet({
   useClickOutside(dialogContentRef, () => dialogRef?.current?.close());
 
   const [currentPage, setCurrentPage] = useState(1);
+  const [currentSort, setCurrentSort] = useState<ProductSortType>("latest");
 
   const [sortedReviews, setSortedReviews] = useState<Review[]>([]);
   const [slicedReviews, setSlicedReviews] = useState<Review[]>([]);
 
-  useEffect(() => {
+  function openModal() {
+    dialogRef?.current?.showModal();
     setCurrentPage(1);
+    setCurrentSort("latest");
     setSortedReviews(reviews);
 
     // sorting to display latest reviews by default
     setSlicedReviews(
       reviews
         .sort((a, b) => Number(b.createdAt) - Number(a.createdAt))
-        .slice(0, 5)
+        .slice(0, 6)
     );
-  }, [reviews]);
+  }
+
+  function sortReviews(sort: ProductSortType) {
+    let sortedList: Review[];
+
+    switch (sort) {
+      case "latest":
+        sortedList = reviews.toSorted(
+          (a, b) => Number(b.createdAt) - Number(a.createdAt)
+        );
+        break;
+
+      case "high":
+        sortedList = reviews.toSorted((a, b) => b.rating - a.rating);
+        break;
+
+      case "low":
+        sortedList = reviews.toSorted((a, b) => a.rating - b.rating);
+        break;
+    }
+
+    setCurrentPage(1);
+    setCurrentSort(sort);
+    setSortedReviews(sortedList);
+    setSlicedReviews(sortedList.slice(0, 6));
+  }
 
   return (
     <>
-      <button
-        onClick={() => dialogRef?.current?.showModal()}
-        className={styles.dialog_button}
-      >
+      <button onClick={openModal} className={styles.dialog_button}>
         {reviewCount(reviews)}
       </button>
 
@@ -62,14 +87,9 @@ export default function ProductReviewSheet({
               </button>
             </div>
 
-            <ReviewSort
-              reviews={sortedReviews}
-              setCurrentPage={setCurrentPage}
-              setSlicedReviews={setSlicedReviews}
-              setSortedReviews={setSortedReviews}
-            />
+            <ReviewSort currentSort={currentSort} sortReviews={sortReviews} />
 
-            <ReviewList reviews={slicedReviews} userEmail={userEmail} />
+            <ReviewList reviews={slicedReviews} />
           </div>
 
           <ReviewPagination

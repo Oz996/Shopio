@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useRef, useState } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
 import styles from "./product.review.form.module.scss";
 import { submitReviewAction } from "@/app/actions";
 import ProductAddRating from "./product-add-rating";
@@ -8,6 +8,7 @@ import { Loader, X } from "lucide-react";
 import useClickOutside from "@/hooks/use-click-outside";
 import { Product } from "@prisma/client";
 import Image from "next/image";
+import { ZodIssue } from "zod";
 
 interface ProductReviewFormProps {
   product: Product;
@@ -16,18 +17,33 @@ interface ProductReviewFormProps {
 
 function ProductReviewForm({ product, userEmail }: ProductReviewFormProps) {
   const [rating, setRating] = useState(0);
+  const [errors, setErrors] = useState<ZodIssue[]>([]);
 
   const [state, formAction, isPending] = useActionState(
     submitReviewAction,
     undefined
   );
 
+  useEffect(() => {
+    if (state?.errors) {
+      setErrors(state.errors);
+    } else if (state?.success) {
+      closeModal();
+    }
+  }, [state]);
+
   const dialogRef = useRef<HTMLDialogElement>(null);
   const dialogContentRef = useRef<HTMLDivElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  useClickOutside(dialogContentRef, () => dialogRef.current?.close());
+  useClickOutside(dialogContentRef, () => closeModal());
 
-  console.log(state?.errors);
+  function closeModal() {
+    setRating(0);
+    setErrors([]);
+    textareaRef.current && (textareaRef.current.value = "");
+    dialogRef.current?.close();
+  }
 
   return (
     <>
@@ -42,7 +58,7 @@ function ProductReviewForm({ product, userEmail }: ProductReviewFormProps) {
         <div ref={dialogContentRef} className={styles.dialog_content}>
           <div className={styles.header}>
             <h2>Share your experience!</h2>
-            <button onClick={() => dialogRef?.current?.close()}>
+            <button onClick={closeModal}>
               <X strokeWidth={1.5} />
             </button>
           </div>
@@ -56,8 +72,8 @@ function ProductReviewForm({ product, userEmail }: ProductReviewFormProps) {
             <div className={styles.form_content}>
               <div className={styles.form_rating}>
                 <ProductAddRating rating={rating} setRating={setRating} />
-                {state?.errors &&
-                  state.errors.map((error, index) => (
+                {errors &&
+                  errors.map((error, index) => (
                     <span key={index}>{error.message}</span>
                   ))}
               </div>
@@ -74,10 +90,11 @@ function ProductReviewForm({ product, userEmail }: ProductReviewFormProps) {
                 aria-label="Review content"
                 placeholder="Share a comment (optional)"
                 defaultValue={state?.data}
+                ref={textareaRef}
               />
 
               <button disabled={isPending} className={styles.submit_button}>
-                {isPending ? <Loader /> : "Submit Review"}
+                {isPending ? <Loader size={20} /> : "Submit Review"}
               </button>
             </div>
           </form>

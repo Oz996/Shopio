@@ -16,17 +16,12 @@ export default async function ProductReviews({ product }: ProductReviewsProps) {
   });
   const session = await auth();
 
-  console.log("revss", reviews);
-
   return (
     <div className={styles.reviews}>
       <div className={styles.content}>
         <ProductRating rating={product.rating} />
-        <ProductReviewSheet
-          product={product}
-          reviews={reviews}
-          userEmail={session?.user?.email as string}
-        />
+        <ProductReviewSheet product={product} reviews={reviews} />
+
         <ProductReviewForm
           product={product}
           userEmail={session?.user?.email as string}
