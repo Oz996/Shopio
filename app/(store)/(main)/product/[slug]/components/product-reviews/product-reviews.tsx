@@ -3,7 +3,7 @@ import styles from "./product-reviews.module.scss";
 import ProductRating from "@/components/product-card/product-rating";
 import prisma from "@/lib/prisma/prisma";
 import { auth } from "@/auth";
-import ProductReviewForm from "./product-review-form/product-review.form";
+import ProductReviewForm from "./product-review-form/product-review-form-dialog";
 import ProductReviewSheet from "./product-review-sheet/product-review-sheet";
 
 interface ProductReviewsProps {

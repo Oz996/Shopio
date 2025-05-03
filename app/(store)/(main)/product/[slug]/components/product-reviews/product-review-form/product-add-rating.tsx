@@ -1,6 +1,6 @@
 "use client";
 
-import styles from "./product.review.form.module.scss";
+import styles from "./product-review-form-dialog.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { Dispatch, SetStateAction } from "react";

@@ -79,44 +79,6 @@ body {
 .number-slide2 {
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: 94%;
-
-  @include tablet {
-    background-position: 79%;
-
-    div {
-      h2 {
-        color: #000;
-      }
-      p {
-        color: #000;
-      }
-    }
-  }
-}
-
-.number-slide3 {
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: 65%;
-
-  @include tablet {
-    background-position: 75%;
-  }
-
-  div {
-    h2 {
-      color: #000;
-    }
-    p {
-      color: #000;
-    }
-  }
-}
-
-.number-slide4 {
-  background-size: cover;
-  background-repeat: no-repeat;
   background-position: 40%;
 
   @include tablet {
@@ -157,7 +119,7 @@ body {
   width: 35px;
   height: 35px;
   padding: 10px;
-  border-radius: 1rem;
+  border-radius: 10rem;
 
   background-color: #fff;
   position: absolute;

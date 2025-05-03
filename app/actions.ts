@@ -59,6 +59,7 @@ export async function submitReviewAction(prevState: any, formData: FormData) {
         rating: rounded,
       },
     });
+
     revalidatePath("/product");
     return { success: true };
   } catch (error) {

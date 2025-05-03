@@ -21,8 +21,6 @@ export default function ReviewPagination({
   const reviewsPerPage = 6;
   const totalPages = Math.ceil(reviews.length / reviewsPerPage);
 
-  console.log("total", totalPages);
-
   const pages = new Array(totalPages).fill(0);
 
   function changePage(page: number) {
@@ -66,7 +64,11 @@ export default function ReviewPagination({
         </button>
       ))}
 
-      <button className={styles.arrow} disabled={length < 4} onClick={nextPage}>
+      <button
+        className={styles.arrow}
+        disabled={length < reviewsPerPage}
+        onClick={nextPage}
+      >
         {<ChevronRight size={16} />}
       </button>
     </div>

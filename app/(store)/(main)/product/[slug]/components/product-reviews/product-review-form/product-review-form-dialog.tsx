@@ -1,21 +1,25 @@
 "use client";
 
+import styles from "./product-review-form-dialog.module.scss";
 import { useActionState, useEffect, useRef, useState } from "react";
-import styles from "./product.review.form.module.scss";
 import { submitReviewAction } from "@/app/actions";
 import ProductAddRating from "./product-add-rating";
 import { Loader, X } from "lucide-react";
 import useClickOutside from "@/hooks/use-click-outside";
 import { Product } from "@prisma/client";
-import Image from "next/image";
 import { ZodIssue } from "zod";
+import Image from "next/image";
+import toast, { Toaster } from "react-hot-toast";
 
 interface ProductReviewFormProps {
   product: Product;
   userEmail: string;
 }
 
-function ProductReviewForm({ product, userEmail }: ProductReviewFormProps) {
+export default function ProductReviewForm({
+  product,
+  userEmail,
+}: ProductReviewFormProps) {
   const [rating, setRating] = useState(0);
   const [errors, setErrors] = useState<ZodIssue[]>([]);
 
@@ -23,20 +27,20 @@ function ProductReviewForm({ product, userEmail }: ProductReviewFormProps) {
     submitReviewAction,
     undefined
   );
-
-  useEffect(() => {
-    if (state?.errors) {
-      setErrors(state.errors);
-    } else if (state?.success) {
-      closeModal();
-    }
-  }, [state]);
-
   const dialogRef = useRef<HTMLDialogElement>(null);
   const dialogContentRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   useClickOutside(dialogContentRef, () => closeModal());
+
+  useEffect(() => {
+    if (state?.errors) {
+      setErrors(state.errors);
+    } else if (state?.success) {
+      toast.success("Review submitted");
+      closeModal();
+    }
+  }, [state]);
 
   function closeModal() {
     setRating(0);
@@ -100,8 +104,8 @@ function ProductReviewForm({ product, userEmail }: ProductReviewFormProps) {
           </form>
         </div>
       </dialog>
+
+      <Toaster position="top-right" />
     </>
   );
 }
-
-export default ProductReviewForm;
