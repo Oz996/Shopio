@@ -16,7 +16,6 @@ export async function submitReviewAction(prevState: any, formData: FormData) {
   });
 
   if (!result.success) {
-    console.log("errr", result.error.errors);
     // also returning content to persist input field if error
     return {
       errors: result.error.errors,

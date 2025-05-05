@@ -35,7 +35,7 @@ export default function ReviewSort({
         value={selectedSort}
         styles={customStyles}
         options={options}
-        onChange={(selected) => sortReviews((selected as any).value)}
+        onChange={(selected) => sortReviews((selected as SortOptions).value)}
         aria-label="Sort reviews"
         isSearchable={false}
       />

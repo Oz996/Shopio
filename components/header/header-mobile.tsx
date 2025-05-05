@@ -5,8 +5,14 @@ import styles from "./header.module.scss";
 import { ChevronRight, Menu, Search, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { productCategories } from "@/lib/constants";
+import { Session } from "next-auth";
+import SignOutButton from "./sign-out-button";
 
-export default function HeaderMobile() {
+interface HeaderMobileProps {
+  authorized: Session | null;
+}
+
+export default function HeaderMobile({ authorized }: HeaderMobileProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const navRef = useRef<HTMLDivElement>(null);
@@ -76,7 +82,11 @@ export default function HeaderMobile() {
               </div>
             ))}
             <div className={styles.nav_item}>
-              <span className={styles.text}>Sign Up / Login</span>
+              {authorized ? (
+                <SignOutButton />
+              ) : (
+                <Link href="/sign-in">Sign Up / Login</Link>
+              )}
             </div>
           </div>
         )}

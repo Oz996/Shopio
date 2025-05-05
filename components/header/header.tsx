@@ -3,12 +3,14 @@ import styles from "./header.module.scss";
 import Link from "next/link";
 import ProductsNavbar from "./products-navbar";
 import HeaderMobile from "./header-mobile";
-import { auth } from "@/auth";
 import SignOutButton from "./sign-out-button";
+import { Session } from "next-auth";
 
-export default async function Header() {
-  const authorized = await auth();
+interface HeaderProps {
+  authorized: Session | null;
+}
 
+export default async function Header({ authorized }: HeaderProps) {
   return (
     <>
       <header className={styles.header}>
@@ -41,7 +43,7 @@ export default async function Header() {
         </div>
       </header>
 
-      <HeaderMobile />
+      <HeaderMobile authorized={authorized} />
     </>
   );
 }

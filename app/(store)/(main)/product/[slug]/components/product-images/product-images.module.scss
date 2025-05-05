@@ -1,49 +1,22 @@
 @use "@/sass/" as *;
 
 .images {
+  width: 50%;
+
+  @include tablet {
+    width: auto;
+  }
 }
 
 .display {
   position: relative;
-
-  aspect-ratio: 16 / 14;
+  aspect-ratio: 16 / 9;
 
   border-radius: 0.2rem;
   background: #fff;
   margin-bottom: 0.5rem;
 
-  @include tablet {
-    aspect-ratio: 16 / 9;
-  }
-
   img {
     object-fit: contain;
-  }
-}
-
-.thumbnails {
-  display: flex;
-  gap: 0.5rem;
-
-  @include tablet {
-    justify-content: center;
-  }
-
-  @include mobile {
-    justify-content: start;
-    overflow: auto;
-  }
-
-  div {
-    background: #fff;
-    border-radius: 0.2rem;
-    cursor: pointer;
-
-    position: relative;
-
-    img {
-      padding: 0.5rem;
-      object-fit: contain;
-    }
   }
 }

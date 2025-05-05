@@ -11,8 +11,6 @@ export default async function PopularProducts() {
     select: productCardSelect,
   });
 
-  console.log("prodd", products);
-
   return (
     <>
       <h2 className={styles.title}>Popular Products</h2>

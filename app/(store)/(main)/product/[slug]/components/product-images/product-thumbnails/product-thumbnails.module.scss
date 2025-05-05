@@ -1,0 +1,91 @@
+@use "@/sass" as *;
+
+.thumbnail_wrapper {
+  position: relative;
+}
+
+.thumbnails {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+
+  list-style: none;
+  overflow-x: auto;
+
+  @include mobile {
+    justify-content: start;
+  }
+
+  li {
+    background: transparent;
+    border-radius: 0.2rem;
+    cursor: pointer;
+
+    img {
+      padding: 0.5rem;
+      object-fit: contain;
+    }
+  }
+}
+
+.shadow_left,
+.shadow_right {
+  position: absolute;
+  top: 0;
+
+  width: 2rem;
+  height: 100%;
+
+  pointer-events: none;
+  z-index: 1;
+
+  opacity: 0.4;
+  transition: opacity 0.3s ease;
+}
+
+.shadow_left {
+  left: 0;
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.3) 0%,
+    rgba(0, 0, 0, 0.15) 30%,
+    rgba(0, 0, 0, 0.05) 60%,
+    transparent 100%
+  );
+}
+
+.shadow_right {
+  right: 0;
+  background: linear-gradient(
+    to left,
+    rgba(0, 0, 0, 0.3) 0%,
+    rgba(0, 0, 0, 0.15) 30%,
+    rgba(0, 0, 0, 0.05) 60%,
+    transparent 100%
+  );
+}
+
+.arrow_left,
+.arrow_right {
+  position: absolute;
+  top: 40%;
+
+  color: $dark-grey;
+  background: transparent;
+  border: none;
+
+  z-index: 1;
+  cursor: pointer;
+}
+
+.arrow_left {
+  left: 0;
+}
+
+.arrow_right {
+  right: 0;
+}
+
+.hidden {
+  display: none;
+}

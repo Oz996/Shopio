@@ -11,8 +11,6 @@ export default async function FeaturedProducts() {
     select: productCardSelect,
   });
 
-  console.log("prodd", products);
-
   return (
     <>
       <h2 className={styles.title}>Featured Products</h2>

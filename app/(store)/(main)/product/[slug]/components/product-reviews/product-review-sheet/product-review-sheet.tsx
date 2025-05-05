@@ -38,11 +38,7 @@ export default function ProductReviewSheet({
     setSortedReviews(reviews);
 
     // sorting to display latest reviews by default
-    setSlicedReviews(
-      reviews
-        .sort((a, b) => Number(b.createdAt) - Number(a.createdAt))
-        .slice(0, 6)
-    );
+    sortReviews("latest");
   }
 
   function sortReviews(sort: ProductSortType) {
@@ -69,6 +65,9 @@ export default function ProductReviewSheet({
     setSortedReviews(sortedList);
     setSlicedReviews(sortedList.slice(0, 6));
   }
+
+  if (reviews.length === 0)
+    return <span className={styles.no_reviews}>No reviews</span>;
 
   return (
     <>
@@ -108,9 +107,7 @@ export default function ProductReviewSheet({
 function reviewCount(reviews: Review[]) {
   if (reviews.length === 1) {
     return `${reviews.length} Review`;
-  } else if (reviews.length > 1) {
-    return `${reviews.length} Reviews`;
   } else {
-    return "No reviews";
+    return `${reviews.length} Reviews`;
   }
 }
