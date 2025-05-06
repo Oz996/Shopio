@@ -2,8 +2,7 @@ import { Product } from "@prisma/client";
 import styles from "./product-reviews.module.scss";
 import ProductRating from "@/components/product-card/product-rating";
 import prisma from "@/lib/prisma/prisma";
-import { auth } from "@/auth";
-import ProductReviewForm from "./product-review-form/product-review-form-dialog";
+import ProductReviewForm from "./product-review-form/product-review-form";
 import ProductReviewSheet from "./product-review-sheet/product-review-sheet";
 
 interface ProductReviewsProps {
@@ -14,7 +13,6 @@ export default async function ProductReviews({ product }: ProductReviewsProps) {
   const reviews = await prisma.review.findMany({
     where: { productId: product.id },
   });
-  const session = await auth();
 
   return (
     <div className={styles.reviews}>
@@ -22,10 +20,7 @@ export default async function ProductReviews({ product }: ProductReviewsProps) {
         <ProductRating rating={product.rating} />
         <ProductReviewSheet product={product} reviews={reviews} />
 
-        <ProductReviewForm
-          product={product}
-          userEmail={session?.user?.email as string}
-        />
+        <ProductReviewForm product={product} />
       </div>
     </div>
   );

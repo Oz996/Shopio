@@ -1,32 +1,28 @@
 "use client";
 
-import styles from "./product-review-form-dialog.module.scss";
+import styles from "./product-review-form.module.scss";
 import { useActionState, useEffect, useRef, useState } from "react";
 import { submitReviewAction } from "@/app/actions";
 import ProductAddRating from "./product-add-rating";
 import { Loader, X } from "lucide-react";
 import useClickOutside from "@/hooks/use-click-outside";
 import { Product } from "@prisma/client";
-import { ZodIssue } from "zod";
 import Image from "next/image";
 import toast, { Toaster } from "react-hot-toast";
 
 interface ProductReviewFormProps {
   product: Product;
-  userEmail: string;
 }
 
-export default function ProductReviewForm({
-  product,
-  userEmail,
-}: ProductReviewFormProps) {
+export default function ProductReviewForm({ product }: ProductReviewFormProps) {
   const [rating, setRating] = useState(0);
-  const [errors, setErrors] = useState<ZodIssue[]>([]);
+  const [errors, setErrors] = useState<{ message: string }[]>([]);
 
   const [state, formAction, isPending] = useActionState(
     submitReviewAction,
     undefined
   );
+
   const dialogRef = useRef<HTMLDialogElement>(null);
   const dialogContentRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -86,7 +82,6 @@ export default function ProductReviewForm({
             <div className={styles.form_content}>
               <input type="hidden" name="id" value={product.id} />
               <input type="hidden" name="rating" value={rating} />
-              <input type="hidden" name="userEmail" value={userEmail} />
 
               <textarea
                 rows={8}

@@ -1,5 +1,6 @@
 "use server";
 
+import { auth } from "@/auth";
 import prisma from "@/lib/prisma/prisma";
 import { reviewSchema } from "@/lib/schemas";
 import { revalidatePath } from "next/cache";
@@ -8,7 +9,17 @@ export async function submitReviewAction(prevState: any, formData: FormData) {
   const id = formData.get("id")?.toString() as string;
   const rating = Number(formData.get("rating"));
   const content = formData.get("content")?.toString() as string;
-  const userEmail = formData.get("userEmail")?.toString() as string;
+
+  const session = await auth();
+
+  if (!session) {
+    return {
+      errors: [{ message: "Sign in to submit" }],
+      data: content,
+    };
+  }
+
+  const userEmail = session.user?.email;
 
   const result = reviewSchema.safeParse({
     content,
@@ -18,7 +29,7 @@ export async function submitReviewAction(prevState: any, formData: FormData) {
   if (!result.success) {
     // also returning content to persist input field if error
     return {
-      errors: result.error.errors,
+      errors: result.error.errors.map((error) => ({ message: error.message })),
       data: content,
     };
   }
@@ -46,7 +57,7 @@ export async function submitReviewAction(prevState: any, formData: FormData) {
         rating,
         content,
         productId: id,
-        user_email: userEmail,
+        user_email: userEmail as string,
       },
     });
 

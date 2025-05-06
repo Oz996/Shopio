@@ -8,11 +8,11 @@ export default async function StoreLayout({
 }: {
   children: ReactNode;
 }) {
-  const authorized = await auth();
+  const session = await auth();
 
   return (
     <>
-      <Header authorized={authorized} />
+      <Header authorized={session} />
       <main className={styles.store_wrapper}>{children}</main>
     </>
   );

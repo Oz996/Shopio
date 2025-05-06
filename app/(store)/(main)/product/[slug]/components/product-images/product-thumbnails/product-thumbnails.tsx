@@ -63,9 +63,7 @@ export default function ProductThumbnails({
 
       {!isAtEnd && (
         <>
-          <div
-            className={`${styles.shadow_right} ${isAtEnd && styles.hidden}`}
-          />
+          <div className={styles.shadow_right} />
           <button
             className={styles.arrow_right}
             disabled={isAtEnd}
