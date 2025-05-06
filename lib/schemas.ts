@@ -7,10 +7,7 @@ export const signUpSchema = z
       .string()
       .min(4, { message: "Password must be at least 4 characters" })
       .trim(),
-    cPassword: z
-      .string()
-      .min(4, { message: "Confirm Password must be at least 4 characters" })
-      .trim(),
+    cPassword: z.string().trim(),
   })
   .refine((data) => data.password === data.cPassword, {
     message: "Passwords do not match",

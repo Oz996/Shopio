@@ -4,11 +4,12 @@ import styles from "./product-review-form.module.scss";
 import { useActionState, useEffect, useRef, useState } from "react";
 import { submitReviewAction } from "@/app/actions";
 import ProductAddRating from "./product-add-rating";
-import { Loader, X } from "lucide-react";
+import { X } from "lucide-react";
 import useClickOutside from "@/hooks/use-click-outside";
 import { Product } from "@prisma/client";
 import Image from "next/image";
 import toast, { Toaster } from "react-hot-toast";
+import SubmitButton from "@/app/(store)/(main)/home/components/submit-button/submit-button";
 
 interface ProductReviewFormProps {
   product: Product;
@@ -92,9 +93,12 @@ export default function ProductReviewForm({ product }: ProductReviewFormProps) {
                 ref={textareaRef}
               />
 
-              <button disabled={isPending} className={styles.submit_button}>
-                {isPending ? <Loader size={20} /> : "Submit Review"}
-              </button>
+              <SubmitButton
+                isPending={isPending}
+                className={styles.submit_button}
+              >
+                Submit Review
+              </SubmitButton>
             </div>
           </form>
         </div>

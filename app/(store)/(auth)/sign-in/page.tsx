@@ -1,14 +1,36 @@
 "use client";
 
+import styles from "../auth.module.scss";
 import Link from "next/link";
-import React, { useActionState } from "react";
+import { useActionState, useState } from "react";
 import { authenticate } from "../actions";
+import SubmitButton from "../../(main)/home/components/submit-button/submit-button";
+import { signIn } from "@/auth";
+import { useRouter } from "next/navigation";
 
 export default function SignIn() {
-  const [errorMessage, formAction, isPending] = useActionState(
+  const [isLoading, setIsLoading] = useState(false);
+  const [state, formAction, isPending] = useActionState(
     authenticate,
     undefined
   );
+
+  const router = useRouter();
+
+  async function guestSignIn() {
+    try {
+      setIsLoading(true);
+      await signIn("credentials", {
+        email: "guest@mail.com",
+        password: "test123",
+        redirect: false,
+      });
+      router.push("/home");
+    } catch (error) {
+      console.error(error);
+      setIsLoading(false);
+    }
+  }
 
   return (
     <form action={formAction} noValidate>
@@ -16,7 +38,12 @@ export default function SignIn() {
 
       <div>
         <label htmlFor="email">Email</label>
-        <input type="email" name="email" id="email" />
+        <input
+          type="email"
+          name="email"
+          id="email"
+          defaultValue={state?.data}
+        />
       </div>
 
       <div>
@@ -24,7 +51,11 @@ export default function SignIn() {
         <input type="password" name="password" id="password" />
       </div>
 
-      {errorMessage && <p>{errorMessage}</p>}
+      {state?.error && (
+        <div className={`${styles.error} ${styles.center}`}>
+          <span>{state?.error}</span>
+        </div>
+      )}
 
       <div>
         <span>
@@ -33,8 +64,10 @@ export default function SignIn() {
       </div>
 
       <div>
-        <button disabled={isPending}>Sign in</button>
-        <button type="button">Enter as guest</button>
+        <SubmitButton isPending={isPending}>Sign in</SubmitButton>
+        <SubmitButton isPending={isLoading} onClick={guestSignIn} type="button">
+          Enter as guest
+        </SubmitButton>
       </div>
     </form>
   );

@@ -30,7 +30,6 @@ model Product {
 model Review {
   id          String    @id @default(auto()) @map("_id") @db.ObjectId
   user_email  String
-  name        String
   content     String?
   rating      Int
   product     Product   @relation(fields: [productId], references: [id])
@@ -43,6 +42,6 @@ model User {
   id       String    @id @default(auto()) @map("_id") @db.ObjectId
   email    String    @unique
   password String 
-  name     String?
+  name     String? 
   @@map("users")
 }

@@ -41,10 +41,6 @@
 .submit_button {
   @include black-button(5px);
   justify-content: center;
-
-  svg {
-    @include spin_loader;
-  }
 }
 
 .rating_star {

@@ -4,36 +4,46 @@ import { signIn } from "@/auth";
 import prisma from "@/lib/prisma/prisma";
 import { signUpSchema } from "@/lib/schemas";
 import { AuthError } from "next-auth";
-import { ZodIssue } from "zod";
+import { AuthenticateReturnType, SignUpReturnType } from "./action-types";
+import { redirect } from "next/navigation";
 
 export async function authenticate(
-  prevState: string | undefined,
-  formData: FormData,
-  callbackUrl = "/home"
+  prevState: AuthenticateReturnType,
+  formData: FormData
 ) {
-  try {
-    const email = formData.get("email")?.toString();
-    const password = formData.get("password")?.toString();
+  const email = formData.get("email")?.toString();
+  const password = formData.get("password")?.toString();
+  let success;
 
-    await signIn("credentials", { email, password, redirectTo: callbackUrl });
+  try {
+    await signIn("credentials", { email, password, redirect: false });
+    success = true;
   } catch (error) {
+    success = false;
     if (error instanceof AuthError) {
       switch (error.type) {
         case "CredentialsSignin":
-          return "Invalid credentials.";
+          return {
+            error: "Invalid credentials.",
+            data: email,
+          };
+
         default:
-          return "Something went wrong.";
+          return {
+            error: "Something went wrong.",
+            data: email,
+          };
       }
     }
     throw error;
   }
+
+  if (success) redirect("/home");
 }
 
-export async function signUp(
-  prevState: ZodIssue[] | undefined,
-  formData: FormData,
-  callbackUrl = "/home"
-) {
+export async function signUp(prevState: SignUpReturnType, formData: FormData) {
+  let success;
+
   try {
     const email = formData.get("email")?.toString() as string;
     const name = formData.get("name")?.toString() as string;
@@ -44,11 +54,19 @@ export async function signUp(
       email,
       password,
       cPassword,
-      redirectTo: callbackUrl,
     });
 
     if (!result.success) {
-      return result.error.errors;
+      return {
+        errors: result.error.errors.map((error) => ({
+          message: error.message,
+        })),
+        data: {
+          email,
+          password,
+          cPassword,
+        },
+      };
     }
 
     await prisma.user.create({
@@ -59,8 +77,13 @@ export async function signUp(
       },
     });
 
-    await signIn("credentials", { email, password, redirectTo: callbackUrl });
+    await signIn("credentials", { email, password, redirect: false });
+    success = true;
   } catch (error) {
+    success = false;
     console.error(error);
+    throw new Error("Something went wrong");
   }
+
+  if (success) redirect("/home");
 }

@@ -4,8 +4,12 @@ import { auth } from "@/auth";
 import prisma from "@/lib/prisma/prisma";
 import { reviewSchema } from "@/lib/schemas";
 import { revalidatePath } from "next/cache";
+import { ReviewReturnType } from "./action-types";
 
-export async function submitReviewAction(prevState: any, formData: FormData) {
+export async function submitReviewAction(
+  prevState: ReviewReturnType,
+  formData: FormData
+) {
   const id = formData.get("id")?.toString() as string;
   const rating = Number(formData.get("rating"));
   const content = formData.get("content")?.toString() as string;
@@ -53,7 +57,6 @@ export async function submitReviewAction(prevState: any, formData: FormData) {
   try {
     await prisma.review.create({
       data: {
-        name: "",
         rating,
         content,
         productId: id,

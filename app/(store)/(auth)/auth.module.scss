@@ -41,18 +41,8 @@
     }
 
     span {
-      font-size: 14;
+      font-size: 13px;
       padding-block: 0.2rem;
-    }
-
-    p {
-      font-size: 14;
-      text-align: center;
-
-      color: rgb(207, 30, 30);
-      padding: 0.6rem;
-      border-radius: 5px;
-      border: 1px solid rgb(207, 30, 30);
     }
 
     a {
@@ -71,7 +61,7 @@
 }
 
 .error {
-  font-size: 14;
+  font-size: 13px;
   color: rgb(207, 30, 30);
   padding: 0.6rem;
 
@@ -80,4 +70,8 @@
 
   border-radius: 5px;
   border: 1px solid rgb(207, 30, 30);
+}
+
+.center {
+  text-align: center;
 }

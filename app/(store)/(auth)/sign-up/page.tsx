@@ -1,15 +1,13 @@
 "use client";
 
+import styles from "../auth.module.scss";
 import Link from "next/link";
 import { useActionState } from "react";
 import { signUp } from "../actions";
-import styles from "../auth.module.scss";
+import SubmitButton from "../../(main)/home/components/submit-button/submit-button";
 
 export default function SignUp() {
-  const [errorMessage, formAction, isPending] = useActionState(
-    signUp,
-    undefined
-  );
+  const [state, formAction, isPending] = useActionState(signUp, undefined);
 
   return (
     <form action={formAction} noValidate>
@@ -35,9 +33,9 @@ export default function SignUp() {
         <input type="password" name="cPassword" id="cPassword" />
       </div>
 
-      {errorMessage && (
+      {state?.errors && (
         <div className={styles.error}>
-          {errorMessage.map((error, index) => (
+          {state.errors.map((error, index) => (
             <span key={index}>{error.message}</span>
           ))}
         </div>
@@ -50,7 +48,7 @@ export default function SignUp() {
       </div>
 
       <div>
-        <button disabled={isPending}>Sign up</button>
+        <SubmitButton isPending={isPending}>Sign up</SubmitButton>
       </div>
     </form>
   );

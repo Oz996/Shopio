@@ -1,0 +1,5 @@
+@use "@/sass" as *;
+
+.spinner {
+  @include spin_loader;
+}
