@@ -31,7 +31,7 @@
   }
 
   p {
-    @include line-clamp(3);
+    @include truncate;
   }
 }
 

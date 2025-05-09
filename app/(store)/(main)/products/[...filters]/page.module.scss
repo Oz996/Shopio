@@ -1,0 +1,9 @@
+@use "@/sass" as *;
+
+.section {
+  @include container;
+}
+
+.product_list {
+  display: flex;
+}

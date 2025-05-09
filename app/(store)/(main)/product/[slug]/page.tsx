@@ -28,8 +28,6 @@ export default async function Product({
     },
   });
 
-  console.log("prodd", product);
-
   return (
     <>
       <section className={styles.section}>

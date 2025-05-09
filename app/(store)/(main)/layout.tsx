@@ -11,9 +11,9 @@ export default async function StoreLayout({
   const session = await auth();
 
   return (
-    <>
+    <div className={styles.layout}>
       <Header authorized={session} />
       <main className={styles.store_wrapper}>{children}</main>
-    </>
+    </div>
   );
 }
