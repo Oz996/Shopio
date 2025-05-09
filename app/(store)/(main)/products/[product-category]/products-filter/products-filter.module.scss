@@ -1,0 +1,14 @@
+@use "@/sass" as *;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+
+  width: 20rem;
+  background: #fff;
+  padding: 1rem;
+
+  border: 1px solid rgb(234, 234, 234);
+  border-radius: 10px;
+}

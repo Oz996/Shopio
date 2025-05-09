@@ -2,6 +2,9 @@
 
 .section {
   @include container;
+
+  display: flex;
+  gap: 2rem;
 }
 
 .product_list {
