@@ -26,8 +26,9 @@ export default async function Product({
     where: {
       slug,
     },
-    include: { reviews: true },
   });
+
+  console.log("prodd", product);
 
   return (
     <>

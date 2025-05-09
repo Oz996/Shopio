@@ -19,7 +19,13 @@ export default function ProductImages({ product }: ProductImagesProps) {
   return (
     <div className={styles.images}>
       <div className={styles.display}>
-        <Image src={displayImage} alt="" fill />
+        <Image
+          src={displayImage}
+          alt=""
+          fill
+          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 100vw, 50vw"
+          priority
+        />
       </div>
 
       <ProductThumbnails
