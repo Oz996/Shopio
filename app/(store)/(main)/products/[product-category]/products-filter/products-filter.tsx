@@ -8,13 +8,18 @@ import { BrandOptions } from "../page";
 import dynamic from "next/dynamic";
 import { selectStyles } from "@/lib/styles";
 import { SlidersHorizontal } from "lucide-react";
+import { ProductCategory } from "@/lib/types";
 const ReactSelect = dynamic(() => import("react-select"), { ssr: false });
 
 interface ProductsFilterProps {
+  category: ProductCategory;
   brands: BrandOptions[];
 }
 
-export default function ProductsFilter({ brands }: ProductsFilterProps) {
+export default function ProductsFilter({
+  category,
+  brands,
+}: ProductsFilterProps) {
   const [url, setUrl] = useState<URL>();
 
   const router = useRouter();
@@ -54,6 +59,20 @@ export default function ProductsFilter({ brands }: ProductsFilterProps) {
     handleRoute();
   }
 
+  // function categoryFilters() {
+  //   switch (category) {
+  //     case "monitors": {
+  //       return (
+  //         <>
+  //         <ul>
+
+  //         </ul>
+  //         </>
+  //       )
+  //     }
+  //   }
+  // }
+
   return (
     <div className={styles.container}>
       <div className={styles.title}>
@@ -79,7 +98,7 @@ export default function ProductsFilter({ brands }: ProductsFilterProps) {
         </ul>
 
         <div>
-          <h3>Price</h3>
+          <h3>Price (€)</h3>
           <ReactSelect
             isClearable
             placeholder="Show all"

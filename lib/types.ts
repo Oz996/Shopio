@@ -1,4 +1,5 @@
 import { Product } from "@prisma/client";
+import { productCategories } from "./constants";
 
 export type ProductCardType = Pick<
   Product,
@@ -15,3 +16,5 @@ export type ProductCardType = Pick<
 export interface ProductSlug {
   slug: string;
 }
+
+export type ProductCategory = Lowercase<(typeof productCategories)[number]>;
