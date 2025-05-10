@@ -2,6 +2,8 @@ import styles from "./page.module.scss";
 import ProductList from "@/components/product-list/product-list";
 import prisma from "@/lib/prisma/prisma";
 import ProductsFilter from "./products-filter/products-filter";
+import { ProductCardType } from "@/lib/types";
+import { productCardSelect } from "@/lib/prisma/selects";
 
 export default async function Products({
   params,
@@ -33,11 +35,22 @@ export default async function Products({
     where.price.lt = priceTo;
   }
 
-  const results = await prisma.product.findMany({ where });
+  const results: ProductCardType[] = await prisma.product.findMany({
+    where,
+    select: productCardSelect,
+  });
+
+  const brandOptions: BrandOptions[] = await prisma.product.findMany({
+    where: { category },
+    distinct: ["brand"],
+    select: { brand: true },
+  });
+
+  console.log("brandOptions", brandOptions);
 
   return (
     <section className={styles.section}>
-      <ProductsFilter />
+      <ProductsFilter brands={brandOptions} />
       <ProductList products={results} />
     </section>
   );
@@ -47,4 +60,8 @@ interface QueryType {
   category: string;
   brand?: string;
   price: { gt: number; lt: number };
+}
+
+export interface BrandOptions {
+  brand: string;
 }

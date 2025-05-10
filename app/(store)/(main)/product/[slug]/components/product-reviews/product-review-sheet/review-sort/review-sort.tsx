@@ -3,6 +3,7 @@
 import dynamic from "next/dynamic";
 import { ProductSortType } from "../product-review-sheet";
 import styles from "./review-sort.module.scss";
+import { selectStyles } from "@/lib/styles";
 const ReactSelect = dynamic(() => import("react-select"), { ssr: false });
 
 interface ReviewSortProps {
@@ -33,7 +34,7 @@ export default function ReviewSort({
     <div className={styles.sort}>
       <ReactSelect
         value={selectedSort}
-        styles={customStyles}
+        styles={selectStyles}
         options={options}
         onChange={(selected) => sortReviews((selected as SortOptions).value)}
         aria-label="Sort reviews"
@@ -42,22 +43,3 @@ export default function ReviewSort({
     </div>
   );
 }
-
-const customStyles = {
-  control: (provided: any) => ({
-    ...provided,
-    fontSize: "14px",
-    cursor: "pointer",
-  }),
-  option: (provided: any, state: any) => ({
-    ...provided,
-    fontSize: "14px",
-    backgroundColor: state.isFocused ? "#e4e9f4" : "white",
-    cursor: "pointer",
-    color: "black",
-  }),
-  singleValue: (provided: any) => ({
-    ...provided,
-    fontSize: "14px",
-  }),
-};

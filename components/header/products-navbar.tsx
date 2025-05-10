@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  ChevronDown,
-  Headphones,
-  Laptop,
-  Monitor,
-  ShoppingBasket,
-  Tablet,
-} from "lucide-react";
+import { ChevronDown, Headphones, Laptop, Monitor, Tablet } from "lucide-react";
 import styles from "./header.module.scss";
 import { useState } from "react";
 import { productCategories } from "@/lib/constants";
@@ -27,12 +20,6 @@ export default function ProductsNavbar() {
 
       {isOpen && (
         <ul>
-          <li>
-            <Link href="/products">
-              <ShoppingBasket size={16} />
-              <span>Browse all</span>
-            </Link>
-          </li>
           {productCategories.map((category) => (
             <li key={category}>
               <Link href={`/products/${category.toLowerCase()}`}>

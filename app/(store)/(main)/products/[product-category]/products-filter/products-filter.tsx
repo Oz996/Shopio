@@ -1,13 +1,20 @@
 "use client";
 
-import { monitorBrands, priceOptions } from "@/lib/constants";
+import { priceOptions } from "@/lib/constants";
 import styles from "./products-filter.module.scss";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { BrandOptions } from "../page";
 import dynamic from "next/dynamic";
+import { selectStyles } from "@/lib/styles";
+import { SlidersHorizontal } from "lucide-react";
 const ReactSelect = dynamic(() => import("react-select"), { ssr: false });
 
-export default function ProductsFilter() {
+interface ProductsFilterProps {
+  brands: BrandOptions[];
+}
+
+export default function ProductsFilter({ brands }: ProductsFilterProps) {
   const [url, setUrl] = useState<URL>();
 
   const router = useRouter();
@@ -49,28 +56,36 @@ export default function ProductsFilter() {
 
   return (
     <div className={styles.container}>
-      <h2>Filters</h2>
+      <div className={styles.title}>
+        <SlidersHorizontal size={18} />
+        <h2>Filter</h2>
+      </div>
 
-      <div>
+      <div className={styles.content}>
         <h3>Brands</h3>
-        {monitorBrands.map((brand) => (
-          <div key={brand}>
-            <input
-              type="checkbox"
-              name={brand}
-              onChange={() => handleFilter(brand)}
-            />
-            <span>{brand}</span>
-          </div>
-        ))}
+
+        <ul>
+          {brands.map((item) => (
+            <li key={item.brand}>
+              <input
+                type="checkbox"
+                name={item.brand}
+                id={item.brand}
+                onChange={() => handleFilter(item.brand)}
+              />
+              <label htmlFor={item.brand}>{item.brand}</label>
+            </li>
+          ))}
+        </ul>
 
         <div>
           <h3>Price</h3>
           <ReactSelect
-            options={priceOptions}
-            onChange={(price) => handlePriceChange(price as PriceOption)}
             isClearable
             placeholder="Show all"
+            options={priceOptions}
+            onChange={(price) => handlePriceChange(price as PriceOption)}
+            styles={selectStyles}
           />
         </div>
       </div>
