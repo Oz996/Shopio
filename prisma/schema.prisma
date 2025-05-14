@@ -21,6 +21,7 @@ model Product {
   popular     Boolean?
   featured    Boolean?
   reviews     Review[]
+  monitor     MonitorDetails?
   rating      Float
   createdAt   DateTime  @default(now())
   editedAt    DateTime  @default(now())
@@ -44,4 +45,14 @@ model User {
   password String 
   name     String? 
   @@map("users")
+}
+
+model MonitorDetails {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  resolution    String 
+  refresh_rate  String
+  panel_type    String
+  product       Product   @relation(fields: [productId], references: [id])
+  productId     String    @unique @db.ObjectId
+  @@map("monitor-details")
 }

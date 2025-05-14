@@ -1,16 +1,21 @@
 import styles from "./page.module.scss";
 import ProductList from "@/components/product-list/product-list";
 import ProductsFilter from "./products-filter/products-filter";
-import { productsBrands, productsQuery } from "./product-queries";
+import {
+  getMonitorSpecs,
+  productsBrands,
+  productsQuery,
+} from "./product-queries";
 
 export default async function Products({
   params,
   searchParams,
 }: {
   params: Promise<any>;
-  searchParams: Promise<any>;
+  searchParams: Promise<Record<string, string>>;
 }) {
-  const { brand, price, refresh } = await searchParams;
+  const { brand, price, refresh_rate, resolution, panel_type } =
+    await searchParams;
   const { "product-category": category } = await params;
 
   const where: QueryType = {
@@ -21,14 +26,36 @@ export default async function Products({
     },
   };
 
+  if (category === "monitors") {
+    where.monitor = {};
+  }
+
   if (brand) {
     where.brand = brand;
   }
 
-  if (refresh) {
-    const ref = refresh.split("_").join(" ");
-    where.description.contains = ref;
+  if (refresh_rate) {
+    where.monitor = {
+      ...where.monitor,
+      refresh_rate,
+    };
   }
+
+  if (resolution) {
+    where.monitor = {
+      ...where.monitor,
+      resolution,
+    };
+  }
+
+  if (panel_type) {
+    where.monitor = {
+      ...where.monitor,
+      panel_type: panel_type.toUpperCase(),
+    };
+  }
+
+  console.log("refreshs", refresh_rate);
 
   if (price) {
     const prices = price?.split("-");
@@ -41,12 +68,15 @@ export default async function Products({
 
   const results = await productsQuery(where);
   const brandOptions = await productsBrands(category);
+  const specifications = await getMonitorSpecs(category);
 
+  console.log("pess", results);
+  console.log("objj", specifications);
   console.log("brandOptions", brandOptions);
 
   return (
     <section className={styles.section}>
-      <ProductsFilter category={category} brands={brandOptions} />
+      <ProductsFilter specifications={specifications} brands={brandOptions} />
       <ProductList products={results} />
     </section>
   );
@@ -59,8 +89,11 @@ interface QueryType {
   description: {
     contains: string;
   };
-}
-
-export interface BrandOptions {
-  brand: string;
+  monitor?: {
+    id: string;
+    resolution: string;
+    refresh_rate: string;
+    panel_type: string;
+    productId: string;
+  } | null;
 }
