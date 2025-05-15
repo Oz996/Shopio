@@ -15,11 +15,13 @@ const ReactSelect = dynamic(() => import("react-select"), {
 
 interface ProductsFilterProps {
   specifications: Record<string, any[]>;
+  searchParams: Record<string, string>;
   brands: BrandOptions[];
 }
 
 export default function ProductsFilter({
   specifications,
+  searchParams,
   brands,
 }: ProductsFilterProps) {
   const [url, setUrl] = useState<URL>();
@@ -68,24 +70,22 @@ export default function ProductsFilter({
       console.log("spec", spec);
 
       sections.push(
-        <>
-          <div className={styles.content}>
-            <h3>{title}</h3>
-            <ul>
-              {specifications[spec].map((s) => (
-                <li key={s}>
-                  <input
-                    type="checkbox"
-                    name={s}
-                    id={s}
-                    onChange={() => handleFilter(spec, s)}
-                  />
-                  <label htmlFor={s}>{s}</label>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </>
+        <div className={styles.content} key={crypto.randomUUID()}>
+          <h3>{title}</h3>
+          <ul>
+            {specifications[spec].map((s) => (
+              <li key={s}>
+                <input
+                  // checked={[searchParams[spec]].includes(s?.toLowerCase())}
+                  type="checkbox"
+                  id={s}
+                  onChange={() => handleFilter(spec, s)}
+                />
+                <label htmlFor={s}>{s}</label>
+              </li>
+            ))}
+          </ul>
+        </div>
       );
     }
 
