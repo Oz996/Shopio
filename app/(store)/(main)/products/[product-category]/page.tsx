@@ -1,13 +1,7 @@
 import styles from "./page.module.scss";
 import ProductList from "@/components/product-list/product-list";
 import ProductsFilter from "./products-filter/products-filter";
-import {
-  getHeadphoneSpecs,
-  getMonitorSpecs,
-  productsBrands,
-  productsQuery,
-} from "./product-queries";
-import { ProductCategory } from "@/lib/types";
+import { getSpecs, productsBrands, productsQuery } from "./product-queries";
 
 export default async function Products({
   params,
@@ -101,12 +95,16 @@ export default async function Products({
 
   const results = await productsQuery(where);
   const brandOptions = await productsBrands(category);
+  // const specifications = await getSpecs(category);
+
   const specifications = await getSpecs(category);
 
-  async function getSpecs(category: ProductCategory) {
-    if (category === "monitors") return await getMonitorSpecs();
-    if (category === "headphones") return await getHeadphoneSpecs();
-  }
+  // console.log("rez", d);
+
+  // async function getSpecs(category: ProductCategory) {
+  //   if (category === "monitors") return await getMonitorSpecs();
+  //   if (category === "headphones") return await getHeadphoneSpecs();
+  // }
 
   console.log("pess", results);
   console.log("objj", specifications);

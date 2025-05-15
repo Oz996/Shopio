@@ -6,23 +6,6 @@ const select = {
   ...productCardSelect,
 };
 
-// interface ProductQueryType extends ProductCardType {
-//   monitor?: {
-//     id: string;
-//     resolution: string;
-//     refresh_rate: string;
-//     panel_type: string;
-//     productId: string;
-//   } | null;
-//   headphone?: {
-//     id?: string;
-//     connection?: string;
-//     battery_life?: string;
-//     noise_cancelling?: string;
-//     productId?: string;
-//   } | null;
-// }
-
 export async function productsQuery(
   query: QueryType
 ): Promise<ProductCardType[]> {
@@ -42,61 +25,42 @@ export async function productsBrands(
   });
 }
 
-export async function getMonitorSpecs() {
-  const monitors = await prisma.product.findMany({
-    where: { category: "monitors" },
+export async function getSpecs(category: ProductCategory) {
+  const type = category.slice(0, -1);
+  const results = await prisma.product.findMany({
+    where: { category },
     select: {
-      monitor: true,
+      [type]: true,
     },
   });
 
-  const specs = {
-    refresh_rate: new Set(),
-    resolution: new Set(),
-    panel_type: new Set(),
-  };
+  const specs: Record<string, Set<any> | string[]> = Object.keys(
+    results[0][type]
+  )
+    .filter((key) => key !== "productId" && key !== "id")
+    .reduce((acc, key) => {
+      acc[key] = results[0][type][key];
+      return acc;
+    }, {});
 
-  monitors.map((object) => {
-    const monitor = object.monitor;
-    if (monitor?.refresh_rate) specs.refresh_rate.add(monitor?.refresh_rate);
-    if (monitor?.resolution) specs.resolution.add(monitor?.resolution);
-    if (monitor?.panel_type) specs.panel_type.add(monitor?.panel_type);
-  });
+  const specValues = results.map((object) => object[type]);
 
-  return {
-    refresh_rate: [...specs.refresh_rate],
-    resolution: [...specs.resolution],
-    panel_type: [...specs.panel_type],
-  };
-}
+  // using Sets to avoid duplicate values, later converting them to arrays
+  for (const key in specs) {
+    specs[key] = new Set();
+  }
 
-export async function getHeadphoneSpecs() {
-  const headphones = await prisma.product.findMany({
-    where: { category: "headphones" },
-    select: {
-      headphone: true,
-    },
-  });
+  for (const spec of specValues) {
+    for (const key in spec) {
+      if (specs[key] && !Array.isArray(specs[key])) specs[key].add(spec[key]);
+    }
+  }
 
-  const specs = {
-    connection: new Set(),
-    noise_cancelling: new Set(),
-    battery_life: new Set(),
-  };
+  for (const spec in specs) {
+    specs[spec] = Array.from(specs[spec]);
+  }
 
-  headphones.map((object) => {
-    const headphone = object.headphone;
-    if (headphone?.connection) specs.connection.add(headphone.connection);
-    if (headphone?.noise_cancelling)
-      specs.noise_cancelling.add(headphone.noise_cancelling);
-    if (headphone?.battery_life) specs.battery_life.add(headphone.battery_life);
-  });
-
-  return {
-    connection: [...specs.connection],
-    noise_cancelling: [...specs.noise_cancelling],
-    battery_life: [...specs.battery_life],
-  };
+  return specs;
 }
 
 interface QueryType {

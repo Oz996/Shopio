@@ -76,7 +76,7 @@ export default function ProductsFilter({
             {specifications[spec].map((s) => (
               <li key={s}>
                 <input
-                  // checked={[searchParams[spec]].includes(s?.toLowerCase())}
+                  checked={[searchParams[spec]].includes(s?.toLowerCase())}
                   type="checkbox"
                   id={s}
                   onChange={() => handleFilter(spec, s)}
