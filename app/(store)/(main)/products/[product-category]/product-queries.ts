@@ -6,6 +6,48 @@ const select = {
   ...productCardSelect,
 };
 
+export function searchParamsConstructor(
+  category: ProductCategory,
+  args: Record<string, string>
+) {
+  const where: QueryType = {
+    category,
+    price: { gt: 0, lt: 100_000_000_000 },
+    description: {
+      contains: "",
+    },
+  };
+
+  const { brand, price, ...specs } = args;
+
+  if (brand) {
+    where.brand = brand;
+  }
+
+  if (category === "monitors") {
+    where.monitor = {
+      ...specs,
+    };
+  }
+
+  if (category === "headphones") {
+    where.headphone = {
+      ...specs,
+    };
+  }
+
+  if (price) {
+    const prices = price?.split("-");
+    const priceFrom = Number(prices[0]);
+    const priceTo = Number(prices[1]);
+
+    where.price.gt = priceFrom;
+    where.price.lt = priceTo;
+  }
+
+  return where;
+}
+
 export async function productsQuery(
   query: QueryType
 ): Promise<ProductCardType[]> {
@@ -25,7 +67,9 @@ export async function productsBrands(
   });
 }
 
-export async function getSpecs(category: ProductCategory) {
+export async function getSpecs(
+  category: ProductCategory
+): Promise<Record<string, string[]>> {
   const type = category.slice(0, -1);
   const results = await prisma.product.findMany({
     where: { category },
@@ -34,19 +78,18 @@ export async function getSpecs(category: ProductCategory) {
     },
   });
 
-  const specs: Record<string, Set<any> | string[]> = Object.keys(
-    results[0][type]
-  )
-    .filter((key) => key !== "productId" && key !== "id")
-    .reduce((acc, key) => {
-      acc[key] = results[0][type][key];
-      return acc;
-    }, {});
+  const specs: Record<string, Set<any> | string[]> = {};
+
+  for (const key of Object.keys(results[0][type])) {
+    if (key !== "id" && key !== "productId") {
+      specs[key] = new Set();
+    }
+  }
 
   const specValues = results.map((object) => object[type]);
 
   // using Sets to avoid duplicate values, later converting them to arrays
-  for (const key in specs) {
+  for (const key of Object.keys(specs)) {
     specs[key] = new Set();
   }
 
@@ -56,11 +99,11 @@ export async function getSpecs(category: ProductCategory) {
     }
   }
 
-  for (const spec in specs) {
+  for (const spec of Object.keys(specs)) {
     specs[spec] = Array.from(specs[spec]);
   }
 
-  return specs;
+  return specs as Record<string, string[]>;
 }
 
 interface QueryType {
@@ -74,4 +117,33 @@ interface QueryType {
 
 export interface BrandOptions {
   brand: string;
+}
+
+interface QueryType {
+  category: string;
+  brand?: string;
+  price: { gt: number; lt: number };
+  description: {
+    contains: string;
+  };
+  monitor?:
+    | {
+        id: string;
+        resolution: string;
+        refresh_rate: string;
+        panel_type: string;
+        productId: string;
+      }
+    | {}
+    | null;
+  headphone?:
+    | {
+        id?: string;
+        connection?: string;
+        battery_life?: string;
+        noise_cancelling?: string;
+        productId?: string;
+      }
+    | {}
+    | null;
 }
