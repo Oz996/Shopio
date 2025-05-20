@@ -1,0 +1,95 @@
+@use "@/sass" as *;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+
+  min-width: 18rem;
+  background: #fff;
+  padding: 1rem;
+
+  border: 1px solid rgb(234, 234, 234);
+  border-radius: 10px;
+
+  h2 {
+    font-weight: 500;
+    font-size: 18px;
+  }
+}
+
+.filter_options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+
+  @include tablet {
+    min-width: auto;
+
+    flex-direction: row;
+    column-gap: 3rem;
+    row-gap: 1rem;
+    flex-wrap: wrap;
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+
+  button {
+    display: none;
+    border: none;
+
+    margin-left: auto;
+    background: transparent;
+
+    @include tablet {
+      display: block;
+    }
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+
+  h3 {
+    font-weight: 500;
+    font-size: 16px;
+
+    text-transform: capitalize;
+    padding-block: 0.3rem;
+  }
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+
+    gap: 0.1rem;
+  }
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+
+    cursor: pointer;
+    transition: 0.3s;
+
+    &:hover {
+      background: $store-background;
+    }
+  }
+
+  input {
+    cursor: pointer;
+  }
+
+  label {
+    width: 100%;
+    cursor: pointer;
+  }
+}

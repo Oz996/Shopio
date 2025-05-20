@@ -1,6 +1,6 @@
 "use client";
 
-import { RefObject, SetStateAction, useEffect } from "react";
+import { RefObject, useEffect } from "react";
 
 export default function useClickOutside(
   elementRef: RefObject<any>,

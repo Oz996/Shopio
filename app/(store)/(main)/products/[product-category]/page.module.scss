@@ -5,6 +5,10 @@
 
   display: flex;
   gap: 2rem;
+
+  @include tablet {
+    flex-direction: column;
+  }
 }
 
 .product_list {
