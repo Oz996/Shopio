@@ -18,3 +18,5 @@ export interface ProductSlug {
 }
 
 export type ProductCategory = Lowercase<(typeof productCategories)[number]>;
+
+export type FeaturedType = "featured" | "popular";

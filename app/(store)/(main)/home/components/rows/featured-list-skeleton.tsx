@@ -1,12 +1,13 @@
 import ProductListSkeleton from "@/components/product-list/product-list-skeleton";
-import styles from "./row-list.module.scss";
+import styles from "./featured-list-skeleton.module.scss";
+import { FeaturedType } from "@/lib/types";
 
 interface RowListSkeletonProps {
-  title: string;
+  title: FeaturedType;
   length: number;
 }
 
-export default function RowListSkeleton({
+export default function FeaturedListSkeleton({
   length,
   title,
 }: RowListSkeletonProps) {

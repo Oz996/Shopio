@@ -1,5 +1,6 @@
 import type { NextAuthConfig } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
+import { NextResponse } from "next/server";
 
 export const authConfig = {
   pages: {
@@ -8,10 +9,9 @@ export const authConfig = {
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
-      const isOnAdminPage = nextUrl.pathname.startsWith("/admin");
-      if (isOnAdminPage) {
-        if (isLoggedIn) return true;
-        return false;
+      const authRoutes = nextUrl.pathname.startsWith("/sign-");
+      if (isLoggedIn && authRoutes) {
+        return NextResponse.redirect(new URL("/home", nextUrl));
       }
       return true;
     },

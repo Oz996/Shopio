@@ -1,10 +1,11 @@
 import ProductList from "@/components/product-list/product-list";
 import prisma from "@/lib/prisma/prisma";
-import styles from "./row-list.module.scss";
+import styles from "./featured-list-skeleton.module.scss";
 import { productCardSelect } from "@/lib/prisma/selects";
+import { FeaturedType } from "@/lib/types";
 
 interface FeaturedProductsProps {
-  type: "popular" | "featured";
+  type: FeaturedType;
 }
 
 export default async function FeaturedProducts({
