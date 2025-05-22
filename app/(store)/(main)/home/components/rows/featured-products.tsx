@@ -14,7 +14,7 @@ export default async function FeaturedProducts() {
   return (
     <>
       <h2 className={styles.title}>Featured Products</h2>
-      <ProductList products={products} />
+      <ProductList products={products} centered />
     </>
   );
 }

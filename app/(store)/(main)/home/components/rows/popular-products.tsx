@@ -14,7 +14,7 @@ export default async function PopularProducts() {
   return (
     <>
       <h2 className={styles.title}>Popular Products</h2>
-      <ProductList products={products} />
+      <ProductList products={products} centered />
     </>
   );
 }

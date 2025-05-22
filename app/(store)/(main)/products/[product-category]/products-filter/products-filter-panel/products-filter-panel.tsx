@@ -14,17 +14,20 @@ const ReactSelect = dynamic(() => import("react-select"), {
 interface FilterPanelProps {
   specifications: Record<string, any[]>;
   searchParams: Record<string, string>;
-  setIsOpen: Dispatch<SetStateAction<boolean>>;
+  setIsOpen?: Dispatch<SetStateAction<boolean>>;
   brands: BrandOptions[];
 }
 
 export default function FilterPanel({
-  setIsOpen,
   specifications,
   searchParams,
+  setIsOpen,
   brands,
 }: FilterPanelProps) {
   const { url, handleRoute } = useRoute();
+
+  const price = searchParams.price?.split("-");
+  const currentPrice = priceOptions?.find((p) => p.from == Number(price?.[0]));
 
   function handleFilter(filter: string, value: string) {
     if (url?.searchParams.has(filter)) {
@@ -85,12 +88,14 @@ export default function FilterPanel({
         <SlidersHorizontal size={18} />
         <h2>Filter</h2>
 
-        <button
-          onClick={() => setIsOpen(false)}
-          aria-label="Close filter options"
-        >
-          <X size={20} />
-        </button>
+        {setIsOpen && (
+          <button
+            onClick={() => setIsOpen(false)}
+            aria-label="Close filter options"
+          >
+            <X size={20} />
+          </button>
+        )}
       </div>
 
       <div className={styles.content}>
@@ -98,6 +103,7 @@ export default function FilterPanel({
         <ReactSelect
           isClearable
           placeholder="Show all"
+          value={currentPrice}
           options={priceOptions}
           onChange={(price) => handlePriceChange(price as PriceOption)}
           styles={selectStyles}

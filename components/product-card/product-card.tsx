@@ -27,7 +27,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           <p>{product.description}</p>
         </div>
 
-        <div className={styles.content_second}>
+        <div className={styles.footer}>
           <ProductRating rating={product.rating} small />
           <p className={styles.price}>€ {product.price}</p>
         </div>

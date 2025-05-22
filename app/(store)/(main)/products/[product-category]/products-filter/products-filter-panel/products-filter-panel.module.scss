@@ -39,15 +39,9 @@
   gap: 0.3rem;
 
   button {
-    display: none;
     border: none;
-
     margin-left: auto;
     background: transparent;
-
-    @include tablet {
-      display: block;
-    }
   }
 }
 
@@ -89,6 +83,7 @@
   }
 
   label {
+    font-size: 13px;
     width: 100%;
     cursor: pointer;
   }

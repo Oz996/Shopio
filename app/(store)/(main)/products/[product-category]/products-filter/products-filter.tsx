@@ -26,7 +26,6 @@ export default function ProductsFilter({
         <FilterPanel
           specifications={specifications}
           searchParams={searchParams}
-          setIsOpen={setIsOpen}
           brands={brands}
         />
       </div>

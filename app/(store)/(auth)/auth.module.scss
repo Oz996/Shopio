@@ -1,7 +1,6 @@
 @use "@/sass/" as *;
 
 .auth_wrapper {
-  @include container;
   height: 100vh;
 
   display: flex;
@@ -19,6 +18,10 @@
     gap: 1rem;
 
     width: 20rem;
+
+    @include mobile {
+      width: 90%;
+    }
 
     div {
       display: flex;

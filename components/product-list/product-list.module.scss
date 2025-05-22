@@ -3,10 +3,14 @@
 .section {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  place-self: center;
+  place-self: start;
   gap: 0.8rem;
 
   @include tablet {
     grid-template-columns: repeat(2, 1fr);
   }
+}
+
+.centered {
+  place-self: center;
 }
