@@ -35,13 +35,14 @@ body {
     }
 
     h2 {
-      font-size: 40;
+      font-size: 30px;
       font-weight: 300;
     }
 
     p {
       max-width: 20rem;
-      font-size: 14;
+      font-weight: 400;
+      font-size: 13px;
     }
 
     a {
@@ -49,8 +50,8 @@ body {
       padding: 1rem;
       cursor: pointer;
 
-      font-size: 14;
-      font-weight: bold;
+      font-size: 13px;
+      font-weight: 500;
       max-width: 10rem;
 
       text-align: center;
