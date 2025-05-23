@@ -7,33 +7,38 @@ import {
   productsQuery,
   searchParamsConstructor,
 } from "./product-queries";
+import { ProductCategory } from "@/lib/types";
 
 export default async function Products({
   params,
   searchParams,
 }: {
-  params: Promise<any>;
+  params: Promise<Record<string, ProductCategory>>;
   searchParams: Promise<Record<string, string>>;
 }) {
   const { ...args } = await searchParams;
   const { "product-category": category } = await params;
 
   const where = searchParamsConstructor(category, args);
+  const productsData = productsQuery(where);
 
-  const results = await productsQuery(where);
-  const brandOptions = await productsBrands(category);
-  const specifications = await getSpecs(category);
+  const brandData = productsBrands(category);
+  const specificationsData = getSpecs(category);
 
-  console.log("specifications", specifications);
+  const [products, brands, specifications] = await Promise.all([
+    productsData,
+    brandData,
+    specificationsData,
+  ]);
 
   return (
     <section className={styles.section}>
       <ProductsFilter
         specifications={specifications}
         searchParams={await searchParams}
-        brands={brandOptions}
+        brands={brands}
       />
-      <ProductList products={results} />
+      <ProductList products={products} />
     </section>
   );
 }

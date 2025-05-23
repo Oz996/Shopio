@@ -17,6 +17,10 @@ export interface ProductSlug {
   slug: string;
 }
 
+export interface BrandOptions {
+  brand: string;
+}
+
 export type ProductCategory = Lowercase<(typeof productCategories)[number]>;
 
 export type FeaturedType = "featured" | "popular";

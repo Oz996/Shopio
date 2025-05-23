@@ -5,7 +5,7 @@ import { selectStyles } from "@/lib/styles";
 import { priceOptions } from "@/lib/constants";
 import { Dispatch, SetStateAction } from "react";
 import useRoute from "@/hooks/use-route";
-import { BrandOptions } from "../../product-queries";
+import { BrandOptions } from "@/lib/types";
 const ReactSelect = dynamic(() => import("react-select"), {
   ssr: false,
   loading: () => <p>SELECT</p>,

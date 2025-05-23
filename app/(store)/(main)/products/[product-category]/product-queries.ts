@@ -1,6 +1,6 @@
 import prisma from "@/lib/prisma/prisma";
 import { productCardSelect } from "@/lib/prisma/selects";
-import { ProductCardType, ProductCategory } from "@/lib/types";
+import { BrandOptions, ProductCardType, ProductCategory } from "@/lib/types";
 
 const select = {
   ...productCardSelect,
@@ -20,20 +20,15 @@ export function searchParamsConstructor(
 
   const { brand, price, ...specs } = args;
 
+  // assigning specs dynamically
+  const type = category.slice(0, -1) as Specification;
+
+  where[type] = {
+    ...specs,
+  };
+
   if (brand) {
     where.brand = brand;
-  }
-
-  if (category === "monitors") {
-    where.monitor = {
-      ...specs,
-    };
-  }
-
-  if (category === "headphones") {
-    where.headphone = {
-      ...specs,
-    };
   }
 
   if (price) {
@@ -106,18 +101,7 @@ export async function getSpecs(
   return specs as Record<string, string[]>;
 }
 
-interface QueryType {
-  category: string;
-  brand?: string;
-  price: { gt: number; lt: number };
-  description: {
-    contains: string;
-  };
-}
-
-export interface BrandOptions {
-  brand: string;
-}
+type Specification = "monitor" | "headphone";
 
 interface QueryType {
   category: string;
