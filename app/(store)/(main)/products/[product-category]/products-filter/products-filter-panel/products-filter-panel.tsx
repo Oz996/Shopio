@@ -1,55 +1,42 @@
 import { SlidersHorizontal, X } from "lucide-react";
 import styles from "./products-filter-panel.module.scss";
-import dynamic from "next/dynamic";
-import { selectStyles } from "@/lib/styles";
 import { priceOptions } from "@/lib/constants";
 import { Dispatch, SetStateAction } from "react";
-import useRoute from "@/hooks/use-route";
 import { BrandOptions } from "@/lib/types";
-const ReactSelect = dynamic(() => import("react-select"), {
-  ssr: false,
-  loading: () => <p>SELECT</p>,
-});
+import PriceSlider from "./price-slider/price-slider";
+import { useSearchParams } from "next/navigation";
+import useRoute from "@/hooks/use-route";
 
 interface FilterPanelProps {
   specifications: Record<string, any[]>;
-  searchParams: Record<string, string>;
   setIsOpen?: Dispatch<SetStateAction<boolean>>;
+  prices: { from: number; to: number };
   brands: BrandOptions[];
 }
 
 export default function FilterPanel({
   specifications,
-  searchParams,
   setIsOpen,
+  prices,
   brands,
 }: FilterPanelProps) {
-  const { url, handleRoute } = useRoute();
+  const { from, to } = prices;
 
-  const price = searchParams.price?.split("-");
+  const searchParams = useSearchParams();
+
+  const { createQueryString, deleteQueryString } = useRoute();
+
+  const price = searchParams.get("price")?.split("-");
   const currentPrice = priceOptions?.find((p) => p.from == Number(price?.[0]));
 
-  function handleFilter(filter: string, value: string) {
-    if (url?.searchParams.has(filter)) {
-      url?.searchParams.delete(filter);
-      return handleRoute();
+  function handleFilter(name: string, value: string) {
+    const current = searchParams.get(name);
+
+    if (current === value) {
+      return deleteQueryString(name);
     }
 
-    url?.searchParams.append(filter, value);
-    handleRoute();
-  }
-
-  type PriceOption = (typeof priceOptions)[number];
-
-  function handlePriceChange(price: PriceOption) {
-    if (!price) {
-      url?.searchParams.delete("price");
-      return handleRoute();
-    }
-
-    const { from, to } = price;
-    url?.searchParams.set("price", `${from}-${to}`);
-    handleRoute();
+    createQueryString(name, value);
   }
 
   function listSpecifications() {
@@ -57,21 +44,20 @@ export default function FilterPanel({
 
     for (const spec in specifications) {
       const title = spec.split("_").join(" ");
-      console.log("spec", spec);
 
       sections.push(
         <div className={styles.content} key={crypto.randomUUID()}>
           <h3>{title}</h3>
           <ul>
-            {specifications[spec].map((s) => (
-              <li key={s}>
+            {specifications[spec].map((value) => (
+              <li key={value}>
                 <input
-                  checked={[searchParams[spec]].includes(s)}
+                  checked={searchParams.get(spec) === value}
                   type="checkbox"
-                  id={s}
-                  onChange={() => handleFilter(spec, s)}
+                  id={value}
+                  onChange={() => handleFilter(spec, value)}
                 />
-                <label htmlFor={s}>{s}</label>
+                <label htmlFor={value}>{value}</label>
               </li>
             ))}
           </ul>
@@ -100,14 +86,8 @@ export default function FilterPanel({
 
       <div className={styles.content}>
         <h3>Price (€)</h3>
-        <ReactSelect
-          isClearable
-          placeholder="Show all"
-          value={currentPrice}
-          options={priceOptions}
-          onChange={(price) => handlePriceChange(price as PriceOption)}
-          styles={selectStyles}
-        />
+        <PriceSlider prices={prices} />
+        {/* <PriceSelect onChange={handlePriceChange} /> */}
       </div>
 
       <div className={styles.filter_options}>
@@ -118,7 +98,7 @@ export default function FilterPanel({
             {brands.map((item) => (
               <li key={item.brand}>
                 <input
-                  checked={searchParams?.brand === item.brand}
+                  checked={searchParams.get("brand") === item.brand}
                   type="checkbox"
                   name={item.brand}
                   id={item.brand}

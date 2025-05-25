@@ -8,13 +8,13 @@ import FilterPanel from "./products-filter-panel/products-filter-panel";
 
 interface ProductsFilterProps {
   specifications: Record<string, any[]>;
-  searchParams: Record<string, string>;
+  prices: { from: number; to: number };
   brands: BrandOptions[];
 }
 
 export default function ProductsFilter({
   specifications,
-  searchParams,
+  prices,
   brands,
 }: ProductsFilterProps) {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,7 +25,7 @@ export default function ProductsFilter({
       <div className={styles.desktop}>
         <FilterPanel
           specifications={specifications}
-          searchParams={searchParams}
+          prices={prices}
           brands={brands}
         />
       </div>
@@ -35,8 +35,8 @@ export default function ProductsFilter({
         {isOpen ? (
           <FilterPanel
             specifications={specifications}
-            searchParams={searchParams}
             setIsOpen={setIsOpen}
+            prices={prices}
             brands={brands}
           />
         ) : (

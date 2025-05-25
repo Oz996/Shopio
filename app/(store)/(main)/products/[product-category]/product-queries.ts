@@ -77,16 +77,12 @@ export async function getSpecs(
 
   for (const key of Object.keys(results[0][type])) {
     if (key !== "id" && key !== "productId") {
+      // using Sets to avoid duplicate values, later converting them to arrays
       specs[key] = new Set();
     }
   }
 
   const specValues = results.map((object) => object[type]);
-
-  // using Sets to avoid duplicate values, later converting them to arrays
-  for (const key of Object.keys(specs)) {
-    specs[key] = new Set();
-  }
 
   for (const spec of specValues) {
     for (const key in spec) {

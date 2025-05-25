@@ -5,7 +5,7 @@
   flex-direction: column;
   gap: 0.3rem;
 
-  min-width: 18rem;
+  width: 18rem;
   background: #fff;
   padding: 1rem;
 
@@ -15,6 +15,10 @@
   h2 {
     font-weight: 500;
     font-size: 18px;
+  }
+
+  @include tablet {
+    width: auto;
   }
 }
 

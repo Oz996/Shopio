@@ -1,5 +1,5 @@
 import { Product } from "@prisma/client";
-import { productCategories } from "./constants";
+import { priceOptions, productCategories } from "./constants";
 
 export type ProductCardType = Pick<
   Product,
@@ -22,5 +22,7 @@ export interface BrandOptions {
 }
 
 export type ProductCategory = Lowercase<(typeof productCategories)[number]>;
+
+export type PriceOption = (typeof priceOptions)[number];
 
 export type FeaturedType = "featured" | "popular";

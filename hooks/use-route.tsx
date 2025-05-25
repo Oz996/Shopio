@@ -1,25 +1,24 @@
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 export default function useRoute() {
-  const [url, setUrl] = useState<URL>();
-
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const currentUrl = new URL(window.location.href);
-      setUrl(currentUrl);
-    }
-  }, []);
+  function createQueryString(name: string, value: string) {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set(name, value);
+    router.push(`${pathname}?${params}`, { scroll: false });
+  }
 
-  function handleRoute() {
-    return router.push(url?.toString() as string, { scroll: false });
+  function deleteQueryString(name: string) {
+    const params = new URLSearchParams(searchParams.toString());
+    params.delete(name);
+    router.push(`${pathname}?${params}`, { scroll: false });
   }
 
   return {
-    url,
-    setUrl,
-    handleRoute,
+    createQueryString,
+    deleteQueryString,
   };
 }

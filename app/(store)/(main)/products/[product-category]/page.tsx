@@ -31,11 +31,17 @@ export default async function Products({
     specificationsData,
   ]);
 
+  const sort = products.toSorted((a, b) => a.price - b.price);
+  const prices = {
+    from: sort[0]?.price,
+    to: sort[sort.length - 1]?.price,
+  };
+
   return (
     <section className={styles.section}>
       <ProductsFilter
         specifications={specifications}
-        searchParams={await searchParams}
+        prices={prices}
         brands={brands}
       />
       <ProductList products={products} />
