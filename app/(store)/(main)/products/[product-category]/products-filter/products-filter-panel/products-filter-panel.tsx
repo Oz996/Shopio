@@ -85,7 +85,6 @@ export default function FilterPanel({
       </div>
 
       <div className={styles.content}>
-        <h3>Price (€)</h3>
         <PriceSlider prices={prices} />
         {/* <PriceSelect onChange={handlePriceChange} /> */}
       </div>

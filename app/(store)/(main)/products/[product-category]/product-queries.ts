@@ -12,7 +12,7 @@ export function searchParamsConstructor(
 ) {
   const where: QueryType = {
     category,
-    price: { gt: 0, lt: 100_000_000_000 },
+    price: { gte: 0, lte: 100_000_000_000 },
     description: {
       contains: "",
     },
@@ -33,11 +33,11 @@ export function searchParamsConstructor(
 
   if (price) {
     const prices = price?.split("-");
-    const priceFrom = Number(prices[0]);
-    const priceTo = Number(prices[1]);
+    const priceFrom = Number(prices[0]) - 1;
+    const priceTo = Number(prices[1]) + 1;
 
-    where.price.gt = priceFrom;
-    where.price.lt = priceTo;
+    where.price.gte = priceFrom;
+    where.price.lte = priceTo;
   }
 
   return where;
@@ -102,7 +102,7 @@ type Specification = "monitor" | "headphone";
 interface QueryType {
   category: string;
   brand?: string;
-  price: { gt: number; lt: number };
+  price: { gte: number; lte: number };
   description: {
     contains: string;
   };

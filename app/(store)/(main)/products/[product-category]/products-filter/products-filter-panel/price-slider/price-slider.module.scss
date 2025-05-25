@@ -1,5 +1,17 @@
 @use "@/sass" as *;
 
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  button {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+  }
+}
+
 .inputs {
   display: flex;
   align-items: center;
