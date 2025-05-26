@@ -1,56 +1,23 @@
-import { useEffect, useState } from "react";
 import styles from "./price-slider.module.scss";
 import * as Slider from "@radix-ui/react-slider";
-import useRoute from "@/hooks/use-route";
 import { RotateCcw } from "lucide-react";
+import usePriceFilter from "./hooks/use-price-filter";
 
 interface PriceSliderProps {
   prices: { from: number; to: number };
 }
 
 export default function PriceSlider({ prices }: PriceSliderProps) {
-  const [priceState, setPriceState] = useState({
-    from: prices.from,
-    to: prices.to,
-    selected: false,
-  });
+  const {
+    priceState,
+    initialPrice,
+    handleToChange,
+    handleFromChange,
+    handleSliderCommit,
+    handleSliderChange,
+  } = usePriceFilter(prices);
 
   const { from, to } = priceState;
-  const { createQueryString, deleteQueryString } = useRoute();
-
-  useEffect(() => {
-    if (!priceState.selected) {
-      setPriceState({
-        from: prices.from,
-        to: prices.to,
-        selected: false,
-      });
-    }
-  }, [prices]);
-
-  function handleChange(values: number[]) {
-    const from = values[0];
-    const to = values[1];
-
-    setPriceState({ from, to, selected: true });
-  }
-
-  function handleCommit(values: number[]) {
-    const from = values[0];
-    const to = values[1];
-
-    createQueryString("price", `${from}-${to}`);
-    setPriceState((prev) => ({ ...prev, selected: true }));
-  }
-
-  function initialPrice() {
-    setPriceState({
-      from: prices.from,
-      to: prices.to,
-      selected: false,
-    });
-    deleteQueryString("price");
-  }
 
   return (
     <div className={styles.wrapper}>
@@ -74,9 +41,18 @@ export default function PriceSlider({ prices }: PriceSliderProps) {
           name="from"
           value={from}
           aria-label="Price from input"
+          onChange={handleFromChange}
         />
+
         <span>-</span>
-        <input type="number" name="to" value={to} aria-label="Price to input" />
+
+        <input
+          type="number"
+          name="to"
+          value={to}
+          aria-label="Price to input"
+          onChange={handleToChange}
+        />
       </div>
 
       <Slider.Root
@@ -86,8 +62,8 @@ export default function PriceSlider({ prices }: PriceSliderProps) {
         value={[from, to]}
         className={styles.root}
         minStepsBetweenThumbs={10}
-        onValueChange={handleChange}
-        onValueCommit={handleCommit}
+        onValueChange={handleSliderChange}
+        onValueCommit={handleSliderCommit}
       >
         <Slider.Track className={styles.track}>
           <Slider.Range className={styles.range} />
