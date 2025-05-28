@@ -13,3 +13,12 @@ export const priceOptions = [
   { label: "2000 to 5000", from: 2000, to: 5000 },
   { label: "5000 and above", from: 5000, to: 100_000_000_000 },
 ] as const;
+
+export const sortOptions = [
+  { label: "Recommended", value: "recommended" },
+  { label: "Popularity", value: "popularity" },
+  { label: "Price asc", value: "price_asc" },
+  { label: "Price desc", value: "price_desc" },
+  { label: "Name asc", value: "name_asc" },
+  { label: "Name desc", value: "name_desc" },
+] as const;

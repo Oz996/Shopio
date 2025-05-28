@@ -4,17 +4,25 @@ import * as Select from "@radix-ui/react-select";
 import { ChevronDown, Check } from "lucide-react";
 import styles from "./custom-select.module.scss";
 
-const options = [
-  { value: "apple", label: "Apple" },
-  { value: "banana", label: "Banana" },
-  { value: "grape", label: "Grape" },
-];
+interface CustomSelectProps {
+  options: OptionsType;
+  onChange: (value: string) => void;
+  value?: string;
+  placeholder?: string;
+}
 
-export default function CustomSelect() {
+type OptionsType = readonly { label: string; value: string }[];
+
+export default function CustomSelect({
+  options,
+  onChange,
+  value,
+  placeholder,
+}: CustomSelectProps) {
   return (
-    <Select.Root onValueChange={(value) => console.log("value", value)}>
+    <Select.Root onValueChange={onChange} value={value}>
       <Select.Trigger className={styles.trigger}>
-        <Select.Value placeholder="Select a fruit" />
+        <Select.Value />
         <Select.Icon className={styles.icon}>
           <ChevronDown size={16} />
         </Select.Icon>
@@ -28,6 +36,7 @@ export default function CustomSelect() {
           <Select.Viewport className={styles.viewport}>
             {options.map((option) => (
               <Select.Item
+                aria-label={`Sort by ${option.label}`}
                 key={option.label}
                 value={option.value}
                 className={styles.item}

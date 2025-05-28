@@ -19,8 +19,8 @@ export default async function Products({
   const { ...args } = await searchParams;
   const { "product-category": category } = await params;
 
-  const where = searchParamsConstructor(category, args);
-  const productsData = productsQuery(where);
+  const { where, orderBy } = searchParamsConstructor(category, args);
+  const productsData = productsQuery(where, orderBy);
 
   const brandData = productsBrands(category);
   const specificationsData = getSpecs(category);

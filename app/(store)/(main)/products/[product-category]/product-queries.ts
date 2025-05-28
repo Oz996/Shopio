@@ -1,3 +1,4 @@
+import { sortOptions } from "@/lib/constants";
 import prisma from "@/lib/prisma/prisma";
 import { productCardSelect } from "@/lib/prisma/selects";
 import { BrandOptions, ProductCardType, ProductCategory } from "@/lib/types";
@@ -18,7 +19,7 @@ export function searchParamsConstructor(
     },
   };
 
-  const { brand, price, ...specs } = args;
+  const { brand, price, sort, ...specs } = args;
 
   // assigning specs dynamically
   const type = category.slice(0, -1) as Specification;
@@ -40,15 +41,40 @@ export function searchParamsConstructor(
     where.price.lte = priceTo;
   }
 
-  return where;
+  // sorting logic
+
+  let orderBy: Record<string, OrderByOptions | {}> = { createdAt: "asc" };
+
+  if (sort) {
+    let type = sort;
+    let order = "";
+
+    if (sort.includes("name")) type = "brand";
+    if (sort.includes("price")) type = "price";
+
+    if (sort.endsWith("asc")) order = "asc";
+    if (sort.endsWith("desc")) order = "desc";
+
+    if (sort === "popularity") {
+      orderBy = { reviews: { _count: "desc" } };
+    } else if (sort === "recommended") {
+      orderBy = { createdAt: "asc" };
+    } else {
+      orderBy = { [type]: order };
+    }
+  }
+
+  return { where, orderBy };
 }
 
 export async function productsQuery(
-  query: QueryType
+  query: QueryType,
+  orderBy?: any
 ): Promise<ProductCardType[]> {
   return await prisma.product.findMany({
     where: query,
     select,
+    orderBy,
   });
 }
 
@@ -98,6 +124,8 @@ export async function getSpecs(
 }
 
 type Specification = "monitor" | "headphone";
+
+type OrderByOptions = (typeof sortOptions)[number]["value"];
 
 interface QueryType {
   category: string;

@@ -5,6 +5,8 @@ import { BrandOptions } from "@/lib/types";
 import PriceSlider from "./price-slider/price-slider";
 import { useSearchParams } from "next/navigation";
 import useRoute from "@/hooks/use-route";
+import CustomSelect from "@/components/custom-select/custom-select";
+import { sortOptions } from "@/lib/constants";
 
 interface FilterPanelProps {
   specifications: Record<string, any[]>;
@@ -33,6 +35,12 @@ export default function FilterPanel({
     createQueryString(name, value);
   }
 
+  function handleSort(value: string) {
+    createQueryString("sort", value);
+  }
+
+  const sortValue = searchParams.get("sort") ?? "recommended";
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -47,6 +55,15 @@ export default function FilterPanel({
             <X size={20} />
           </button>
         )}
+      </div>
+
+      <div className={styles.content}>
+        <h3>Sort</h3>
+        <CustomSelect
+          options={sortOptions}
+          onChange={handleSort}
+          value={sortValue as string}
+        />
       </div>
 
       <div className={styles.content}>
