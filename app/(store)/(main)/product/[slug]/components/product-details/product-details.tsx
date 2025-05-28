@@ -1,8 +1,6 @@
 import { Product } from "@prisma/client";
 import styles from "./product-details.module.scss";
 import ProductOptions from "../product-options/product-options";
-import Link from "next/link";
-import { ChevronRight } from "lucide-react";
 import { Suspense } from "react";
 import ProductRatingSkeleton from "@/components/skeletons/product-rating/product-rating-skeleton";
 import ProductReviews from "../product-reviews/product-reviews";
@@ -25,18 +23,6 @@ export default async function ProductDetails({ product }: ProductDetailsProps) {
       <span className={styles.price}>€ {product.price}</span>
 
       <ProductOptions product={product} />
-
-      <div className={styles.links}>
-        <Link href={`/products/${product.brand}`}>
-          Browse more from <span>{product.brand}</span>
-          <ChevronRight size={15} />
-        </Link>
-
-        <Link href={`/products/${product.category}`}>
-          {`Browse all ${product.category}`}
-          <ChevronRight size={15} />
-        </Link>
-      </div>
     </div>
   );
 }

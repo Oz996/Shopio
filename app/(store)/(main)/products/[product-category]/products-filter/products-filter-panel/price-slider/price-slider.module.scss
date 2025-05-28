@@ -19,8 +19,18 @@
   gap: 0.5rem;
 
   input {
+    border: 1px solid rgb(224, 224, 224);
+    border-radius: 5px;
+
     width: 100%;
-    padding: 0.3rem;
+    padding: 0.5rem;
+    text-align: center;
+  }
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
   }
 }
 
@@ -35,7 +45,7 @@
 }
 
 .track {
-  background-color: rgb(228, 228, 228);
+  background-color: rgb(227, 227, 227);
   position: relative;
   flex-grow: 1;
   border-radius: 9999px;
@@ -57,11 +67,11 @@
   box-shadow: 0 2px 10px rgb(107, 107, 107);
   border-radius: 10px;
   transition: 0.3s;
+  box-shadow: 0 0 0 2px black;
   &:hover {
     background-color: black;
   }
   &:focus {
     outline: none;
-    box-shadow: 0 0 0 2px black;
   }
 }

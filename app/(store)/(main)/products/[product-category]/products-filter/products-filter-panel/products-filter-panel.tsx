@@ -1,6 +1,5 @@
 import { SlidersHorizontal, X } from "lucide-react";
 import styles from "./products-filter-panel.module.scss";
-import { priceOptions } from "@/lib/constants";
 import { Dispatch, SetStateAction } from "react";
 import { BrandOptions } from "@/lib/types";
 import PriceSlider from "./price-slider/price-slider";
@@ -20,14 +19,9 @@ export default function FilterPanel({
   prices,
   brands,
 }: FilterPanelProps) {
-  const { from, to } = prices;
-
   const searchParams = useSearchParams();
 
   const { createQueryString, deleteQueryString } = useRoute();
-
-  const price = searchParams.get("price")?.split("-");
-  const currentPrice = priceOptions?.find((p) => p.from == Number(price?.[0]));
 
   function handleFilter(name: string, value: string) {
     const current = searchParams.get(name);
@@ -38,6 +32,50 @@ export default function FilterPanel({
 
     createQueryString(name, value);
   }
+
+  return (
+    <div className={styles.container}>
+      <div className={styles.header}>
+        <SlidersHorizontal size={18} />
+        <h2>Filter</h2>
+
+        {setIsOpen && (
+          <button
+            onClick={() => setIsOpen(false)}
+            aria-label="Close filter options"
+          >
+            <X size={20} />
+          </button>
+        )}
+      </div>
+
+      <div className={styles.content}>
+        <PriceSlider prices={prices} />
+      </div>
+
+      <div className={styles.filter_options}>
+        <div className={styles.content}>
+          <h3>Brands</h3>
+
+          <ul>
+            {brands.map((item) => (
+              <li key={item.brand}>
+                <input
+                  checked={searchParams.get("brand") === item.brand}
+                  type="checkbox"
+                  name={item.brand}
+                  id={item.brand}
+                  onChange={() => handleFilter("brand", item.brand)}
+                />
+                <label htmlFor={item.brand}>{item.brand}</label>
+              </li>
+            ))}
+          </ul>
+        </div>
+        {listSpecifications()}
+      </div>
+    </div>
+  );
 
   function listSpecifications() {
     const sections = [];
@@ -67,49 +105,4 @@ export default function FilterPanel({
 
     return sections;
   }
-
-  return (
-    <div className={styles.container}>
-      <div className={styles.header}>
-        <SlidersHorizontal size={18} />
-        <h2>Filter</h2>
-
-        {setIsOpen && (
-          <button
-            onClick={() => setIsOpen(false)}
-            aria-label="Close filter options"
-          >
-            <X size={20} />
-          </button>
-        )}
-      </div>
-
-      <div className={styles.content}>
-        <PriceSlider prices={prices} />
-        {/* <PriceSelect onChange={handlePriceChange} /> */}
-      </div>
-
-      <div className={styles.filter_options}>
-        <div className={styles.content}>
-          <h3>Brands</h3>
-
-          <ul>
-            {brands.map((item) => (
-              <li key={item.brand}>
-                <input
-                  checked={searchParams.get("brand") === item.brand}
-                  type="checkbox"
-                  name={item.brand}
-                  id={item.brand}
-                  onChange={() => handleFilter("brand", item.brand)}
-                />
-                <label htmlFor={item.brand}>{item.brand}</label>
-              </li>
-            ))}
-          </ul>
-        </div>
-        {listSpecifications()}
-      </div>
-    </div>
-  );
 }

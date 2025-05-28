@@ -32,32 +32,6 @@
   font-weight: 700;
 }
 
-.links {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-
-  a {
-    font-size: 13px;
-    display: flex;
-    align-items: center;
-
-    span {
-      padding-left: 0.2rem;
-      text-transform: capitalize;
-    }
-
-    svg {
-      margin-left: 0.1rem;
-      transition: 0.4s ease;
-    }
-
-    &:hover svg {
-      transform: translateX(1px);
-    }
-  }
-}
-
 .list {
   list-style: circle;
   padding-left: 1rem;

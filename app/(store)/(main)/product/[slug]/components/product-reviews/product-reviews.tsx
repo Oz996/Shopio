@@ -19,7 +19,6 @@ export default async function ProductReviews({ product }: ProductReviewsProps) {
       <div className={styles.content}>
         <ProductRating rating={product.rating} />
         <ProductReviewSheet product={product} reviews={reviews} />
-
         <ProductReviewForm product={product} />
       </div>
     </div>

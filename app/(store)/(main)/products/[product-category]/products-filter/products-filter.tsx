@@ -2,7 +2,7 @@
 
 import styles from "./products-filter.module.scss";
 import { useState } from "react";
-import { BrandOptions } from "@/lib/types";
+import { BrandOptions, ProductCardType } from "@/lib/types";
 import { SlidersHorizontal } from "lucide-react";
 import FilterPanel from "./products-filter-panel/products-filter-panel";
 
