@@ -2,6 +2,7 @@ import { sortOptions } from "@/lib/constants";
 import prisma from "@/lib/prisma/prisma";
 import { productCardSelect } from "@/lib/prisma/selects";
 import { BrandOptions, ProductCardType, ProductCategory } from "@/lib/types";
+import { removeDuplicates } from "@/lib/utils";
 
 const select = {
   ...productCardSelect,
@@ -92,6 +93,7 @@ export async function getSpecs(
   category: ProductCategory
 ): Promise<Record<string, string[]>> {
   const type = category.slice(0, -1);
+
   const results = await prisma.product.findMany({
     where: { category },
     select: {
@@ -99,29 +101,35 @@ export async function getSpecs(
     },
   });
 
-  const specs: Record<string, Set<any> | string[]> = {};
+  const specs: Record<string, string[]> = {};
 
+  // creating an empty array in the specs object for each type of specialization found
   for (const key of Object.keys(results[0][type])) {
     if (key !== "id" && key !== "productId") {
-      // using Sets to avoid duplicate values, later converting them to arrays
-      specs[key] = new Set();
+      specs[key] = [];
     }
   }
 
+  // extracting values from each products category data
   const specValues = results.map((object) => object[type]);
 
+  // type checking and making sure a value exists before assigning it to its array
   for (const spec of specValues) {
     for (const key in spec) {
-      if (specs[key] && !Array.isArray(specs[key])) specs[key].add(spec[key]);
+      if (specs[key] && typeof spec[key] === "string")
+        specs[key].push(spec[key]);
     }
   }
 
-  for (const spec of Object.keys(specs)) {
-    specs[spec] = Array.from(specs[spec]);
+  // removing any duplicate values
+  for (const [key, value] of Object.entries(specs)) {
+    specs[key] = removeDuplicates(value);
   }
 
-  return specs as Record<string, string[]>;
+  return specs;
 }
+
+//
 
 type Specification = "monitor" | "headphone";
 
