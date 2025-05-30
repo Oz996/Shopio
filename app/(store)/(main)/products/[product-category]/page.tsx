@@ -6,8 +6,9 @@ import {
   productsBrands,
   productsQuery,
   searchParamsConstructor,
+  sortResults,
 } from "./product-queries";
-import { ProductCategory } from "@/lib/types";
+import { ProductCategory, SortValue } from "@/lib/types";
 
 export default async function Products({
   params,
@@ -19,9 +20,10 @@ export default async function Products({
   const { ...args } = await searchParams;
   const { "product-category": category } = await params;
 
-  const { where, orderBy } = searchParamsConstructor(category, args);
-  const productsData = productsQuery(where, orderBy);
+  const where = searchParamsConstructor(category, args);
+  const orderBy = sortResults(args.sort as SortValue);
 
+  const productsData = productsQuery(where, orderBy);
   const brandData = productsBrands(category);
   const specificationsData = getSpecs(category);
 

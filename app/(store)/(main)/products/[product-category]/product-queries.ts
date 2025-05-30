@@ -1,12 +1,18 @@
-import { sortOptions } from "@/lib/constants";
 import prisma from "@/lib/prisma/prisma";
 import { productCardSelect } from "@/lib/prisma/selects";
-import { BrandOptions, ProductCardType, ProductCategory } from "@/lib/types";
+import {
+  BrandOptions,
+  ProductCardType,
+  ProductCategory,
+  SortValue,
+} from "@/lib/types";
 import { removeDuplicates } from "@/lib/utils";
-
-const select = {
-  ...productCardSelect,
-};
+import {
+  HeadphoneDetails,
+  LaptopDetails,
+  MonitorDetails,
+  Prisma,
+} from "@prisma/client";
 
 export function searchParamsConstructor(
   category: ProductCategory,
@@ -35,37 +41,38 @@ export function searchParamsConstructor(
 
   if (price) {
     const prices = price?.split("-");
-    const priceFrom = Number(prices[0]) - 1;
-    const priceTo = Number(prices[1]) + 1;
+    const priceFrom = Number(prices[0]);
+    const priceTo = Number(prices[1]);
 
     where.price.gte = priceFrom;
     where.price.lte = priceTo;
   }
 
-  // sorting logic
+  return where;
+}
 
-  let orderBy: Record<string, OrderByOptions | {}> = { createdAt: "asc" };
+export function sortResults(
+  value: SortValue
+): Prisma.ProductOrderByWithRelationInput | undefined {
+  if (!value) return;
 
-  if (sort) {
-    let type = sort;
-    let order = "";
-
-    if (sort.includes("name")) type = "brand";
-    if (sort.includes("price")) type = "price";
-
-    if (sort.endsWith("asc")) order = "asc";
-    if (sort.endsWith("desc")) order = "desc";
-
-    if (sort === "popularity") {
-      orderBy = { reviews: { _count: "desc" } };
-    } else if (sort === "recommended") {
-      orderBy = { createdAt: "asc" };
-    } else {
-      orderBy = { [type]: order };
-    }
+  if (value === "recommended") {
+    return { createdAt: "asc" };
   }
 
-  return { where, orderBy };
+  if (value === "popularity") {
+    return { reviews: { _count: "desc" } };
+  }
+
+  if (value.includes("name")) {
+    if (value.endsWith("asc")) return { brand: "asc" };
+    else return { brand: "desc" };
+  }
+
+  if (value.includes("price")) {
+    if (value.endsWith("asc")) return { price: "asc" };
+    else return { price: "desc" };
+  }
 }
 
 export async function productsQuery(
@@ -74,7 +81,7 @@ export async function productsQuery(
 ): Promise<ProductCardType[]> {
   return await prisma.product.findMany({
     where: query,
-    select,
+    select: { ...productCardSelect },
     orderBy,
   });
 }
@@ -131,9 +138,7 @@ export async function getSpecs(
 
 //
 
-type Specification = "monitor" | "headphone";
-
-type OrderByOptions = (typeof sortOptions)[number]["value"];
+type Specification = "monitor" | "headphone" | "laptop";
 
 interface QueryType {
   category: string;
@@ -142,24 +147,7 @@ interface QueryType {
   description: {
     contains: string;
   };
-  monitor?:
-    | {
-        id: string;
-        resolution: string;
-        refresh_rate: string;
-        panel_type: string;
-        productId: string;
-      }
-    | {}
-    | null;
-  headphone?:
-    | {
-        id?: string;
-        connection?: string;
-        battery_life?: string;
-        noise_cancelling?: string;
-        productId?: string;
-      }
-    | {}
-    | null;
+  monitor?: MonitorDetails | {};
+  headphone?: HeadphoneDetails | {};
+  laptop?: LaptopDetails | {};
 }
