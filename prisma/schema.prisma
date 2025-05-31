@@ -74,7 +74,7 @@ model LaptopDetails {
   ram           String
   resolution    String 
   screen_size   String
-  product           Product   @relation(fields: [productId], references: [id])
-  productId         String    @unique @db.ObjectId
+  product       Product   @relation(fields: [productId], references: [id])
+  productId     String    @unique @db.ObjectId
   @@map("laptop-details")
 }

@@ -5,18 +5,18 @@ import { ChevronDown, Check } from "lucide-react";
 import styles from "./custom-select.module.scss";
 
 interface CustomSelectProps {
+  value?: string;
   options: OptionsType;
   onChange: (value: string) => void;
-  value?: string;
   placeholder?: string;
 }
 
 type OptionsType = readonly { label: string; value: string }[];
 
 export default function CustomSelect({
+  value,
   options,
   onChange,
-  value,
   placeholder,
 }: CustomSelectProps) {
   return (
