@@ -22,6 +22,7 @@ model Product {
   featured    Boolean?
   reviews     Review[]
   laptop      LaptopDetails?
+  tablet      TabletDetails?
   monitor     MonitorDetails?
   headphone   HeadphoneDetails?
   rating      Float
@@ -77,4 +78,14 @@ model LaptopDetails {
   product       Product   @relation(fields: [productId], references: [id])
   productId     String    @unique @db.ObjectId
   @@map("laptop-details")
+}
+
+model TabletDetails {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  storage       String
+  resolution    String 
+  screen_size   String
+  product       Product   @relation(fields: [productId], references: [id])
+  productId     String    @unique @db.ObjectId
+  @@map("tablet-details")
 }

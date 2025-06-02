@@ -12,6 +12,7 @@ import {
   LaptopDetails,
   MonitorDetails,
   Prisma,
+  TabletDetails,
 } from "@prisma/client";
 
 export function searchParamsConstructor(
@@ -138,7 +139,7 @@ export async function getSpecs(
 
 //
 
-type Specification = "monitor" | "headphone" | "laptop";
+type Specification = "monitor" | "headphone" | "laptop" | "tablet";
 
 interface QueryType {
   category: string;
@@ -150,4 +151,5 @@ interface QueryType {
   monitor?: MonitorDetails | {};
   headphone?: HeadphoneDetails | {};
   laptop?: LaptopDetails | {};
+  tablet?: TabletDetails | {};
 }
