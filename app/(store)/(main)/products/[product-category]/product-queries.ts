@@ -8,12 +8,10 @@ import {
 } from "@/lib/types";
 import { removeDuplicates } from "@/lib/utils";
 import {
-  HeadphoneDetails,
-  LaptopDetails,
-  MonitorDetails,
-  Prisma,
-  TabletDetails,
-} from "@prisma/client";
+  QueryType,
+  SortReturnValue,
+  Specification,
+} from "./product-query-types";
 
 export function searchParamsConstructor(
   category: ProductCategory,
@@ -52,9 +50,7 @@ export function searchParamsConstructor(
   return where;
 }
 
-export function sortResults(
-  value: SortValue
-): Prisma.ProductOrderByWithRelationInput | undefined {
+export function sortResults(value: SortValue): SortReturnValue {
   if (!value) return;
 
   if (value === "recommended") {
@@ -138,18 +134,3 @@ export async function getSpecs(
 }
 
 //
-
-type Specification = "monitor" | "headphone" | "laptop" | "tablet";
-
-interface QueryType {
-  category: string;
-  brand?: string;
-  price: { gte: number; lte: number };
-  description: {
-    contains: string;
-  };
-  monitor?: MonitorDetails | {};
-  headphone?: HeadphoneDetails | {};
-  laptop?: LaptopDetails | {};
-  tablet?: TabletDetails | {};
-}
