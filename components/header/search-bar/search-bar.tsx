@@ -11,14 +11,16 @@ import { searchProducts } from "./client-api";
 import { Search } from "lucide-react";
 import { usePathname } from "next/navigation";
 import SearchList from "./search-list/search-list";
+import { useDebounce } from "use-debounce";
 
 const queryClient = new QueryClient();
 
 export default function SearchBar() {
   const [value, setValue] = useState("");
+  const [debouncedValue] = useDebounce(value, 300);
 
   const { data: products, isLoading } = useQuery({
-    queryKey: ["search", value],
+    queryKey: ["search", debouncedValue],
     queryFn: () => searchProducts(value),
     enabled: !!value,
   });
@@ -43,6 +45,7 @@ export default function SearchBar() {
           placeholder="Search for products"
           className={styles.input}
         />
+
         <Search className={styles.icon_search} size={20} />
 
         {value && <SearchList products={products} isLoading={isLoading} />}

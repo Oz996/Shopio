@@ -36,6 +36,7 @@ export default function SearchList({ products, isLoading }: SearchListProps) {
               <div className={styles.image_wrapper}>
                 <Image src={product.thumbnails[0]} alt="" fill />
               </div>
+
               <div className={styles.content}>
                 <span
                   className={styles.title}
@@ -44,6 +45,7 @@ export default function SearchList({ products, isLoading }: SearchListProps) {
                   {product.description}
                 </span>
               </div>
+
               <span className={styles.price}>€{product.price}</span>
             </Link>
           </li>
