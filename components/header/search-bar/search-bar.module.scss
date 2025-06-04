@@ -1,0 +1,39 @@
+@use "@/sass" as *;
+
+.input_div {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+
+  position: relative;
+}
+
+.icon_search {
+  position: absolute;
+  right: 25px;
+  color: grey;
+
+  @include mobile {
+    right: 10px;
+  }
+}
+
+.input {
+  width: 100%;
+  padding-block: 0.8rem;
+  padding-inline: 2rem;
+  border: none;
+  font-family: var(--font-inter);
+
+  @include mobile {
+    padding-inline: 1rem;
+  }
+
+  &:focus {
+    outline: 1px solid $dark-grey;
+  }
+
+  &::placeholder {
+    color: rgb(150, 150, 150);
+  }
+}

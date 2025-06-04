@@ -1,0 +1,38 @@
+@use "@/sass" as *;
+
+.wrapper {
+  display: flex;
+  align-items: center;
+
+  gap: 1rem;
+  padding: 1rem;
+
+  .image {
+    width: 4rem;
+    height: 2.5rem;
+
+    @include skeleton;
+    border-radius: 2px;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    div {
+      @include skeleton;
+      border-radius: 2px;
+    }
+
+    div:first-child {
+      width: 12rem;
+      height: 0.6rem;
+    }
+
+    div:last-child {
+      width: 16rem;
+      height: 0.6rem;
+    }
+  }
+}
