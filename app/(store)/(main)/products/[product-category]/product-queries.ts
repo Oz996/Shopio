@@ -32,31 +32,43 @@ export function searchParamsConstructor(
   const type = category.slice(0, -1) as Specification;
 
   // querying DB based on if value is a string or an array to handle filtering by multiple values for same query key.
-  // works but filtering breaks sometimes, best i could do.
+  // works but filtering breaks sometimes due to needing complex AND and OR relations, best i could do.
+
+  const OR: any[] = [];
 
   for (const spec in specs) {
     if (Array.isArray(specs[spec])) {
-      where.OR = specs[spec].map((s) => ({
-        [type]: { [spec]: { contains: s, mode: "insensitive" } },
-      }));
+      for (const s of specs[spec]) {
+        const obj = {
+          [type]: { [spec]: { contains: s, mode: "insensitive" } },
+        };
+        OR.push(obj);
+      }
     } else {
-      where.OR = [
-        ...(where.OR ?? []),
-        {
-          [type]: {
-            [spec]: { contains: specs[spec], mode: "insensitive" },
-          },
+      const obj = {
+        [type]: {
+          [spec]: { contains: specs[spec], mode: "insensitive" },
         },
-      ];
+      };
+
+      OR.push(obj);
     }
   }
 
-  if (Array.isArray(brand)) {
-    where.OR = brand.map((b) => ({
-      brand: { contains: b, mode: "insensitive" },
-    }));
-  } else {
-    where.brand = brand;
+  if (brand) {
+    if (Array.isArray(brand)) {
+      for (const b of brand) {
+        const obj = { brand: { contains: b, mode: "insensitive" } };
+        OR.push(obj);
+      }
+    } else {
+      const obj = { brand: { contains: brand, mode: "insensitive" } };
+      OR.push(obj);
+    }
+  }
+
+  if (OR.length > 0) {
+    where.OR = OR;
   }
 
   if (price) {
