@@ -15,6 +15,7 @@ export interface QueryType {
   description: {
     contains: string;
   };
+  OR?: undefined | any[];
   monitor?: MonitorDetails | {};
   headphone?: HeadphoneDetails | {};
   laptop?: LaptopDetails | {};

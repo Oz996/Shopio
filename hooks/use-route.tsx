@@ -7,13 +7,21 @@ export default function useRoute() {
 
   function createQueryString(name: string, value: string) {
     const params = new URLSearchParams(searchParams.toString());
-    params.set(name, value);
+    params.append(name, value);
+
     router.push(`${pathname}?${params}`, { scroll: false });
   }
 
-  function deleteQueryString(name: string) {
+  function deleteQueryString(name: string, value: string) {
     const params = new URLSearchParams(searchParams.toString());
-    params.delete(name);
+    const keys = params.getAll(name);
+
+    if (keys.length > 1) {
+      params.delete(name, value);
+    } else {
+      params.delete(name);
+    }
+
     router.push(`${pathname}?${params}`, { scroll: false });
   }
 

@@ -26,10 +26,10 @@ export default function FilterPanel({
   const { createQueryString, deleteQueryString } = useRoute();
 
   function handleFilter(name: string, value: string) {
-    const current = searchParams.get(name);
+    const current = searchParams.getAll(name);
 
-    if (current === value) {
-      return deleteQueryString(name);
+    if (current.includes(value)) {
+      return deleteQueryString(name, value);
     }
 
     createQueryString(name, value);
@@ -73,12 +73,11 @@ export default function FilterPanel({
       <div className={styles.filter_options}>
         <div className={styles.content}>
           <h3>Brands</h3>
-
           <ul>
             {brands.map((item) => (
               <li key={item.brand}>
                 <input
-                  checked={searchParams.get("brand") === item.brand}
+                  checked={searchParams.getAll("brand").includes(item.brand)}
                   type="checkbox"
                   name={item.brand}
                   id={item.brand}
@@ -107,7 +106,7 @@ export default function FilterPanel({
             {specifications[spec].map((value) => (
               <li key={value}>
                 <input
-                  checked={searchParams.get(spec) === value}
+                  checked={searchParams.getAll(spec).includes(value)}
                   type="checkbox"
                   id={value}
                   onChange={() => handleFilter(spec, value)}

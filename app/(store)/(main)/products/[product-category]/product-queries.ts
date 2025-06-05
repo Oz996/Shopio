@@ -23,6 +23,7 @@ export function searchParamsConstructor(
     description: {
       contains: "",
     },
+    OR: undefined,
   };
 
   const { brand, price, sort, ...specs } = args;
@@ -30,11 +31,31 @@ export function searchParamsConstructor(
   // assigning specs dynamically
   const type = category.slice(0, -1) as Specification;
 
-  where[type] = {
-    ...specs,
-  };
+  // querying DB based on if value is a string or an array to handle filtering by multiple values for same query key.
+  // works but filtering breaks sometimes, best i could do.
 
-  if (brand) {
+  for (const spec in specs) {
+    if (Array.isArray(specs[spec])) {
+      where.OR = specs[spec].map((s) => ({
+        [type]: { [spec]: { contains: s, mode: "insensitive" } },
+      }));
+    } else {
+      where.OR = [
+        ...(where.OR ?? []),
+        {
+          [type]: {
+            [spec]: { contains: specs[spec], mode: "insensitive" },
+          },
+        },
+      ];
+    }
+  }
+
+  if (Array.isArray(brand)) {
+    where.OR = brand.map((b) => ({
+      brand: { contains: b, mode: "insensitive" },
+    }));
+  } else {
     where.brand = brand;
   }
 
@@ -132,5 +153,3 @@ export async function getSpecs(
 
   return specs;
 }
-
-//
