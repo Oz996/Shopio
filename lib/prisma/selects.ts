@@ -7,12 +7,12 @@ type BooleanValues<T> = {
 type ProductCardSelect = BooleanValues<ProductCardType>;
 
 export const productCardSelect: ProductCardSelect = {
-  brand: true,
   description: true,
   thumbnails: true,
   rating: true,
+  brand: true,
+  price: true,
   name: true,
   slug: true,
-  price: true,
   id: true,
 };

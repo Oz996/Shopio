@@ -9,7 +9,6 @@ import {
   sortResults,
 } from "./product-queries";
 import { ProductCategory, SortValue } from "@/lib/types";
-import prisma from "@/lib/prisma/prisma";
 
 export default async function Products({
   params,
@@ -39,31 +38,6 @@ export default async function Products({
     from: sort[0]?.price,
     to: sort[sort.length - 1]?.price,
   };
-
-  const test1 = await prisma.product.findMany({
-    where: {
-      AND: [
-        {
-          monitor: {
-            resolution: { contains: "5120 x 1440", mode: "insensitive" },
-          },
-        },
-        {
-          monitor: {
-            resolution: { contains: "3440 x 1440", mode: "insensitive" },
-          },
-        },
-        {
-          OR: [
-            { brand: { contains: "apple", mode: "insensitive" } },
-            { brand: { contains: "samsung", mode: "insensitive" } },
-          ],
-        },
-      ],
-    },
-  });
-
-  console.log("test1", test1);
 
   return (
     <section className={styles.section}>

@@ -7,11 +7,16 @@ import SearchListSkeleton from "./search-list-skeleton/search-list-skeleton";
 
 interface SearchListProps {
   products: Product[] | undefined;
-  isLoading: boolean;
+  loading: boolean;
+  error: Error | null;
 }
 
-export default function SearchList({ products, isLoading }: SearchListProps) {
-  if (isLoading)
+export default function SearchList({
+  products,
+  loading,
+  error,
+}: SearchListProps) {
+  if (loading)
     return (
       <SearchListDiv>
         <SearchListSkeleton />
@@ -23,6 +28,15 @@ export default function SearchList({ products, isLoading }: SearchListProps) {
       <SearchListDiv>
         <div className={styles.no_results}>
           <span>No Results</span>
+        </div>
+      </SearchListDiv>
+    );
+
+  if (error)
+    return (
+      <SearchListDiv>
+        <div className={styles.no_results}>
+          <span>{error.message}</span>
         </div>
       </SearchListDiv>
     );

@@ -1,5 +1,4 @@
 import prisma from "@/lib/prisma/prisma";
-import { ProductSlug } from "@/lib/types";
 import styles from "./page.module.scss";
 import ProductImages from "./components/product-images/product-images";
 import ProductDetails from "./components/product-details/product-details";
@@ -36,4 +35,8 @@ export default async function Product({
       </section>
     </>
   );
+}
+
+interface ProductSlug {
+  slug: string;
 }

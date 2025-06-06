@@ -34,7 +34,7 @@ export function searchParamsConstructor(
   // querying DB based on if value is a string or an array to handle filtering by multiple values for same query key.
   // works but filtering breaks sometimes due to needing complex AND and OR relations, best i could do.
 
-  const OR: any[] = [];
+  const OR = [];
 
   for (const spec in specs) {
     if (Array.isArray(specs[spec])) {
@@ -42,6 +42,7 @@ export function searchParamsConstructor(
         const obj = {
           [type]: { [spec]: { contains: s, mode: "insensitive" } },
         };
+
         OR.push(obj);
       }
     } else {
@@ -59,10 +60,12 @@ export function searchParamsConstructor(
     if (Array.isArray(brand)) {
       for (const b of brand) {
         const obj = { brand: { contains: b, mode: "insensitive" } };
+
         OR.push(obj);
       }
     } else {
       const obj = { brand: { contains: brand, mode: "insensitive" } };
+
       OR.push(obj);
     }
   }
@@ -111,7 +114,7 @@ export async function productsQuery(
 ): Promise<ProductCardType[]> {
   return await prisma.product.findMany({
     where: query,
-    select: { ...productCardSelect },
+    select: productCardSelect,
     orderBy,
   });
 }

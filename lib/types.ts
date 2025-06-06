@@ -1,21 +1,17 @@
 import { Product } from "@prisma/client";
-import { priceOptions, productCategories, sortOptions } from "./constants";
+import { productCategories, sortOptions } from "./constants";
 
 export type ProductCardType = Pick<
   Product,
-  | "name"
-  | "slug"
-  | "brand"
   | "description"
   | "thumbnails"
-  | "price"
   | "rating"
+  | "brand"
+  | "price"
+  | "name"
+  | "slug"
   | "id"
 >;
-
-export interface ProductSlug {
-  slug: string;
-}
 
 export interface BrandOptions {
   brand: string;
@@ -24,7 +20,5 @@ export interface BrandOptions {
 export type ProductCategory = Lowercase<(typeof productCategories)[number]>;
 
 export type SortValue = (typeof sortOptions)[number]["value"];
-
-export type PriceOption = (typeof priceOptions)[number];
 
 export type FeaturedType = "featured" | "popular";

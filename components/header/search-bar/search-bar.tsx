@@ -19,7 +19,11 @@ export default function SearchBar() {
   const [value, setValue] = useState("");
   const [debouncedValue] = useDebounce(value, 300);
 
-  const { data: products, isLoading } = useQuery({
+  const {
+    data: products,
+    isLoading,
+    error,
+  } = useQuery({
     queryKey: ["search", debouncedValue],
     queryFn: () => searchProducts(value),
     enabled: !!value,
@@ -48,7 +52,9 @@ export default function SearchBar() {
 
         <Search className={styles.icon_search} size={20} />
 
-        {value && <SearchList products={products} isLoading={isLoading} />}
+        {value && (
+          <SearchList products={products} loading={isLoading} error={error} />
+        )}
       </div>
     </QueryClientProvider>
   );
