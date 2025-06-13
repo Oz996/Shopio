@@ -2,18 +2,12 @@
 
 import styles from "./search-bar.module.scss";
 import { ChangeEvent, useEffect, useState } from "react";
-import {
-  QueryClient,
-  QueryClientProvider,
-  useQuery,
-} from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { searchProducts } from "./client-api";
 import { Search } from "lucide-react";
 import { usePathname } from "next/navigation";
 import SearchList from "./search-list/search-list";
 import { useDebounce } from "use-debounce";
-
-const queryClient = new QueryClient();
 
 export default function SearchBar() {
   const [value, setValue] = useState("");
@@ -40,22 +34,20 @@ export default function SearchBar() {
   }
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <div className={styles.input_div}>
-        <input
-          type="text"
-          value={value}
-          onChange={handleSearch}
-          placeholder="Search for products"
-          className={styles.input}
-        />
+    <div className={styles.input_div}>
+      <input
+        type="text"
+        value={value}
+        onChange={handleSearch}
+        placeholder="Search for products"
+        className={styles.input}
+      />
 
-        <Search className={styles.icon_search} size={20} />
+      <Search className={styles.icon_search} size={20} />
 
-        {value && (
-          <SearchList products={products} loading={isLoading} error={error} />
-        )}
-      </div>
-    </QueryClientProvider>
+      {value && (
+        <SearchList products={products} loading={isLoading} error={error} />
+      )}
+    </div>
   );
 }

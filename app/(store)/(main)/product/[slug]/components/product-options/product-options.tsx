@@ -4,6 +4,7 @@ import { Product } from "@prisma/client";
 import styles from "./product-option.module.scss";
 import { ChangeEvent, useState } from "react";
 import { ShoppingBasket } from "lucide-react";
+import { useCart } from "@/hooks/use-cart";
 
 interface ProductOptionsProps {
   product: Product;
@@ -11,6 +12,8 @@ interface ProductOptionsProps {
 
 export default function ProductOptions({ product }: ProductOptionsProps) {
   const [amount, setAmount] = useState(1);
+
+  const { addToCart } = useCart();
 
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
     setAmount(Number(e.target.value));
@@ -33,7 +36,10 @@ export default function ProductOptions({ product }: ProductOptionsProps) {
         <input type="text" value={amount} onChange={handleChange} />
         <button onClick={incrementAmount}>+</button>
       </div>
-      <button className={styles.add_button}>
+      <button
+        className={styles.add_button}
+        onClick={() => addToCart(product, amount)}
+      >
         Add to Cart <ShoppingBasket size={16} />{" "}
       </button>
     </div>
