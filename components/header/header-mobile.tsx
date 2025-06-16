@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import { productCategories } from "@/lib/constants";
 import { Session } from "next-auth";
 import SignOutButton from "./sign-out-button";
+import SearchBar from "./search-bar/search-bar";
 
 interface HeaderMobileProps {
   authorized: Session | null;
@@ -56,14 +57,8 @@ export default function HeaderMobile({ authorized }: HeaderMobileProps) {
       </div>
 
       <nav className={styles.nav}>
-        <div className={styles.input_div}>
-          <input
-            type="text"
-            placeholder="Search for products"
-            className={styles.input}
-          />
-          <Search className={styles.icon_search} size={20} />
-        </div>
+        <SearchBar />
+
         {isOpen && (
           <div className={styles.nav_mobile} ref={navRef}>
             {productCategories.map((category) => (

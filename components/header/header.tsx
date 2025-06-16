@@ -5,6 +5,7 @@ import HeaderMobile from "./header-mobile";
 import SignOutButton from "./sign-out-button";
 import { Session } from "next-auth";
 import SearchBar from "./search-bar/search-bar";
+import Cart from "./cart/cart";
 
 interface HeaderProps {
   authorized: Session | null;
@@ -20,6 +21,7 @@ export default function Header({ authorized }: HeaderProps) {
               <h2>Shopio</h2>
             </Link>
           </div>
+
           <nav className={styles.nav}>
             <SearchBar />
             <ProductsNavbar />
@@ -30,6 +32,10 @@ export default function Header({ authorized }: HeaderProps) {
               ) : (
                 <Link href="/sign-in">Sign Up / Login</Link>
               )}
+            </div>
+
+            <div className={styles.nav_item}>
+              <Cart />
             </div>
           </nav>
         </div>

@@ -5,6 +5,7 @@
   z-index: 10;
 
   position: absolute;
+  overflow: auto;
   top: 2.9rem;
 
   width: 100%;
@@ -14,7 +15,11 @@
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
 
-  overflow: auto;
+  @include mobile {
+    position: fixed;
+    top: 4.95rem;
+    left: 0;
+  }
 
   ul {
     display: flex;

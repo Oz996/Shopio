@@ -16,6 +16,10 @@
   animation: spin 1s linear infinite;
 }
 
+@mixin grow_in_cart {
+  animation: grow_in 0.2s ease;
+}
+
 @keyframes shimmer {
   0% {
     background-position: 100% 0;
@@ -48,5 +52,14 @@
 @keyframes spin {
   to {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes grow_in {
+  0% {
+    transform: scale(0%);
+  }
+  100% {
+    transform: scale(100%);
   }
 }

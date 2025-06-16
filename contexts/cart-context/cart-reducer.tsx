@@ -1,6 +1,6 @@
-import { ActionTypes, CartType } from "./cart-types";
+import { ActionTypes, CartItem } from "./cart-types";
 
-export function cartReducer(cart: CartType, action: ActionTypes) {
+export function cartReducer(cart: CartItem[], action: ActionTypes) {
   const productIndex = cart.findIndex(
     (product) => product.id === action.payload.id
   );
