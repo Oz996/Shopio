@@ -34,10 +34,36 @@ export function CartContextProvider({ children }: { children: ReactNode }) {
     dispatch({ type: "REMOVE", payload: product });
   }
 
+  function incrementQuantity(product: Product) {
+    dispatch({ type: "INCREMENT", payload: product });
+  }
+
+  function decrementQuantity(product: Product) {
+    dispatch({ type: "DECREMENT", payload: product });
+  }
+
+  function setQuantity(product: Product, quantity: number) {
+    dispatch({ type: "SET_QUANTITY", payload: product, quantity });
+  }
+
+  function clearCart() {
+    dispatch({ type: "CLEAR" });
+  }
+
   console.log("cart", cart);
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
+    <CartContext.Provider
+      value={{
+        cart,
+        addToCart,
+        clearCart,
+        setQuantity,
+        removeFromCart,
+        incrementQuantity,
+        decrementQuantity,
+      }}
+    >
       {children}
     </CartContext.Provider>
   );
