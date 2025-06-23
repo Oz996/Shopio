@@ -16,7 +16,10 @@ export default function ProductOptions({ product }: ProductOptionsProps) {
   const { addToCart } = useCart();
 
   function handleChange(e: ChangeEvent<HTMLInputElement>) {
-    setAmount(Number(e.target.value));
+    const value = Number(e.target.value);
+    if (value <= 0) return;
+
+    setAmount(value);
   }
 
   function incrementAmount() {
@@ -33,14 +36,15 @@ export default function ProductOptions({ product }: ProductOptionsProps) {
     <div className={styles.options}>
       <div className={styles.amount}>
         <button onClick={decrementAmount}>-</button>
-        <input type="text" value={amount} onChange={handleChange} />
+        <input type="number" value={amount} onChange={handleChange} />
         <button onClick={incrementAmount}>+</button>
       </div>
+
       <button
         className={styles.add_button}
         onClick={() => addToCart(product, amount)}
       >
-        Add to Cart <ShoppingBasket size={16} />{" "}
+        Add to Cart <ShoppingBasket size={16} />
       </button>
     </div>
   );

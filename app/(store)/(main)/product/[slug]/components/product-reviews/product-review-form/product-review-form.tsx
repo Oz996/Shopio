@@ -2,7 +2,7 @@
 
 import styles from "./product-review-form.module.scss";
 import { useActionState, useEffect, useRef, useState } from "react";
-import { submitReviewAction } from "@/app/actions";
+import { submitReviewAction } from "@/app/actions/review-actions";
 import ProductAddRating from "./product-add-rating";
 import { X } from "lucide-react";
 import useClickOutside from "@/hooks/use-click-outside";

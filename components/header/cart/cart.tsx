@@ -3,12 +3,13 @@
 import useClickOutside from "@/hooks/use-click-outside";
 import styles from "./cart.module.scss";
 import { useCart } from "@/hooks/use-cart";
-import { ShoppingBasket, X } from "lucide-react";
+import { ShoppingBasket, Truck, X } from "lucide-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { Product } from "@prisma/client";
+import Link from "next/link";
 
 export default function Cart() {
   const [isOpen, setIsOpen] = useState(false);
@@ -61,7 +62,7 @@ export default function Cart() {
             <div className={styles.header}>
               <h2>Cart</h2>
               <button onClick={() => setIsOpen(false)} aria-label="Close cart">
-                <X />
+                <X size={22} />
               </button>
             </div>
 
@@ -71,9 +72,12 @@ export default function Cart() {
                   <Image src={product.thumbnails[0]} alt="" fill />
                 </div>
 
-                <span>
+                <Link
+                  href={`http://localhost:3000/product/${product.slug}`}
+                  onClick={() => setIsOpen(false)}
+                >
                   {product.brand} {product.name}
-                </span>
+                </Link>
 
                 <div className={styles.item_end}>
                   <div>
@@ -113,6 +117,13 @@ export default function Cart() {
             <div className={styles.footer}>
               <div className={styles.total}>
                 <span>{`Total: € ${total}`}</span>
+
+                {total > 500 && (
+                  <div>
+                    <Truck size={18} />
+                    <span> Free delivery available</span>
+                  </div>
+                )}
               </div>
 
               <div className={styles.confirm}>

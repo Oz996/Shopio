@@ -4,6 +4,10 @@
   button {
     background: transparent;
   }
+
+  span {
+    cursor: default;
+  }
 }
 
 .amount {
@@ -58,16 +62,19 @@
 }
 
 .cart {
+  @include slide_in_top_cart;
+
   position: absolute;
   z-index: 30;
   right: 0;
+  top: 100%;
 
   background: #fff;
   border-radius: 3px;
   overflow-y: auto;
 
   width: 30rem;
-  max-height: 40rem;
+  max-height: calc(100vh - 5rem);
 
   padding: 1rem;
   padding-bottom: 0.5rem;
@@ -87,7 +94,7 @@
   padding-bottom: 0.8rem;
   border-bottom: 1px solid rgb(198, 198, 198);
 
-  span {
+  a {
     text-transform: capitalize;
   }
 }
@@ -155,6 +162,19 @@
 .total {
   span {
     font-weight: 600;
+  }
+
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.2rem;
+
+    span {
+      font-size: 13px;
+      font-weight: 500;
+      color: $dark-grey;
+    }
   }
 }
 

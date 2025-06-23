@@ -9,7 +9,11 @@
 }
 
 @mixin slide_in_top_dialog {
-  animation: slide_in_top 0.3s ease forwards;
+  animation: slide_in_top_dialog 0.3s ease forwards;
+}
+
+@mixin slide_in_top_cart {
+  animation: slide_in_top_cart 0.3s ease forwards;
 }
 
 @mixin spin_loader {
@@ -38,13 +42,24 @@
   }
 }
 
-@keyframes slide_in_top {
+@keyframes slide_in_top_dialog {
   0% {
     top: 45%;
     opacity: 60%;
   }
   100% {
     top: 50%;
+    opacity: 100%;
+  }
+}
+
+@keyframes slide_in_top_cart {
+  0% {
+    top: 0;
+    opacity: 60%;
+  }
+  100% {
+    top: 100%;
     opacity: 100%;
   }
 }
