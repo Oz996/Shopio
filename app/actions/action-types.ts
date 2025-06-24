@@ -12,3 +12,14 @@ export type ReviewReturnType =
       data?: undefined;
     }
   | undefined;
+
+export type OrderReturnType =
+  | {
+      error: string;
+      success?: undefined;
+    }
+  | {
+      success: boolean;
+      error?: undefined;
+    }
+  | undefined;

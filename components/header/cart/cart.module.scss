@@ -152,14 +152,12 @@
 
 .footer {
   margin-top: auto;
-
-  div {
-    border-bottom: 1px solid rgb(198, 198, 198);
-    padding-block: 1rem;
-  }
 }
 
 .total {
+  border-bottom: 1px solid rgb(198, 198, 198);
+  padding-block: 1rem;
+
   span {
     font-weight: 600;
   }
@@ -179,11 +177,24 @@
 }
 
 .confirm {
+  border-bottom: 1px solid rgb(198, 198, 198);
+  padding-block: 1rem;
+
   button {
     @include black-button(5px);
     justify-content: center;
     width: 100%;
+    font-size: 13px;
+  }
 
+  svg {
+    color: #fff;
+  }
+}
+
+.error {
+  span {
+    color: red;
     font-size: 13px;
   }
 }

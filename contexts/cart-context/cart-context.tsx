@@ -1,10 +1,4 @@
-import {
-  createContext,
-  ReactNode,
-  useEffect,
-  useReducer,
-  useState,
-} from "react";
+import { createContext, ReactNode, useEffect, useReducer } from "react";
 import { CartContextType, CartItem } from "./cart-types";
 import { cartReducer } from "./cart-reducer";
 import { Product } from "@prisma/client";
@@ -49,8 +43,6 @@ export function CartContextProvider({ children }: { children: ReactNode }) {
   function clearCart() {
     dispatch({ type: "CLEAR" });
   }
-
-  console.log("cart", cart);
 
   return (
     <CartContext.Provider

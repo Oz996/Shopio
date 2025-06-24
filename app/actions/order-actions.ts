@@ -1,13 +1,17 @@
 "use server";
 
-import { auth } from "@/auth";
 import { CartItem } from "@/contexts/cart-context/cart-types";
 import prisma from "@/lib/prisma/prisma";
+import { OrderReturnType } from "./action-types";
+import { getCurrentUser } from "../get-user";
 
-export async function submitOrderAction(prevSate: any, products: CartItem[]) {
-  const session = await auth();
+export async function submitOrderAction(
+  prevSate: OrderReturnType,
+  products: CartItem[]
+) {
+  const user = await getCurrentUser();
 
-  if (!session) {
+  if (!user) {
     return {
       error: "Sign in to submit order",
     };
@@ -15,7 +19,7 @@ export async function submitOrderAction(prevSate: any, products: CartItem[]) {
 
   const order = await prisma.order.create({
     data: {
-      userId: session.user?.id!,
+      userId: user.id,
     },
   });
 
@@ -28,4 +32,6 @@ export async function submitOrderAction(prevSate: any, products: CartItem[]) {
       },
     });
   }
+
+  return { success: true };
 }

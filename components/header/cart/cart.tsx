@@ -10,6 +10,7 @@ import Image from "next/image";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { Product } from "@prisma/client";
 import Link from "next/link";
+import ConfirmPurchase from "./confirm-purchase";
 
 export default function Cart() {
   const [isOpen, setIsOpen] = useState(false);
@@ -61,7 +62,7 @@ export default function Cart() {
           <div className={styles.cart} ref={cartRef}>
             <div className={styles.header}>
               <h2>Cart</h2>
-              <button onClick={() => setIsOpen(false)} aria-label="Close cart">
+              <button onClick={closeCart} aria-label="Close cart">
                 <X size={22} />
               </button>
             </div>
@@ -74,7 +75,7 @@ export default function Cart() {
 
                 <Link
                   href={`http://localhost:3000/product/${product.slug}`}
-                  onClick={() => setIsOpen(false)}
+                  onClick={closeCart}
                 >
                   {product.brand} {product.name}
                 </Link>
@@ -127,7 +128,7 @@ export default function Cart() {
               </div>
 
               <div className={styles.confirm}>
-                <button>Confirm purchase</button>
+                <ConfirmPurchase closeCart={closeCart} />
               </div>
 
               <button onClick={clearCart}>Clear cart</button>
@@ -168,5 +169,9 @@ export default function Cart() {
     }
 
     setQuantity(product, value);
+  }
+
+  function closeCart() {
+    setIsOpen(false);
   }
 }
