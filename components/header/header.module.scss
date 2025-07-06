@@ -53,11 +53,11 @@
 
   @include tablet {
     padding-left: 1rem;
+    gap: 1rem;
   }
 }
 
 .nav_item {
-  position: relative;
   cursor: pointer;
 
   display: flex;

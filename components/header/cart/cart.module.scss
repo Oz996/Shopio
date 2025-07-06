@@ -1,6 +1,7 @@
 @use "@/sass" as *;
 
 .container {
+  position: relative;
   button {
     background: transparent;
   }
@@ -8,6 +9,14 @@
   span {
     cursor: default;
   }
+
+  @include mobile {
+    position: unset;
+  }
+}
+
+.cart_button {
+  position: relative !important;
 }
 
 .amount {
@@ -67,7 +76,6 @@
   position: absolute;
   z-index: 30;
   right: 0;
-  top: 100%;
 
   background: #fff;
   border-radius: 3px;
@@ -75,6 +83,7 @@
 
   width: 30rem;
   max-height: calc(100vh - 5rem);
+  cursor: default;
 
   padding: 1rem;
   padding-bottom: 0.5rem;
@@ -83,7 +92,9 @@
   flex-direction: column;
   gap: 0.5rem;
 
-  cursor: default;
+  @include mobile {
+    width: 100vw;
+  }
 }
 
 .cart_item {
@@ -96,6 +107,11 @@
 
   a {
     text-transform: capitalize;
+    @include truncate(2);
+
+    @include mobile {
+      font-size: 15px;
+    }
   }
 }
 
@@ -141,7 +157,7 @@
 }
 
 .image_wrapper {
-  width: 4.5rem;
+  min-width: 4.5rem;
   position: relative;
   aspect-ratio: 16 / 9;
 
@@ -179,9 +195,10 @@
 .confirm {
   border-bottom: 1px solid rgb(198, 198, 198);
   padding-block: 1rem;
+  width: 100%;
 
   button {
-    @include black-button(5px);
+    @include black-button(5px, 0);
     justify-content: center;
     width: 100%;
     font-size: 13px;

@@ -8,6 +8,7 @@ import { productCategories } from "@/lib/constants";
 import { Session } from "next-auth";
 import SignOutButton from "./sign-out-button";
 import SearchBar from "./search-bar/search-bar";
+import Cart from "./cart/cart";
 
 interface HeaderMobileProps {
   authorized: Session | null;
@@ -58,6 +59,10 @@ export default function HeaderMobile({ authorized }: HeaderMobileProps) {
 
       <nav className={styles.nav}>
         <SearchBar />
+
+        <div className={styles.nav_item}>
+          <Cart />
+        </div>
 
         {isOpen && (
           <div className={styles.nav_mobile} ref={navRef}>

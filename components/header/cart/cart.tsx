@@ -45,7 +45,11 @@ export default function Cart() {
 
   return (
     <div className={styles.container}>
-      <button onClick={() => setIsOpen(true)} aria-label="Open cart">
+      <button
+        onClick={() => setIsOpen(true)}
+        aria-label="Open cart"
+        className={styles.cart_button}
+      >
         {isMounted && cart.length > 0 && (
           <div className={styles.amount}>
             <span>{cart.length}</span>
