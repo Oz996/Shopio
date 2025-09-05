@@ -1,5 +1,3 @@
-"use client";
-
 import useClickOutside from "@/hooks/use-click-outside";
 import styles from "./cart.module.scss";
 import { useCart } from "@/hooks/use-cart";

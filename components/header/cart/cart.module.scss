@@ -93,7 +93,8 @@
   gap: 0.5rem;
 
   @include mobile {
-    width: 100vw;
+    width: calc(100vw - 10px);
+    right: -11px;
   }
 }
 

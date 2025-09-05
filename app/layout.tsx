@@ -25,7 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={poppins.className}>
+      <body className={poppins.className} tabIndex={-1}>
         <Providers>{children}</Providers>
       </body>
     </html>

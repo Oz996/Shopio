@@ -1,5 +1,3 @@
-"use client";
-
 import styles from "./search-bar.module.scss";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";

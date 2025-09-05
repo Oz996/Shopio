@@ -1,16 +1,24 @@
-"use client";
-
 import { ChevronDown, Headphones, Laptop, Monitor, Tablet } from "lucide-react";
 import styles from "./header.module.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { productCategories } from "@/lib/constants";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 
 export default function ProductsNavbar() {
   const [isOpen, setIsOpen] = useState(false);
 
+  const pathname = usePathname();
+
+  useEffect(() => {
+    setIsOpen(false);
+  }, [pathname]);
+
   return (
     <div
+      tabIndex={0}
+      aria-expanded={isOpen}
+      onFocus={() => setIsOpen(true)}
       className={styles.nav_item}
       onMouseEnter={() => setIsOpen(true)}
       onMouseLeave={() => setIsOpen(false)}

@@ -1,8 +1,6 @@
-"use client";
-
 import Link from "next/link";
 import styles from "./header.module.scss";
-import { ChevronRight, Menu, Search, X } from "lucide-react";
+import { ChevronRight, Menu, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { productCategories } from "@/lib/constants";
 import { Session } from "next-auth";

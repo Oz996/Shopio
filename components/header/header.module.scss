@@ -8,6 +8,10 @@
 
   display: flex;
   align-items: end;
+
+  &:focus {
+    outline: none;
+  }
 }
 
 .header {
@@ -59,6 +63,7 @@
 
 .nav_item {
   cursor: pointer;
+  position: relative;
 
   display: flex;
   align-items: center;
@@ -110,6 +115,7 @@
     font-size: 14px;
     font-weight: 500;
     color: $dark-grey;
+    font-family: var(--font-inter);
 
     border: none;
     cursor: pointer;
